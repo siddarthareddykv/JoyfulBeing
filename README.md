@@ -25,3 +25,5 @@ JoyfulBeing transforms this timeless wisdom into a modern digital space:
 🌈 Community-first philosophy
 
 Everything is crafted to help people breathe again, at home or on the go.
+<img width="1024" height="1536" alt="ChatGPT Image Dec 11, 2025, 05_02_20 PM" src="https://github.com/user-attachments/assets/3623064a-d55c-48a3-add1-786dfd8b61b7" />
+
