@@ -1,0 +1,204 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+/* --------------------------------------------------
+   STRESS PAGE MASTER STYLE (LOCAL TO THIS PAGE)
+-------------------------------------------------- */
+
+.stress-hero {
+    padding: 80px 20px;
+    background: linear-gradient(135deg, #fdf8ff, #eef8ff);
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+.stress-hero h1 {
+    font-size: 40px;
+    font-weight: 700;
+    color: #3d3f82;
+}
+
+.stress-hero p {
+    font-size: 18px;
+    max-width: 700px;
+    margin: auto;
+    margin-top: 14px;
+    color: #666;
+}
+
+/* BREATHING CARD */
+.breathing-box {
+    margin-top: 40px;
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 6px 22px rgba(0,0,0,0.12);
+}
+
+.breath-text {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+/* Breathing Animation */
+.breath-circle {
+    width: 130px;
+    height: 130px;
+    margin: auto;
+    background: #d8e8ff;
+    border-radius: 50%;
+    animation: breathe 8s infinite ease-in-out;
+}
+
+@keyframes breathe {
+    0% { transform: scale(0.9); background: #cfe2ff; }
+    50% { transform: scale(1.15); background: #eaf3ff; }
+    100% { transform: scale(0.9); background: #cfe2ff; }
+}
+
+/* SECTION TITLE */
+.section-title {
+    margin-top: 60px;
+    font-size: 28px;
+    font-weight: 700;
+    text-align: center;
+}
+
+/* GRID */
+.stress-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 22px;
+    margin-top: 30px;
+}
+
+.stress-card {
+    background: white;
+    padding: 25px;
+    border-radius: 18px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+    transition: 0.3s ease;
+}
+
+.stress-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+}
+
+.stress-card h3 {
+    color: #3d3f82;
+    margin-bottom: 8px;
+}
+
+.stress-card p {
+    color: #555;
+    font-size: 15px;
+}
+
+/* CALM QUOTE */
+.calm-quote {
+    margin-top: 60px;
+    background: linear-gradient(135deg, #fff6ed, #fff1f6);
+    padding: 40px;
+    border-radius: 18px;
+    text-align: center;
+    font-style: italic;
+    font-size: 20px;
+    color: #444;
+    box-shadow: 0 10px 26px rgba(0,0,0,0.08);
+}
+
+/* INSTANT RELIEF TOOLS */
+.relief-tools {
+    margin-top: 50px;
+}
+
+.tool-box {
+    background: white;
+    padding: 25px;
+    border-radius: 18px;
+    margin-bottom: 15px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.07);
+}
+
+/* LOTUS FLOATING AURA */
+.stress-lotus {
+    position: fixed;
+    bottom: -40px;
+    left: -40px;
+    width: 220px;
+    height: 220px;
+    background: radial-gradient(circle, rgba(255,210,234,0.25), transparent);
+    filter: blur(18px);
+    animation: lotusFloat 7s infinite alternate ease-in-out;
+    z-index: -1;
+}
+
+@keyframes lotusFloat {
+    0%   { transform: translate(0, 0); opacity: 0.6; }
+    100% { transform: translate(30px, -40px); opacity: 0.9; }
+}
+</style>
+
+
+<div class="stress-hero">
+    <h1>Melting Stress, One Breath at a Time</h1>
+    <p>Stress is not your enemy — it's a signal. This space gently guides your mind and body back into balance through breath, awareness, and small, soothing actions.</p>
+</div>
+
+<!-- BREATHING BOX -->
+<div class="breathing-box">
+    <div class="breath-text">Follow the Circle — Inhale… Exhale…</div>
+    <div class="breath-circle"></div>
+</div>
+
+<!-- MAIN CATEGORIES -->
+<h2 class="section-title">Stress Relief Pathways</h2>
+
+<div class="stress-grid">
+    <div class="stress-card">
+        <h3>Mind</h3>
+        <p>Simple mindfulness practices to calm overthinking and bring clarity.</p>
+    </div>
+
+    <div class="stress-card">
+        <h3>Body</h3>
+        <p>Micro-movements, stretches, and grounding exercises.</p>
+    </div>
+
+    <div class="stress-card">
+        <h3>Emotions</h3>
+        <p>Healthy ways to release emotional tension and reconnect with ease.</p>
+    </div>
+
+    <div class="stress-card">
+        <h3>Lifestyle</h3>
+        <p>Daily habits that silently reduce stress and strengthen resilience.</p>
+    </div>
+</div>
+
+<!-- CALM QUOTE -->
+<div class="calm-quote">
+    “Within you, there is a stillness and a sanctuary you can retreat to anytime.”  
+    — Hermann Hesse
+</div>
+
+<!-- RELIEF TOOLS -->
+<h2 class="section-title">Instant Relief Tools</h2>
+
+<div class="relief-tools">
+    <div class="tool-box">⭐ 5-4-3-2-1 Grounding Technique</div>
+    <div class="tool-box">⭐ Slow Breathing (4–4–6 Method)</div>
+    <div class="tool-box">⭐ Quick Body Scan</div>
+    <div class="tool-box">⭐ Sip Water Slowly with Awareness</div>
+    <div class="tool-box">⭐ Write down one worry you release today</div>
+</div>
+
+<!-- Background Aura -->
+<div class="stress-lotus"></div>
+
+{% endblock %}

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title if title else "Joyful Being" }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<!-- MAIN NAVBAR -->
+<nav class="navbar">
+    <div class="nav-left">
+        <a href="/" class="logo">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" class="logo-img">
+        </a>
+    </div>
+
+    <div class="nav-right">
+        <a href="/">Home</a>
+        <a href="/calendar">Calendar</a>
+        <a href="/ideas">Kindness Ideas</a>
+        <a href="/stress">Stress Relief</a>
+        <a href="/emotions">Emotions</a>
+        <a href="/about">About</a>
+    </div>
+</nav>
+
+
+
+<!-- MAIN CONTENT -->
+<main class="content">
+    {% block content %}
+    {% endblock %}
+</main>
+
+<!-- FOOTER -->
+<footer class="footer">
+    © 2026 Joyful Being — Mind • Heart • Harmony
+</footer>
+
+</body>
+</html>

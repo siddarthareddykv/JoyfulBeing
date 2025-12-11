@@ -1,0 +1,589 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!--
+  Magical Emotions Guide
+  - Full Magic (C): floating orbs, aura color changes, ripple, heartbeat, breathing cloud,
+    poetic lines, breathing prompts, spark particles, night mode.
+  Paste this file as templates/emotions.html
+-->
+
+<style>
+:root{
+  --bg:#fff9f6;
+  --card:#ffffff;
+  --text:#333444;
+  --muted:#6b6f85;
+  --accent:#4a4d8a;
+  --soft:#f2f6ff;
+  --aura: radial-gradient(circle at 10% 20%, rgba(74,77,138,0.12), transparent 20%),
+         radial-gradient(circle at 90% 80%, rgba(247,180,115,0.06), transparent 25%);
+  --glass: rgba(255,255,255,0.6);
+}
+
+*{box-sizing:border-box}
+body { background: var(--bg); color:var(--text); font-family: 'Poppins', system-ui, -apple-system, 'Helvetica Neue', Arial; }
+
+/* Page Shell */
+.emotion-shell{
+  max-width:1100px;
+  margin:28px auto;
+  padding:22px;
+}
+
+/* Top bar: night toggle & mission */
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  margin-bottom:18px;
+}
+.mission {
+  font-weight:700;
+  font-size:16px;
+  color:var(--accent);
+}
+.controls { display:flex; gap:10px; align-items:center; }
+
+/* Night toggle */
+.toggle {
+  display:inline-flex;
+  gap:8px;
+  align-items:center;
+  background:var(--card);
+  padding:6px 8px;
+  border-radius:999px;
+  box-shadow:0 6px 16px rgba(20,20,60,0.06);
+}
+.toggle input { display:none; }
+.toggle .knob {
+  width:38px; height:22px;
+  background: linear-gradient(90deg,#ffd7a3,#ff9bb8);
+  border-radius:999px;
+  position:relative;
+  padding:3px;
+}
+.toggle .dot {
+  width:16px;height:16px;background:white;border-radius:50%;box-shadow:0 3px 8px rgba(0,0,0,0.12);transform:translateX(0);transition:transform .32s ease;
+}
+.toggle input:checked + .knob { background: linear-gradient(90deg,#6b8cff,#8a3ff7); }
+.toggle input:checked + .knob .dot { transform:translateX(16px); }
+
+/* Hero / Manifesto */
+.hero {
+  background: linear-gradient(135deg,#fff8f6,#f4fbff);
+  padding:36px;
+  border-radius:18px;
+  text-align:center;
+  box-shadow:0 18px 50px rgba(30,30,70,0.06);
+  position:relative;
+  overflow:hidden;
+}
+.hero h1 { font-size:34px; margin:0 0 8px; color:var(--accent); }
+.hero p { margin:0 auto; max-width:840px; color:var(--muted); font-size:16px; line-height:1.6; }
+
+/* Floating emotion orbs container */
+.orb-stage {
+  position:relative;
+  height:140px;
+  margin-top:18px;
+}
+
+/* Emotion orbs (absolute) */
+.orb {
+  position:absolute;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:68px;
+  height:68px;
+  border-radius:50%;
+  font-size:28px;
+  color:#fff;
+  box-shadow:0 12px 30px rgba(10,10,30,0.10), inset 0 -6px 18px rgba(255,255,255,0.06);
+  transform:translateY(0);
+  transition:transform .6s ease, box-shadow .25s ease;
+  cursor:pointer;
+  user-select:none;
+}
+
+/* Small label below orb */
+.orb .label { position:absolute; bottom:-28px; left:50%; transform:translateX(-50%); font-size:13px; color:var(--muted); }
+
+/* Default orb colors (will be overridden by JS theme) */
+.orb.joy    { background: linear-gradient(135deg,#ffd27d,#ffb347); }
+.orb.sad    { background: linear-gradient(135deg,#a9c9ff,#6ea8ff); }
+.orb.anger  { background: linear-gradient(135deg,#ffb3a3,#ff6f6f); }
+.orb.fear   { background: linear-gradient(135deg,#c9b3ff,#9b7aff); }
+.orb.overw  { background: linear-gradient(135deg,#e2e8f0,#cbd5e1); color:#222; }
+.orb.love   { background: linear-gradient(135deg,#ffb7d2,#ff7aa2); }
+
+/* Grid of emotion cards */
+.emotion-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:18px;
+  margin-top:22px;
+}
+
+/* Card */
+.card {
+  background:var(--card);
+  border-radius:16px;
+  padding:22px;
+  box-shadow:0 10px 30px rgba(20,20,60,0.04);
+  transition:transform .35s cubic-bezier(.2,.9,.3,1), box-shadow .35s;
+  position:relative;
+  overflow:visible;
+}
+.card:hover{ transform:translateY(-10px); box-shadow:0 20px 60px rgba(20,20,60,0.08); }
+.card .emoji{ font-size:36px; display:block; margin-bottom:8px; animation:emojiPulse 3s infinite ease-in-out; }
+@keyframes emojiPulse{ 0%{transform:scale(1)}50%{transform:scale(1.08)}100%{transform:scale(1)} }
+.card h3{ margin:0 0 6px; color:var(--accent); font-size:18px; }
+.card p{ margin:0; color:var(--muted); font-size:14px; }
+
+/* Ripple & glow effect when active */
+.card.active{ box-shadow:0 26px 80px rgba(60,40,100,0.12); transform:translateY(-8px) scale(1.01); }
+.ripple {
+  position:absolute; width:8px; height:8px; border-radius:50%; background:rgba(255,255,255,0.25); left:50%; top:24px; transform:translate(-50%,-50%) scale(0); pointer-events:none;
+}
+
+/* Guide box (poetic + steps + breathing prompt + heartbeat container) */
+.guide {
+  margin-top:28px;
+  background: linear-gradient(135deg, rgba(255,255,255,0.85), rgba(255,255,255,0.92));
+  border-radius:18px; padding:24px; box-shadow:0 18px 50px rgba(20,20,60,0.06);
+  position:relative; overflow:visible;
+}
+.guide-header{ display:flex; align-items:center; gap:12px; }
+.guide-title{ font-size:20px; font-weight:800; color:var(--accent); margin:0; }
+.guide-poem{ margin:10px 0 14px; color:var(--muted); font-style:italic; }
+
+/* breathing prompt */
+.breath-prompt{ padding:12px 14px; border-radius:12px; background:linear-gradient(90deg,#fff,#fbfbff); display:inline-block; font-weight:700; color:var(--accent); }
+
+/* heartbeat */
+.heartbeat {
+  position:absolute; right:18px; top:-28px; width:84px; height:84px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center; background:rgba(255,255,255,0.6);
+  box-shadow:0 8px 30px rgba(20,20,60,0.06); opacity:0; transform:scale(.95);
+}
+.heartbeat.visible { opacity:1; animation:heartBeat 1.2s infinite; }
+@keyframes heartBeat{
+  0%{ transform:scale(.94) } 30%{ transform:scale(1.08) } 60%{ transform:scale(.96) } 100%{ transform:scale(.98) }
+}
+
+/* spark particles container (behind guide) */
+.spark-wrap{
+  position:absolute; inset:0; pointer-events:none; overflow:hidden; z-index:0;
+}
+
+/* breathing cloud (soft expanding circle behind guide) */
+.breath-cloud{
+  position:absolute; left:50%; top:50%; transform:translate(-50%,-50%) scale(.7);
+  width:420px; height:420px; border-radius:50%;
+  background: radial-gradient(circle, rgba(150,200,255,0.06), transparent 40%);
+  filter:blur(30px); opacity:0.9; z-index:-1; transition:background .45s ease;
+  animation:cloudBreathe 8s ease-in-out infinite;
+}
+@keyframes cloudBreathe{
+  0%{ transform:translate(-50%,-50%) scale(.72); opacity:.75 }
+  50%{ transform:translate(-50%,-50%) scale(.95); opacity:.9 }
+  100%{ transform:translate(-50%,-50%) scale(.72); opacity:.75 }
+}
+
+/* poetic meaning box + steps */
+.steps { margin-top:12px; display:grid; gap:8px; }
+.step { background:rgba(255,255,255,0.6); padding:10px 12px; border-radius:10px; color:var(--muted); font-weight:600; }
+
+/* footer CTA */
+.footer-cta { margin-top:28px; text-align:center; padding:26px; border-radius:14px; background:linear-gradient(135deg,#fff5f8,#f7fff6); box-shadow:0 12px 30px rgba(20,20,60,0.04); }
+.join { padding:12px 18px; border-radius:12px; background:linear-gradient(90deg,var(--accent),#ff7aa2); color:white; font-weight:800; border:none; }
+
+/* NIGHT MODE overrides */
+body.night {
+  --bg: #051226;
+  --card: rgba(10,16,30,0.6);
+  --text:#e9eef8;
+  --muted:#c6d3ee;
+  --accent:#9fb8ff;
+  --soft: rgba(255,255,255,0.02);
+  --aura: radial-gradient(circle at 10% 20%, rgba(100,120,255,0.08), transparent 20%),
+         radial-gradient(circle at 90% 80%, rgba(250,150,120,0.03), transparent 25%);
+}
+
+/* responsive tweaks */
+@media (max-width:860px){
+  .orb-stage{ height:90px }
+  .orb{ width:56px;height:56px;font-size:22px }
+  .heartbeat{ display:none }
+}
+</style>
+
+<div class="emotion-shell">
+
+  <!-- top bar -->
+  <div class="topbar">
+    <div class="mission">Healing hearts & minds — join a global community of calm</div>
+
+    <div class="controls" aria-hidden="false">
+      <label class="toggle" title="Toggle night mode">
+        <input id="nightToggle" type="checkbox" aria-label="Night mode toggle">
+        <span class="knob"><span class="dot"></span></span>
+      </label>
+    </div>
+  </div>
+
+  <!-- hero -->
+  <section class="hero" aria-labelledby="emotionsTitle">
+    <h1 id="emotionsTitle">We remove stress from the heart and mind — together</h1>
+    <p>Emotions are intelligence wearing different clothes. Choose one below to understand, breathe, and transform it gently.</p>
+
+    <div class="orb-stage" aria-hidden="true" id="orbStage">
+      <!-- orbs added by JS -->
+    </div>
+  </section>
+
+  <!-- emotion cards -->
+  <div class="emotion-grid" role="list" aria-label="Emotion choices" id="grid">
+    <div class="card" role="button" tabindex="0" data-emotion="joy" aria-pressed="false">
+      <div class="emoji">😊</div>
+      <h3>Joy</h3>
+      <p>Inner sunlight — expand and share.</p>
+      <div class="ripple"></div>
+    </div>
+
+    <div class="card" role="button" tabindex="0" data-emotion="sadness" aria-pressed="false">
+      <div class="emoji">😢</div>
+      <h3>Sadness</h3>
+      <p>Healing rain — soften and release.</p>
+      <div class="ripple"></div>
+    </div>
+
+    <div class="card" role="button" tabindex="0" data-emotion="anger" aria-pressed="false">
+      <div class="emoji">😡</div>
+      <h3>Anger</h3>
+      <p>Boundary fire — notice and direct.</p>
+      <div class="ripple"></div>
+    </div>
+
+    <div class="card" role="button" tabindex="0" data-emotion="fear" aria-pressed="false">
+      <div class="emoji">😨</div>
+      <h3>Fear</h3>
+      <p>Inner guardian — ground and reassure.</p>
+      <div class="ripple"></div>
+    </div>
+
+    <div class="card" role="button" tabindex="0" data-emotion="overwhelm" aria-pressed="false">
+      <div class="emoji">😵‍💫</div>
+      <h3>Overwhelm</h3>
+      <p>Storm cloud — slow down and simplify.</p>
+      <div class="ripple"></div>
+    </div>
+
+    <div class="card" role="button" tabindex="0" data-emotion="love" aria-pressed="false">
+      <div class="emoji">💗</div>
+      <h3>Love</h3>
+      <p>Inner light — rest in warmth.</p>
+      <div class="ripple"></div>
+    </div>
+  </div>
+
+  <!-- guide area -->
+  <div class="guide" id="guide" aria-live="polite" aria-hidden="true">
+    <div class="spark-wrap" id="sparkWrap" aria-hidden="true"></div>
+    <div class="breath-cloud" id="breathCloud" aria-hidden="true"></div>
+
+    <div class="guide-header">
+      <div>
+        <h4 class="guide-title" id="guideTitle">Choose an emotion</h4>
+        <div class="guide-poem" id="guidePoem">Tap an emotion to receive a poetic meaning, a breathing prompt and small steps.</div>
+      </div>
+
+      <div class="heartbeat" id="heartbeat" aria-hidden="true"><span style="font-size:20px; color:var(--accent)">❤</span></div>
+    </div>
+
+    <div class="steps" id="guideSteps" role="list"></div>
+
+    <div style="margin-top:12px;">
+      <div class="breath-prompt" id="breathPrompt">Breathe: —</div>
+    </div>
+  </div>
+
+  <!-- CTA & footer -->
+  <div class="footer-cta" style="margin-top:24px;">
+    <div style="font-weight:800; font-size:18px; color:var(--accent)">Join the global movement for calmer hearts</div>
+    <div style="margin-top:10px; color:var(--muted)">We’re building a community that practices small, repeatable acts of kindness and rest — together we heal.</div>
+    <div style="margin-top:14px;"><button class="join">Notify me when community opens</button></div>
+  </div>
+
+</div>
+
+<script>
+/* Magical Emotions JavaScript
+   - Builds floating orbs
+   - Handles interaction, ripple, aura, heartbeat, breathing prompts, particles
+   - Night mode toggle
+*/
+
+const EMOTIONS = {
+  joy: {
+    name: "Joy",
+    emoji: "😊",
+    colorFrom: "#ffd27d",
+    colorTo: "#ffb347",
+    poem: "Joy is your inner sunrise — warm, bright and generous.",
+    breath: "Breathe in gratitude (4). Hold (2). Breathe out softness (6).",
+    steps: ["Notice where joy sits in your body.","Share a small smile with someone.","Write one line of gratitude."]
+  },
+  sadness: {
+    name: "Sadness",
+    emoji: "😢",
+    colorFrom: "#a9c9ff",
+    colorTo: "#6ea8ff",
+    poem: "Sadness is your healing rain — it waters what needs growth.",
+    breath: "Breathe in courage (4). Breathe out release (6).",
+    steps: ["Place a hand on your heart and breathe.","Allow tears without judgment.","Write what you are letting go of."]
+  },
+  anger: {
+    name: "Anger",
+    emoji: "😡",
+    colorFrom: "#ffb3a3",
+    colorTo: "#ff6f6f",
+    poem: "Anger is your boundary fire — it asks to be seen and directed.",
+    breath: "Inhale cool air (4). Exhale warm release (6).",
+    steps: ["Name the need underneath the anger.","Take 5 slow breaths to soften.","Write an assertive 'I' statement."]
+  },
+  fear: {
+    name: "Fear",
+    emoji: "😨",
+    colorFrom: "#c9b3ff",
+    colorTo: "#9b7aff",
+    poem: "Fear is your inner guardian — listen, then reassure it gently.",
+    breath: "Inhale grounding (4). Exhale reassuring words (6).",
+    steps: ["Ground by naming 5 things you see.","Tell yourself: 'This feeling is helping me survive.'","Take a slow walk for clarity."]
+  },
+  overwhelm: {
+    name: "Overwhelm",
+    emoji: "😵‍💫",
+    colorFrom: "#e2e8f0",
+    colorTo: "#cbd5e1",
+    poem: "Overwhelm is a storm cloud — pause, umbrella your attention.",
+    breath: "Slow in for 4, longer out for 8 — repeat 3 times.",
+    steps: ["List 3 tiny next steps.","Remove one distraction for 10 minutes.","Say: 'One thing at a time.'"]
+  },
+  love: {
+    name: "Love",
+    emoji: "💗",
+    colorFrom: "#ffb7d2",
+    colorTo: "#ff7aa2",
+    poem: "Love is your inner light — tender, expansive, healing.",
+    breath: "Breathe warmth in (4). Exhale kindness (6).",
+    steps: ["Recall a moment of care you received.","Offer yourself a gentle affirmation.","Do a small act of kindness."]
+  }
+};
+
+const orbContainer = document.getElementById('orbStage');
+const guide = document.getElementById('guide');
+const guideTitle = document.getElementById('guideTitle');
+const guidePoem = document.getElementById('guidePoem');
+const guideSteps = document.getElementById('guideSteps');
+const breathPrompt = document.getElementById('breathPrompt');
+const heartbeat = document.getElementById('heartbeat');
+const sparkWrap = document.getElementById('sparkWrap');
+const breathCloud = document.getElementById('breathCloud');
+
+const emotionCards = Array.from(document.querySelectorAll('.card'));
+const nightToggle = document.getElementById('nightToggle');
+
+// Create orbs (floating emoji circles) with positions
+function createOrbs(){
+  const keys = Object.keys(EMOTIONS);
+  const positions = [
+    {left:6, top:10},{left:22, top:24},{left:40, top:14},
+    {left:60, top:22},{left:78, top:8},{left:88, top:30}
+  ];
+  keys.forEach((k,i)=>{
+    const e = EMOTIONS[k];
+    const orb = document.createElement('div');
+    orb.className = 'orb ' + (k==='overwhelm' ? 'overw' : (k==='sadness' ? 'sad' : k));
+    orb.dataset.emotion = k;
+    orb.style.left = positions[i].left + '%';
+    orb.style.top = positions[i].top + '%';
+    orb.style.background = `linear-gradient(135deg, ${e.colorFrom}, ${e.colorTo})`;
+    orb.innerHTML = `<div style="z-index:2">${e.emoji}</div><div class="label">${e.name}</div>`;
+    orbContainer.appendChild(orb);
+
+    // floating animation with random timing
+    const dur = 6 + Math.random()*6;
+    orb.animate([
+      { transform: 'translateY(0px) rotate(0deg)' },
+      { transform: `translateY(${(Math.random()*18)-9}px) rotate(4deg)` },
+      { transform: 'translateY(0px) rotate(0deg)' }
+    ], { duration: dur*1000, iterations: Infinity, direction:'alternate', easing:'ease-in-out' });
+
+    orb.addEventListener('click', ()=> activateEmotion(k));
+    orb.addEventListener('keydown', (ev)=> { if(ev.key==='Enter'||ev.key===' ') activateEmotion(k) });
+    orb.tabIndex = 0;
+  });
+}
+
+// Activate emotion: update UI, show guide, animate ripple & aura & spark & heartbeat
+function activateEmotion(key){
+  const e = EMOTIONS[key];
+  // highlight selected card
+  emotionCards.forEach(c=>{
+    if(c.dataset.emotion === key) c.classList.add('active');
+    else c.classList.remove('active');
+    c.setAttribute('aria-pressed', c.dataset.emotion===key ? 'true' : 'false');
+  });
+
+  // ripple animation on that card
+  const card = emotionCards.find(c=>c.dataset.emotion===key);
+  createRipple(card);
+
+  // set aura background tint
+  document.documentElement.style.setProperty('--aura', `radial-gradient(circle at 15% 20%, ${hexToRgba(e.colorFrom,0.12)}, transparent 18%), radial-gradient(circle at 85% 80%, ${hexToRgba(e.colorTo,0.06)}, transparent 25%)`);
+  document.body.style.background = e.colorFrom ? `linear-gradient(180deg, ${shade(e.colorFrom,-0.02)}, ${shade(e.colorTo,0.02)})` : '';
+
+  // show guide
+  guideTitle.textContent = `Understanding ${e.name} ${e.emoji}`;
+  guidePoem.textContent = e.poem;
+  guideSteps.innerHTML = '';
+  e.steps.forEach(s => {
+    const el = document.createElement('div');
+    el.className = 'step';
+    el.textContent = s;
+    guideSteps.appendChild(el);
+  });
+  breathPrompt.textContent = `Breathing cue: ${e.breath}`;
+
+  // heartbeat only for sadness & love
+  if(key==='sadness' || key==='love'){
+    heartbeat.classList.add('visible');
+    heartbeat.setAttribute('aria-hidden','false');
+  } else {
+    heartbeat.classList.remove('visible');
+    heartbeat.setAttribute('aria-hidden','true');
+  }
+
+  // breathing cloud color & intensity
+  breathCloud.style.background = `radial-gradient(circle, ${hexToRgba(e.colorTo,0.06)}, transparent 35%)`;
+  breathCloud.style.opacity = 0.95;
+
+  // spark particles with emotion color
+  startSparks(e.colorTo);
+
+  // show guide region smoothly
+  guide.style.display = 'block';
+  guide.setAttribute('aria-hidden','false');
+  // scroll into view
+  guide.scrollIntoView({behavior:'smooth', block:'center'});
+}
+
+// ripple creation
+function createRipple(card){
+  if(!card) return;
+  const r = card.querySelector('.ripple');
+  r.style.left = '50%'; r.style.top = '24px'; r.style.transform='translate(-50%,-50%) scale(0)';
+  r.style.opacity = 0.9;
+  r.animate([
+    { transform:'translate(-50%,-50%) scale(0)', opacity:0.9 },
+    { transform:'translate(-50%,-50%) scale(12)', opacity:0 }
+  ], { duration:700, easing:'cubic-bezier(.2,.8,.3,1)' });
+}
+
+// sparks engine (simple)
+let sparkTimer = null;
+function startSparks(color){
+  stopSparks();
+  const wrap = sparkWrap;
+  wrap.innerHTML = '';
+  const count = 18;
+  for(let i=0;i<count;i++){
+    const sp = document.createElement('div');
+    sp.className = 'spark';
+    sp.style.position='absolute';
+    sp.style.left = (10 + Math.random()*80) + '%';
+    sp.style.top = (40 + Math.random()*30) + '%';
+    sp.style.width = (2 + Math.random()*6) + 'px';
+    sp.style.height = sp.style.width;
+    sp.style.borderRadius = '50%';
+    sp.style.background = color;
+    sp.style.opacity = 0.1 + Math.random()*0.5;
+    sp.style.filter = 'blur(6px)';
+    sp.style.transition = 'transform 2.8s ease, opacity 2.8s ease';
+    wrap.appendChild(sp);
+    // animate
+    setTimeout(()=> {
+      sp.style.transform = `translateY(-${30 + Math.random()*60}px) scale(${0.6 + Math.random()*1.2})`;
+      sp.style.opacity = 0;
+    }, 60*i);
+  }
+  // remove after 3s
+  sparkTimer = setTimeout(()=> wrap.innerHTML='', 3200);
+}
+function stopSparks(){ if(sparkTimer) clearTimeout(sparkTimer); sparkWrap.innerHTML=''; }
+
+// helper: convert hex to rgba
+function hexToRgba(hex, a){
+  const c = hex.replace('#','');
+  const r = parseInt(c.substring(0,2),16);
+  const g = parseInt(c.substring(2,4),16);
+  const b = parseInt(c.substring(4,6),16);
+  return `rgba(${r},${g},${b},${a})`;
+}
+// shade helper
+function shade(hex,percent){
+  const c = hex.replace('#','');
+  const num = parseInt(c,16);
+  let r = (num >> 16) + Math.round(255*percent);
+  let g = ((num>>8) & 0x00FF) + Math.round(255*percent);
+  let b = (num & 0x0000FF) + Math.round(255*percent);
+  r = Math.max(0, Math.min(255,r)); g = Math.max(0, Math.min(255,g)); b = Math.max(0, Math.min(255,b));
+  return `rgb(${r},${g},${b})`;
+}
+
+// wire card click
+emotionCards.forEach(card=>{
+  card.addEventListener('click', ()=> activateEmotion(card.dataset.emotion) );
+  card.addEventListener('keydown', ev => { if(ev.key==='Enter'||ev.key===' ') activateEmotion(card.dataset.emotion); });
+});
+
+// night mode toggle
+nightToggle.addEventListener('change', (e)=>{
+  document.body.classList.toggle('night', e.target.checked);
+  // subtle ambient change
+  if(e.target.checked){
+    document.documentElement.style.setProperty('--aura','radial-gradient(circle at 10% 20%, rgba(160,190,255,0.04), transparent 20%)');
+  } else {
+    document.documentElement.style.removeProperty('--aura');
+    document.body.style.background = '';
+  }
+});
+
+// keyboard support: 1..6 select emotions
+document.addEventListener('keydown', (e)=>{
+  if(document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') return;
+  const map = { Digit1:'joy', Digit2:'sadness', Digit3:'anger', Digit4:'fear', Digit5:'overwhelm', Digit6:'love' };
+  if(map[e.code]) activateEmotion(map[e.code]);
+});
+
+// init orbs and gentle initial motion
+createOrbs();
+
+// initial small guide visible hint after 1.2s
+setTimeout(()=> {
+  guide.classList.add('hint');
+},1200);
+
+// accessibility: focus styles
+document.querySelectorAll('.card, .orb').forEach(el=>{
+  el.addEventListener('focus', ()=> el.classList.add('focus'));
+  el.addEventListener('blur', ()=> el.classList.remove('focus'));
+});
+
+</script>
+
+{% endblock %}

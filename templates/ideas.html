@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!-- Hero Section -->
+<section class="ideas-hero">
+    <div class="ideas-hero-inner">
+        <h1 class="ideas-title">Acts of Kindness for a Joyful Life</h1>
+        <p class="ideas-sub">Tap the button for a gentle act you can try today.</p>
+    </div>
+
+    <button class="try-today-main-btn" onclick="randomPopup()">Try Today ✨</button>
+</section>
+
+<!-- Modal -->
+<div id="kindnessModal" class="kindness-modal">
+    <div class="kindness-modal-content">
+        <button class="modal-close" onclick="closeModal()">&times;</button>
+
+        <h2 class="modal-heading">Your Kindness Inspiration</h2>
+
+        <p id="modalIdea" class="modal-idea"></p>
+        <p id="modalQuote" class="modal-quote"></p>
+
+        <button class="modal-btn" onclick="closeModal()">Got it 💛</button>
+    </div>
+</div>
+
+<script>
+// 1000+ ideas placeholder (I will generate real list after confirmation)
+const ideas = [
+    "Send a positive message to someone.",
+    "Call a family member you haven't spoken to in a while.",
+    "Help someone without them asking.",
+    "Leave a kind comment online.",
+    "Give someone a genuine compliment.",
+    "Forgive someone silently.",
+    "Smile to the next person you meet.",
+    "Share something useful with a friend.",
+    "Encourage someone trying something new.",
+    "Do one act that makes your area cleaner."
+    // I will replace with 1000+ real kindness ideas
+];
+
+// 1000+ Indian quotes placeholder
+const quotes = [
+    "“Peace comes from within.” — Buddha",
+    "“Where there is love, there is life.” — Gandhi",
+    "“Arise, awake, and stop not till the goal is reached.” — Vivekananda",
+    "“Compassion is the root of Dharma.” — Buddha",
+    "“The fragrance always stays with the hand that gives the rose.” — Kabir",
+    "“Do your duty without attachment.” — Bhagavad Gita",
+    "“Kindness is the greatest virtue.” — Tirukkural",
+    "“Love is the only reality.” — Sri Ramana Maharshi",
+    "“Be humble, be kind.” — Sathya Sai Baba",
+    "“Help ever, hurt never.” — Indian proverb"
+    // I will replace with 1000+ real quotes
+];
+
+function randomPopup() {
+    const idea = ideas[Math.floor(Math.random() * ideas.length)];
+    const quote = quotes[Math.floor(Math.random() * quotes.length)];
+
+    document.getElementById("modalIdea").innerText = idea;
+    document.getElementById("modalQuote").innerText = quote;
+
+    document.getElementById("kindnessModal").style.display = "flex";
+}
+
+function closeModal() {
+    document.getElementById("kindnessModal").style.display = "none";
+}
+</script>
+
+<!-- Daily Kindness Challenge Section -->
+<section class="kindness-challenge">
+    <h2 class="kc-title">Accept 7-Day Kindness Challenge</h2>
+    <p class="kc-sub">Start small, build momentum, and let kindness flow through your days.</p>
+
+    <div class="kc-box">
+        <ul class="kc-list">
+            <li><strong>Day 1:</strong> Smile at a stranger.</li>
+            <li><strong>Day 2:</strong> Do one silent act of help.</li>
+            <li><strong>Day 3:</strong> Appreciate someone sincerely.</li>
+            <li><strong>Day 4:</strong> Call or message a loved one.</li>
+            <li><strong>Day 5:</strong> Donate something small.</li>
+            <li><strong>Day 6:</strong> Encourage someone who needs support.</li>
+            <li><strong>Day 7:</strong> Do a kind act for yourself.</li>
+        </ul>
+
+        <button class="kc-btn" onclick="alert('Your Kindness Journey Begins! 🌿')">
+            Start Challenge →
+        </button>
+    </div>
+</section>
+
+
+<!-- Kindness Meter -->
+<section class="kindness-meter">
+    <h2>How Kind Were You Today?</h2>
+    <div class="meter-options">
+        <span onclick="saveMeter(5)">😊</span>
+        <span onclick="saveMeter(4)">🙂</span>
+        <span onclick="saveMeter(3)">😐</span>
+        <span onclick="saveMeter(2)">🙁</span>
+        <span onclick="saveMeter(1)">😞</span>
+    </div>
+    <p id="meter-status" class="meter-status">Tap an emoji to record your kindness mood.</p>
+</section>
+
+<!-- Reflection Questions -->
+<section class="reflection">
+    <h2>Reflection for Today</h2>
+    <p class="reflection-sub">Gentle questions to end the day with awareness:</p>
+
+    <ul class="reflection-list">
+        <li>Did I help someone today?</li>
+        <li>Did I speak kindly to myself?</li>
+        <li>Did I listen without interrupting?</li>
+        <li>Did I show patience?</li>
+        <li>Did I avoid judging someone too quickly?</li>
+    </ul>
+</section>
+
+<!-- Mantra Section -->
+<section class="mantra-strip">
+    <h2>“Lokah Samastah Sukhino Bhavantu”</h2>
+    <p>May all beings everywhere be happy and free.</p>
+</section>
+
+
+
+{% endblock %}

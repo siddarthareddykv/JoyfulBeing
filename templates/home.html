@@ -1,0 +1,408 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+/* ROOT */
+:root{
+  --max-width:1100px;
+  --accent:#3a3d84;
+  --muted:#6b708b;
+  --card-shadow:0 18px 50px rgba(20,20,60,0.06);
+  --soft-shadow:0 12px 30px rgba(20,20,60,0.06);
+}
+
+/* Container */
+.container{
+  max-width:var(--max-width);
+  margin:36px auto;
+  padding:0 20px;
+}
+
+/* HERO */
+.hero{
+  position:relative;
+  padding:64px 28px;
+  border-radius:20px;
+  background:linear-gradient(180deg,#fffaf6,#f4f9ff);
+  text-align:center;
+  box-shadow:var(--card-shadow);
+}
+.hero h1{
+  font-size:clamp(28px,4vw,52px);
+  font-weight:800;
+  margin:0;
+  color:var(--accent);
+}
+.hero p{
+  max-width:760px;
+  margin:16px auto 24px;
+  color:var(--muted);
+}
+.cta{
+  display:inline-block;
+  padding:14px 22px;
+  background:linear-gradient(90deg,#ffb347,#ff7aa2);
+  color:white;
+  border-radius:14px;
+  font-weight:700;
+  text-decoration:none;
+  transition:0.2s;
+}
+.cta:hover{ transform:translateY(-3px); }
+
+/* PURPOSE */
+.purpose{
+  text-align:center;
+  margin-top:34px;
+  background:white;
+  padding:26px;
+  border-radius:16px;
+  box-shadow:var(--soft-shadow);
+}
+.purpose h2{
+  margin:0;
+  font-size:24px;
+  font-weight:800;
+  color:var(--accent);
+}
+.purpose p{
+  max-width:750px;
+  margin:10px auto;
+  color:var(--muted);
+}
+.underline{
+  width:120px;
+  height:4px;
+  margin:14px auto;
+  background:linear-gradient(90deg,#ffd27d,#ff7aa2);
+  border-radius:20px;
+}
+
+/* PILLARS */
+.pillars{
+  margin-top:36px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:20px;
+}
+.pillar{
+  padding:24px;
+  border-radius:18px;
+  background:linear-gradient(#fff,#fffaf8);
+  box-shadow:var(--soft-shadow);
+  transition:0.3s;
+}
+.pillar:hover{
+  transform:translateY(-8px);
+}
+.pillar .icon{
+  font-size:36px;
+}
+
+/* WISDOM MODULE */
+.wisdom-core{
+  margin-top:40px;
+  padding:30px;
+  background:white;
+  border-radius:18px;
+  box-shadow:var(--soft-shadow);
+  margin-bottom:0;
+  padding-bottom:10px;
+}
+.wisdom-title{
+  text-align:center;
+  font-size:26px;
+  font-weight:800;
+  margin:0;
+  color:var(--accent);
+}
+.wisdom-lead{
+  text-align:center;
+  max-width:900px;
+  margin:10px auto 0;
+  color:var(--muted);
+  font-size:16px;
+}
+
+/* Values grid */
+.values-grid{
+  margin-top:30px;
+  display:grid;
+  gap:20px;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+}
+.value-card{
+  background:#fff;
+  padding:18px;
+  border-radius:14px;
+  box-shadow:var(--soft-shadow);
+  transition:0.25s;
+}
+.value-card:hover{
+  transform:translateY(-6px);
+}
+.value-emoji{font-size:30px;margin-bottom:8px;}
+.value-title{font-weight:700;color:#333;}
+.value-desc{color:#666;font-size:14px;line-height:1.5;}
+
+/* WHY SECTION */
+.why-strip{
+  margin-top:30px;
+  display:grid;
+  gap:20px;
+  grid-template-columns:1fr 320px;
+}
+@media(max-width:900px){
+  .why-strip{grid-template-columns:1fr;}
+}
+.why-box{
+  background:white;
+  padding:20px;
+  border-radius:14px;
+  box-shadow:var(--soft-shadow);
+}
+.promise{
+  background:linear-gradient(180deg,#fff8f8,#f3fff7);
+  padding:20px;
+  border-radius:14px;
+  text-align:center;
+  min-width:280px;
+}
+
+/* CALENDAR */
+.calendar-preview{
+  margin-top:20px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:12px;
+}
+.month-tile{
+  padding:22px;
+  border-radius:14px;
+  color:white;
+  font-weight:700;
+  text-decoration:none;
+  transition:0.25s;
+}
+.month-tile:hover{
+  transform:translateY(-6px);
+}
+
+/* gradients */
+.m-jan{background:linear-gradient(135deg,#ffd27d,#ffb347);}
+.m-feb{background:linear-gradient(135deg,#ffb3c8,#ff7aa2);}
+.m-mar{background:linear-gradient(135deg,#bfeccf,#2fb06b);}
+.m-apr{background:linear-gradient(135deg,#c4b3ff,#9b7aff);}
+.m-may{background:linear-gradient(135deg,#ffd1c4,#ff9472);}
+.m-jun{background:linear-gradient(135deg,#b8f0e3,#00b894);}
+.m-jul{background:linear-gradient(135deg,#ffe7b3,#f08c3f);}
+.m-aug{background:linear-gradient(135deg,#fff4c3,#ffd27d);}
+.m-sep{background:linear-gradient(135deg,#cfe7ff,#2b6fbf);}
+.m-oct{background:linear-gradient(135deg,#ffd6d6,#ef4444);}
+.m-nov{background:linear-gradient(135deg,#e9deff,#7c3aed);}
+.m-dec{background:linear-gradient(135deg,#dff7fa,#0ea5a4);}
+
+/* LOTUS */
+.lotus-wrap{
+  margin-top:30px;
+  display:flex;
+  gap:20px;
+  align-items:center;
+  justify-content:center;
+}
+@media(max-width:800px){
+  .lotus-wrap{flex-direction:column;}
+}
+.lotus-anim{
+  width:150px;
+  height:150px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:50%;
+  background:linear-gradient(#fff,#fff9fb);
+  animation:lotusPulse 6s infinite ease-in-out;
+}
+@keyframes lotusPulse{
+  0%{transform:scale(.94);}
+  50%{transform:scale(1.06);}
+  100%{transform:scale(.94);}
+}
+
+/* JOIN */
+.join{
+  margin-top:30px;
+  text-align:center;
+}
+.footer{
+  margin-top:30px;
+  text-align:center;
+  color:#666;
+  padding-bottom:20px;
+}
+
+</style>
+
+<div class="container">
+
+  <!-- HERO -->
+  <section class="hero">
+    <h1>Stress ends here.<br>Peace begins here.</h1>
+    <p>Welcome to JoyfulBeing — a sanctuary for the heart and mind. We weave ancient Indian wisdom, compassion and modern science into tiny practices that transform your day.</p>
+    <a href="/emotions" class="cta">Begin Your Healing Journey</a>
+  </section>
+
+  <!-- PURPOSE -->
+  <section class="purpose">
+    <h2>We exist so humanity can breathe again.</h2>
+    <div class="underline"></div>
+    <p>Hearts are heavy, minds are crowded. JoyfulBeing brings clarity through timeless Indian moral values: gentle thinking, dharmic action, daily rituals and community support. Stress becomes simple when life regains meaning.</p>
+    <div class="underline"></div>
+  </section>
+
+  <!-- PILLARS -->
+  <section class="pillars">
+    <div class="pillar">
+      <div class="icon">💗</div>
+      <h3>Emotional Healing</h3>
+      <p>Soft, compassionate guidance to understand and soothe your feelings.</p>
+    </div>
+    <div class="pillar">
+      <div class="icon">🌿</div>
+      <h3>Stress Relief</h3>
+      <p>Micro-practices from breathwork and traditional grounding.</p>
+    </div>
+    <div class="pillar">
+      <div class="icon">✨</div>
+      <h3>Daily Joy</h3>
+      <p>Simple daily acts rooted in Indian wisdom that lift the heart.</p>
+    </div>
+  </section>
+
+  <!-- WISDOM -->
+  <section class="wisdom-core">
+
+    <h2 class="wisdom-title">The Indian Way of Living Lightly</h2>
+    <p class="wisdom-lead">
+      Ancient Indian thinkers taught that suffering reduces when life is aligned with values, routine, clarity and compassion.
+      Stress shrinks when wisdom becomes daily practice.
+    </p>
+
+    <!-- VALUES GRID -->
+    <div class="values-grid">
+
+      <div class="value-card">
+        <div class="value-emoji">⚖️</div>
+        <div class="value-title">Dharma — Do the next right thing</div>
+        <div class="value-desc">Dharma simplifies life by removing confusion and emotional overwhelm.</div>
+      </div>
+
+      <div class="value-card">
+        <div class="value-emoji">☮️</div>
+        <div class="value-title">Ahimsa — Gentle mind, gentle life</div>
+        <div class="value-desc">Non-harm toward self dissolves inner storms and sharpens clarity.</div>
+      </div>
+
+      <div class="value-card">
+        <div class="value-emoji">🤝</div>
+        <div class="value-title">Seva — Healing through service</div>
+        <div class="value-desc">Helping others lightens the heart and reduces unnecessary rumination.</div>
+      </div>
+
+      <div class="value-card">
+        <div class="value-emoji">🔁</div>
+        <div class="value-title">Abhyasa — Daily practice</div>
+        <div class="value-desc">Consistency rewires emotional stability. Tiny rituals build resilience.</div>
+      </div>
+
+      <div class="value-card">
+        <div class="value-emoji">🕊️</div>
+        <div class="value-title">Vairagya — Letting go</div>
+        <div class="value-desc">Releasing attachment reduces mental tension and restores inner peace.</div>
+      </div>
+
+      <div class="value-card">
+        <div class="value-emoji">👥</div>
+        <div class="value-title">Satsang — Strength in community</div>
+        <div class="value-desc">We heal faster when we feel seen, supported and understood.</div>
+      </div>
+
+    </div>
+
+    <!-- WHY SECTION -->
+    <div class="why-strip">
+
+      <div class="why-box">
+        <h3>Why these teachings ease stress</h3>
+        <ul style="line-height:1.6; color:#555;">
+          <li>Breathing and posture calm the nervous system quickly.</li>
+          <li>Daily rituals reduce anxiety through predictability.</li>
+          <li>Service shifts attention from rumination to purpose.</li>
+          <li>Letting go breaks the cycle of stress-based attachment.</li>
+        </ul>
+
+        <h4 style="margin-top:16px;">Try one now</h4>
+        <div class="micro-grid">
+          <div class="micro">1-min Breathing</div>
+          <div class="micro">3-min Body Scan</div>
+          <div class="micro">5-min Heart Softening</div>
+          <div class="micro">7-min Seva Task</div>
+          <div class="micro">Night Gratitude</div>
+        </div>
+      </div>
+
+      <div class="promise">
+        <h4>Our Promise</h4>
+        <p>
+          Stress becomes simple when wisdom meets routine.
+          Start with one tiny ritual — repeat it for a week.
+        </p>
+        <a href="/ideas" class="cta" style="margin-top:10px; display:inline-block;">Explore Practices</a>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- CALENDAR -->
+  <section style="margin-top:10px;">
+    <h3 style="color:var(--accent);">Your Happiness Calendar</h3>
+
+    <div class="calendar-preview">
+      <a href="/calendar?month=1" class="month-tile m-jan">January</a>
+      <a href="/calendar?month=2" class="month-tile m-feb">February</a>
+      <a href="/calendar?month=3" class="month-tile m-mar">March</a>
+      <a href="/calendar?month=4" class="month-tile m-apr">April</a>
+      <a href="/calendar?month=5" class="month-tile m-may">May</a>
+      <a href="/calendar?month=6" class="month-tile m-jun">June</a>
+      <a href="/calendar?month=7" class="month-tile m-jul">July</a>
+      <a href="/calendar?month=8" class="month-tile m-aug">August</a>
+      <a href="/calendar?month=9" class="month-tile m-sep">September</a>
+      <a href="/calendar?month=10" class="month-tile m-oct">October</a>
+      <a href="/calendar?month=11" class="month-tile m-nov">November</a>
+      <a href="/calendar?month=12" class="month-tile m-dec">December</a>
+    </div>
+  </section>
+
+  <!-- LOTUS -->
+  <section class="lotus-wrap">
+    <div class="lotus-anim">
+      <div style="font-size:36px;">🪷</div>
+    </div>
+    <div class="lotus-cta">
+      <h3 style="margin-top:0;color:var(--accent);">Take one calm breath</h3>
+      <p style="color:var(--muted);margin-bottom:14px;">Inhale 4 • Hold 2 • Exhale 6</p>
+      <a href="/stress" class="cta">Try a 60-second practice</a>
+    </div>
+  </section>
+
+  <!-- JOIN CTA -->
+  <section class="join">
+    <input id="emailInput" placeholder="Your email for early access"
+           style="padding:12px 14px;border-radius:10px;width:260px;border:1px solid #ddd;">
+    <button id="joinBtn" class="cta" style="border:none;cursor:pointer;">Join Us</button>
+  </section>
+
+</div>
+
+{% endblock %}
