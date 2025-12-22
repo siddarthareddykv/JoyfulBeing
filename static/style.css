@@ -1447,3 +1447,89 @@ section[style*="margin-top:28px"]{
 .wisdom-core + section {
   margin-top: 10px !important;
 }
+/* CONTACT SECTION */
+.contact-section {
+  margin-top: 60px;
+  padding: 40px 20px;
+  text-align: center;
+  background: linear-gradient(180deg, #fffdfb, #f8fbff);
+  border-radius: 18px;
+}
+
+.contact-section h2 {
+  font-size: 26px;
+  font-weight: 700;
+  color: #2a2f6b;
+  margin-bottom: 12px;
+}
+
+.contact-section p {
+  max-width: 720px;
+  margin: 0 auto 24px;
+  color: #555;
+  line-height: 1.6;
+}
+
+.contact-box {
+  display: inline-block;
+  padding: 24px 32px;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+}
+
+.contact-email {
+  display: inline-block;
+  margin-top: 8px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #ff7a7a;
+  text-decoration: none;
+}
+
+.contact-email:hover {
+  text-decoration: underline;
+}
+
+.contact-note {
+  margin-top: 14px;
+  font-size: 14px;
+  color: #777;
+}
+.about-me {
+  margin-top: 60px;
+  padding: 36px 24px;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  background: linear-gradient(180deg, #ffffff, #f9fbff);
+  border-radius: 18px;
+  box-shadow: 0 12px 32px rgba(0,0,0,0.05);
+  text-align: center;
+}
+
+.about-me h2 {
+  font-size: 26px;
+  font-weight: 700;
+  color: #2a2f6b;
+  margin-bottom: 20px;
+}
+
+.about-me p {
+  color: #555;
+  line-height: 1.7;
+  margin-bottom: 16px;
+}
+
+.about-me .signature {
+  margin-top: 24px;
+  font-style: italic;
+  color: #666;
+}
+
+.about-me .signature span {
+  display: block;
+  margin-top: 6px;
+  font-weight: 600;
+  color: #444;
+}
