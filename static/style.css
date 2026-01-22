@@ -1236,3 +1236,58 @@ h3 { font-size: 1.5rem; }
     max-width: 1200px;
     margin: 0 auto;
 }
+.nav-list {
+    display: flex;
+    gap: 20px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-list a {
+    text-decoration: none;
+    color: inherit;
+    font-weight: 500;
+}
+
+/* Hamburger hidden on desktop */
+.menu-toggle {
+    display: none;
+    font-size: 26px;
+    cursor: pointer;
+}
+
+/* MOBILE VIEW */
+@media (max-width: 768px) {
+
+    .menu-toggle {
+        display: block;
+    }
+
+    .nav-right {
+        display: none;
+        width: 100%;
+    }
+
+    .nav-right.active {
+        display: block;
+    }
+
+    .nav-list {
+        flex-direction: column;
+        background: white;
+        padding: 15px;
+        border-radius: 10px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        margin-top: 10px;
+    }
+
+    .nav-list li {
+        padding: 10px 0;
+        border-bottom: 1px solid #eee;
+    }
+
+    .nav-list li:last-child {
+        border-bottom: none;
+    }
+}

@@ -24,15 +24,20 @@
         <p class="nav-tagline">✨ Where Peace Begins</p>
     </div>
 
-    <div class="nav-right">
-        <a href="/" class="nav-link">Home</a>
-        <a href="/stress" class="nav-link">🧘 Wellness</a>
-        <a href="/mantras" class="nav-link">🕉️ Mantras</a>
-        <a href="/rituals" class="nav-link">🕯️ Rituals</a>
-        <a href="/ideas" class="nav-link">🤝 Kindness</a>
-        <a href="/emotions" class="nav-link">❤️ Emotions</a>
-        <a href="/calendar" class="nav-link">📅 Calendar</a>
-        <a href="/about" class="nav-link">About Us</a>
+    <!-- Hamburger button -->
+    <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+
+    <div class="nav-right" id="navMenu">
+        <ul class="nav-list">
+            <li><a href="/">Home</a></li>
+            <li><a href="/stress">🧘 Wellness</a></li>
+            <li><a href="/mantras">🕉️ Mantras</a></li>
+            <li><a href="/rituals">🕯️ Rituals</a></li>
+            <li><a href="/ideas">🤝 Kindness</a></li>
+            <li><a href="/emotions">❤️ Emotions</a></li>
+            <li><a href="/calendar">📅 Calendar</a></li>
+            <li><a href="/about">About Us</a></li>
+        </ul>
     </div>
 </nav>
 
@@ -83,6 +88,10 @@
         <p style="font-size: 12px; margin-top: 5px;">Crafted with ❤️ to nurture your wellbeing</p>
     </div>
 </footer>
-
+<script>
+function toggleMenu() {
+    document.getElementById("navMenu").classList.toggle("active");
+}
+</script>
 </body>
 </html>
