@@ -1,0 +1,436 @@
+<!-- MANTRAS.HTML -->
+{% extends "base.html" %}
+{% block content %}
+
+<!-- HERO SECTION -->
+<section class="content-hero">
+    <div class="hero-content">
+        <h1 class="hero-title">🕉️ Sanskrit Mantras</h1>
+        <p class="hero-subtitle">
+            Sacred syllables and phrases that align your consciousness with universal truth. 
+            Each mantra carries the vibration of divine wisdom.
+        </p>
+    </div>
+</section>
+
+<!-- FEATURED MANTRA -->
+<section class="featured-section">
+    <div class="section-wrapper">
+        <h2 class="section-title">✨ Featured Mantra</h2>
+        <div class="featured-mantra-card">
+            <div class="mantra-display">
+                <p class="mantra-main">{{ featured_mantra.mantra }}</p>
+            </div>
+            <div class="mantra-details">
+                <div class="detail-item">
+                    <strong>Pronunciation:</strong>
+                    <p class="detail-value">{{ featured_mantra.pronunciation }}</p>
+                </div>
+                <div class="detail-item">
+                    <strong>Meaning:</strong>
+                    <p class="detail-value">{{ featured_mantra.meaning }}</p>
+                </div>
+                <div class="detail-item">
+                    <strong>Benefits:</strong>
+                    <p class="detail-value">{{ featured_mantra.benefits }}</p>
+                </div>
+                <div class="detail-item">
+                    <strong>How to Use:</strong>
+                    <p class="detail-value">{{ featured_mantra.how_to_use }}</p>
+                </div>
+            </div>
+            <button class="practice-btn" onclick="chantMantra()">🎵 Chant This Mantra</button>
+        </div>
+    </div>
+</section>
+
+<!-- ALL MANTRAS GRID -->
+<section class="mantras-section">
+    <div class="section-wrapper">
+        <h2 class="section-title">Sacred Mantras</h2>
+        <div class="mantras-grid">
+            {% for mantra in mantras %}
+                <div class="mantra-card">
+                    <p class="mantra-text">{{ mantra.mantra }}</p>
+                    <p class="pronunciation">{{ mantra.pronunciation }}</p>
+                    <p class="meaning">{{ mantra.meaning }}</p>
+                    <div class="mantra-footer">
+                        <span class="benefit-tag">{{ mantra.benefits.split(',')[0] }}</span>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- MANTRA GUIDE -->
+<section class="guide-section">
+    <div class="section-wrapper max-width-md">
+        <h2 class="section-title">How to Chant Mantras</h2>
+        <div class="guide-steps">
+            <div class="guide-step">
+                <span class="step-number">1</span>
+                <h3>Choose Your Mantra</h3>
+                <p>Select a mantra that resonates with your intention or current need.</p>
+            </div>
+            <div class="guide-step">
+                <span class="step-number">2</span>
+                <h3>Find a Sacred Space</h3>
+                <p>Sit in a quiet, clean space facing east or north if possible.</p>
+            </div>
+            <div class="guide-step">
+                <span class="step-number">3</span>
+                <h3>Sit Comfortably</h3>
+                <p>Sit with spine straight. You can use a cushion for comfort.</p>
+            </div>
+            <div class="guide-step">
+                <span class="step-number">4</span>
+                <h3>Begin Chanting</h3>
+                <p>Chant slowly and clearly. Feel the vibration in your body.</p>
+            </div>
+            <div class="guide-step">
+                <span class="step-number">5</span>
+                <h3>108 Repetitions</h3>
+                <p>Chant 108 times (sacred number) or as many times as feels right.</p>
+            </div>
+            <div class="guide-step">
+                <span class="step-number">6</span>
+                <h3>Rest in Silence</h3>
+                <p>After chanting, sit in silence for a few minutes. Feel the resonance.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- MANTRA BENEFITS -->
+<section class="benefits-section">
+    <div class="section-wrapper max-width-md">
+        <h2 class="section-title">Benefits of Mantra Chanting</h2>
+        <div class="benefits-list">
+            <div class="benefit-item">
+                <span class="benefit-icon">🧠</span>
+                <h3>Mental Clarity</h3>
+                <p>Mantras calm the mind and enhance focus and concentration.</p>
+            </div>
+            <div class="benefit-item">
+                <span class="benefit-icon">💚</span>
+                <h3>Emotional Balance</h3>
+                <p>Repetition creates emotional stability and reduces anxiety.</p>
+            </div>
+            <div class="benefit-item">
+                <span class="benefit-icon">🌊</span>
+                <h3>Vibrational Healing</h3>
+                <p>The vibration of mantras creates healing at cellular level.</p>
+            </div>
+            <div class="benefit-item">
+                <span class="benefit-icon">🔮</span>
+                <h3>Spiritual Connection</h3>
+                <p>Mantras connect you with divine consciousness and higher self.</p>
+            </div>
+            <div class="benefit-item">
+                <span class="benefit-icon">⚡</span>
+                <h3>Energy Elevation</h3>
+                <p>Chanting raises your vibration and attracts positive energy.</p>
+            </div>
+            <div class="benefit-item">
+                <span class="benefit-icon">🌟</span>
+                <h3>Transformation</h3>
+                <p>Regular practice transforms consciousness and perspectives.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+.content-hero {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 80px 40px;
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.hero-title {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    font-weight: 800;
+}
+
+.hero-subtitle {
+    font-size: 1.1rem;
+    opacity: 0.95;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.featured-section {
+    padding: 60px 40px;
+    margin-bottom: 40px;
+}
+
+.featured-mantra-card {
+    background: white;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(20, 20, 60, 0.08);
+    max-width: 900px;
+    margin: 0 auto;
+    border-left: 6px solid var(--primary);
+}
+
+.mantra-display {
+    text-align: center;
+    padding: 30px;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.08) 0%, rgba(118, 75, 162, 0.08) 100%);
+    border-radius: 8px;
+    margin-bottom: 30px;
+}
+
+.mantra-main {
+    font-size: 2.5rem;
+    color: var(--primary);
+    font-weight: 700;
+    margin: 0;
+}
+
+.mantra-details {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.detail-item {
+    padding: 15px;
+    background: var(--light);
+    border-radius: 8px;
+}
+
+.detail-item strong {
+    color: var(--primary);
+    display: block;
+    margin-bottom: 8px;
+}
+
+.detail-value {
+    color: var(--text);
+    line-height: 1.6;
+    margin: 0;
+    font-size: 0.95rem;
+}
+
+.practice-btn {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.practice-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+}
+
+.mantras-section {
+    padding: 60px 40px;
+    margin-bottom: 40px;
+    background: linear-gradient(135deg, #f5f7ff 0%, #f0f4ff 100%);
+    border-radius: 12px;
+}
+
+.mantras-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin-top: 40px;
+}
+
+.mantra-card {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(20, 20, 60, 0.05);
+    border-top: 4px solid var(--primary);
+    transition: all 0.3s ease;
+}
+
+.mantra-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(102, 126, 234, 0.15);
+}
+
+.mantra-text {
+    font-size: 1.5rem;
+    color: var(--primary);
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.pronunciation {
+    color: var(--muted);
+    font-style: italic;
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+}
+
+.meaning {
+    color: var(--text);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+.mantra-footer {
+    border-top: 1px solid var(--border);
+    padding-top: 10px;
+}
+
+.benefit-tag {
+    display: inline-block;
+    background: rgba(102, 126, 234, 0.1);
+    color: var(--primary);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.guide-section {
+    padding: 60px 40px;
+    margin-bottom: 40px;
+    background: white;
+    border-radius: 12px;
+}
+
+.guide-steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-top: 40px;
+}
+
+.guide-step {
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+    padding: 25px;
+    border-radius: 12px;
+    border-left: 4px solid var(--primary);
+    text-align: center;
+}
+
+.step-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: var(--primary);
+    color: white;
+    border-radius: 50%;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.guide-step h3 {
+    color: var(--text);
+    margin-bottom: 10px;
+}
+
+.guide-step p {
+    color: var(--muted);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.benefits-section {
+    padding: 60px 40px;
+    background: linear-gradient(135deg, #F3E5F5 0%, #E8F5E9 100%);
+    border-radius: 12px;
+}
+
+.benefits-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
+    margin-top: 40px;
+}
+
+.benefit-item {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(20, 20, 60, 0.05);
+}
+
+.benefit-icon {
+    font-size: 2.5rem;
+    display: block;
+    margin-bottom: 12px;
+}
+
+.benefit-item h3 {
+    color: var(--text);
+    margin-bottom: 10px;
+}
+
+.benefit-item p {
+    color: var(--muted);
+    line-height: 1.6;
+    margin: 0;
+    font-size: 0.95rem;
+}
+
+.section-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.section-title {
+    font-size: 2.5rem;
+    text-align: center;
+    color: var(--text);
+    margin-bottom: 10px;
+}
+
+.max-width-md {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+    .content-hero {
+        padding: 50px 20px;
+    }
+
+    .hero-title {
+        font-size: 2rem;
+    }
+
+    .section-title {
+        font-size: 2rem;
+    }
+
+    .featured-mantra-card {
+        padding: 20px;
+    }
+
+    .mantra-main {
+        font-size: 2rem;
+    }
+}
+</style>
+
+<script>
+function chantMantra() {
+    alert('🕉️ Begin chanting with devotion and intention. Chant 108 times for best results.');
+}
+</script>
+
+{% endblock %}

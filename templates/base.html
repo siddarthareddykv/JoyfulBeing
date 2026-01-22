@@ -2,9 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{{ title if title else "Joyful Being" }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Your sanctuary for emotional wellness, daily happiness, and inner peace">
+    <title>{{ title if title else "Live with Purpose & Peace" }}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
 </head>
 
 <body>
@@ -13,17 +16,23 @@
 <nav class="navbar">
     <div class="nav-left">
         <a href="/" class="logo">
-            <img src="{{ url_for('static', filename='images/logo.png') }}" class="logo-img">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" class="logo-img">
         </a>
     </div>
 
+    <div class="nav-center">
+        <p class="nav-tagline">✨ Where Peace Begins</p>
+    </div>
+
     <div class="nav-right">
-        <a href="/">Home</a>
-        <a href="/calendar">Calendar</a>
-        <a href="/ideas">Kindness Ideas</a>
-        <a href="/stress">Stress Relief</a>
-        <a href="/emotions">Emotions</a>
-        <a href="/about">About</a>
+        <a href="/" class="nav-link">Home</a>
+        <a href="/stress" class="nav-link">🧘 Wellness</a>
+        <a href="/mantras" class="nav-link">🕉️ Mantras</a>
+        <a href="/rituals" class="nav-link">🕯️ Rituals</a>
+        <a href="/ideas" class="nav-link">🤝 Kindness</a>
+        <a href="/emotions" class="nav-link">❤️ Emotions</a>
+        <a href="/calendar" class="nav-link">📅 Calendar</a>
+        <a href="/about" class="nav-link">About Us</a>
     </div>
 </nav>
 
@@ -37,7 +46,42 @@
 
 <!-- FOOTER -->
 <footer class="footer">
-    © 2026 Joyful Being — Mind • Heart • Harmony
+    <div class="footer-content">
+        <div class="footer-section">
+            <h4>About Us</h4>
+            <p>Your companion on the journey to peace, clarity, and authentic happiness.</p>
+        </div>
+
+        <div class="footer-section">
+            <h4>Quick Links</h4>
+            <ul style="list-style: none; padding: 0;">
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About Us</a></li>
+                <li><a href="/calendar">Daily Calendar</a></li>
+                <li><a href="/ideas">Kindness Ideas</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-section">
+            <h4>Resources</h4>
+            <ul style="list-style: none; padding: 0;">
+                <li><a href="/stress">Stress Relief</a></li>
+                <li><a href="/emotions">Emotions Guide</a></li>
+                <li><a href="mailto:contact@joyfulbeing.in">Contact Us</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-section">
+            <h4>Connect</h4>
+            <p style="margin-bottom: 10px;">📧 <a href="mailto:contact@joyfulbeing.in" style="color: #667eea; text-decoration: none;">contact@joyfulbeing.in</a></p>
+            <p style="font-size: 12px; color: #999;">We respond to every message with care and mindfulness.</p>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <p>&copy; 2026 — Building a world where peace, purpose, and kindness flourish</p>
+        <p style="font-size: 12px; margin-top: 5px;">Crafted with ❤️ to nurture your wellbeing</p>
+    </div>
 </footer>
 
 </body>

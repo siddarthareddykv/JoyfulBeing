@@ -6,141 +6,252 @@
 <style>
 /* ------------ STYLING (Jinja-SAFE) ------------ */
 .calendar-page {
-  max-width: 1100px;
-  margin: 28px auto;
-  padding: 18px;
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 20px;
   font-family: 'Poppins', sans-serif;
 }
 
+.calendar-intro {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 40px;
+  border-radius: 16px;
+  margin-bottom: 40px;
+  text-align: center;
+  box-shadow: 0 15px 40px rgba(102, 126, 234, 0.2);
+}
+
+.calendar-intro h1 {
+  font-size: 32px;
+  margin-bottom: 15px;
+  font-weight: 700;
+}
+
+.calendar-intro p {
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 10px;
+  opacity: 0.95;
+}
+
 .calendar-header {
-  background: {{ theme.bg }};
-  padding: 28px;
-  border-radius: 14px;
-  box-shadow: 0 12px 34px rgba(20,20,60,0.08);
-  margin-bottom: 26px;
+  background: white;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 8px 25px rgba(20,20,60,0.08);
+  margin-bottom: 30px;
+  border: 1px solid #f0f0f5;
 }
 
 .month-title {
-  font-size: 28px;
-  font-weight: 800;
-  color: {{ theme.accent }};
+  font-size: 32px;
+  font-weight: 700;
+  color: #2d3748;
+  margin-bottom: 8px;
 }
 
 .subtitle {
-  margin-top: 4px;
-  color: #555;
-  font-size: 14px;
+  color: #666;
+  font-size: 15px;
+  margin-bottom: 20px;
+  font-weight: 500;
 }
 
 .month-nav {
-  margin-top: 12px;
   display: flex;
-  gap: 10px;
+  gap: 8px;
   flex-wrap: wrap;
+  margin-top: 15px;
 }
 
 .month-btn {
-  padding: 8px 12px;
-  border-radius: 10px;
-  border: 1px solid rgba(20,20,40,0.1);
+  padding: 10px 16px;
+  border-radius: 8px;
+  border: 2px solid #e2e8f0;
   font-weight: 600;
   text-decoration: none;
-  color: #333;
-  background: white;
-  box-shadow: 0 4px 18px rgba(20,20,40,0.06);
+  color: #4a5568;
+  background: #f9fafb;
+  transition: all 0.3s ease;
+  font-size: 13px;
 }
+
+.month-btn:hover {
+  border-color: #667eea;
+  color: #667eea;
+  transform: translateY(-2px);
+}
+
 .month-btn.active {
-  background: {{ theme.accent }};
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
+  border-color: transparent;
+  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
 }
 
 .calendar-box {
   background: white;
-  padding: 18px;
+  padding: 25px;
   border-radius: 16px;
-  box-shadow: 0 12px 36px rgba(20,20,40,0.06);
+  box-shadow: 0 8px 25px rgba(20,20,40,0.08);
+  border: 1px solid #f0f0f5;
 }
 
 .weekdays {
   display: grid;
   grid-template-columns: repeat(7,1fr);
-  gap: 10px;
-  margin-bottom: 12px;
-  text-align:center;
-  font-weight:700;
-  color:#666;
+  gap: 12px;
+  margin-bottom: 18px;
+  text-align: center;
+  font-weight: 700;
+  color: #667eea;
+  font-size: 14px;
 }
 
 .grid {
   display: grid;
   grid-template-columns: repeat(7,1fr);
-  gap: 14px;
+  gap: 12px;
 }
 
 .cell {
-  background: linear-gradient(180deg,#ffffff,#f8f9ff);
-  border-radius: 14px;
-  min-height: 120px;
-  padding: 12px;
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9ff 100%);
+  border-radius: 12px;
+  min-height: 140px;
+  padding: 14px;
   position: relative;
-  box-shadow: 0 10px 28px rgba(20,20,40,0.06);
-  transition: .25s;
+  border: 1px solid #e8ecf1;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(20,20,40,0.05);
 }
+
 .cell:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 16px 40px rgba(20,20,40,0.12);
+  transform: translateY(-8px);
+  box-shadow: 0 12px 30px rgba(102, 126, 234, 0.15);
+  border-color: #667eea;
+  background: linear-gradient(135deg, #f8f9ff 0%, #f0f4ff 100%);
 }
 
 .empty {
   background: transparent;
-  box-shadow:none;
+  box-shadow: none;
+  border: none;
+  cursor: default;
+}
+
+.empty:hover {
+  transform: none;
+  box-shadow: none;
 }
 
 .day-number {
-  font-weight:700;
-  color: {{ theme.accent }};
-  font-size: 18px;
+  font-weight: 700;
+  color: #667eea;
+  font-size: 20px;
+  margin-bottom: 6px;
 }
 
 .mini-quote {
-  font-size: 13px;
-  margin-top: 6px;
-  color:#444;
-  line-height:1.3;
-  max-height: 2.8em;
-  overflow:hidden;
+  font-size: 12px;
+  color: #555;
+  line-height: 1.4;
+  max-height: 3em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 500;
 }
 
 /* popup card */
 .popup {
-  position:absolute;
-  left:0;
-  right:0;
-  bottom:0;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
   transform: translateY(12px);
-  opacity:0;
-  pointer-events:none;
-  background:white;
-  border-radius:12px;
-  padding:12px;
-  box-shadow: 0 16px 36px rgba(0,0,0,0.12);
-  transition:.25s;
-  font-size:13px;
-  z-index:20;
+  opacity: 0;
+  pointer-events: none;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 10px;
+  padding: 14px;
+  box-shadow: 0 16px 40px rgba(102, 126, 234, 0.25);
+  transition: all 0.25s ease;
+  font-size: 12px;
+  z-index: 20;
+  color: white;
 }
+
 .cell.show .popup {
   transform: translateY(0);
-  opacity:1;
-  pointer-events:auto;
+  opacity: 1;
+  pointer-events: auto;
 }
-.quote-text { font-style:italic; margin-bottom:6px; }
-.action-text { font-weight:700; }
+
+.quote-text {
+  font-style: italic;
+  margin-bottom: 8px;
+  line-height: 1.4;
+  font-size: 13px;
+}
+
+.action-text {
+  font-weight: 700;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255,255,255,0.3);
+  font-size: 12px;
+}
+
+.calendar-tips {
+  margin-top: 40px;
+  background: linear-gradient(135deg, #f0f4ff 0%, #f8f9ff 100%);
+  padding: 30px;
+  border-radius: 16px;
+  border-left: 4px solid #667eea;
+}
+
+.tips-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #2d3748;
+  margin-bottom: 15px;
+}
+
+.tips-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.tip-card {
+  background: white;
+  padding: 16px;
+  border-radius: 10px;
+  border-left: 3px solid #667eea;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #555;
+}
+
+.tip-card strong {
+  color: #2d3748;
+  display: block;
+  margin-bottom: 6px;
+}
 </style>
+
+<!-- ------------ INTRODUCTION ------------ -->
+<div class="calendar-intro">
+  <h1>✨ Your Daily Wellness Journey</h1>
+  <p>Each day brings a new opportunity for growth, peace, and joy.</p>
+  <p>Explore daily wisdom, actionable insights, and gentle reminders to cultivate happiness and inner strength.</p>
+</div>
 
 <!-- ------------ HEADER ------------ -->
 <div class="calendar-header">
   <div class="month-title">{{ month_name }} {{ year }}</div>
-  <div class="subtitle">Daily Indian wisdom to strengthen mind & heart</div>
+  <div class="subtitle">📅 Click each day to discover your personal wellness prompt & action for the day</div>
 
   <div class="month-nav">
     {% for m in range(1,13) %}
@@ -171,13 +282,36 @@
             <div class="mini-quote">{{mapping[day].quote}}</div>
 
             <div class="popup">
-              <div class="quote-text">“{{ mapping[day].quote }}”</div>
-              <div class="action-text">Try: {{ mapping[day].action }}</div>
+              <div class="quote-text">"{{ mapping[day].quote }}"</div>
+              <div class="action-text">✨ Try: {{ mapping[day].action }}</div>
             </div>
           </div>
         {% endif %}
       {% endfor %}
     {% endfor %}
+  </div>
+</div>
+
+<!-- ------------ TIPS SECTION ------------ -->
+<div class="calendar-tips">
+  <div class="tips-title">💡 How to Use This Calendar</div>
+  <div class="tips-content">
+    <div class="tip-card">
+      <strong>🎯 Click Each Day</strong>
+      Tap on any date to reveal the day's wisdom and recommended action.
+    </div>
+    <div class="tip-card">
+      <strong>📝 Take One Action</strong>
+      Choose one small action from the daily suggestion that resonates with you.
+    </div>
+    <div class="tip-card">
+      <strong>🌱 Build a Habit</strong>
+      Consistency matters more than perfection. Small steps lead to big changes.
+    </div>
+    <div class="tip-card">
+      <strong>💭 Reflect & Share</strong>
+      Journal your thoughts or share your experience with the JoyfulBeing community.
+    </div>
   </div>
 </div>
 

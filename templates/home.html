@@ -1,408 +1,744 @@
 {% extends "base.html" %}
 {% block content %}
 
-<style>
-/* ROOT */
-:root{
-  --max-width:1100px;
-  --accent:#3a3d84;
-  --muted:#6b708b;
-  --card-shadow:0 18px 50px rgba(20,20,60,0.06);
-  --soft-shadow:0 12px 30px rgba(20,20,60,0.06);
-}
-
-/* Container */
-.container{
-  max-width:var(--max-width);
-  margin:36px auto;
-  padding:0 20px;
-}
-
-/* HERO */
-.hero{
-  position:relative;
-  padding:64px 28px;
-  border-radius:20px;
-  background:linear-gradient(180deg,#fffaf6,#f4f9ff);
-  text-align:center;
-  box-shadow:var(--card-shadow);
-}
-.hero h1{
-  font-size:clamp(28px,4vw,52px);
-  font-weight:800;
-  margin:0;
-  color:var(--accent);
-}
-.hero p{
-  max-width:760px;
-  margin:16px auto 24px;
-  color:var(--muted);
-}
-.cta{
-  display:inline-block;
-  padding:14px 22px;
-  background:linear-gradient(90deg,#ffb347,#ff7aa2);
-  color:white;
-  border-radius:14px;
-  font-weight:700;
-  text-decoration:none;
-  transition:0.2s;
-}
-.cta:hover{ transform:translateY(-3px); }
-
-/* PURPOSE */
-.purpose{
-  text-align:center;
-  margin-top:34px;
-  background:white;
-  padding:26px;
-  border-radius:16px;
-  box-shadow:var(--soft-shadow);
-}
-.purpose h2{
-  margin:0;
-  font-size:24px;
-  font-weight:800;
-  color:var(--accent);
-}
-.purpose p{
-  max-width:750px;
-  margin:10px auto;
-  color:var(--muted);
-}
-.underline{
-  width:120px;
-  height:4px;
-  margin:14px auto;
-  background:linear-gradient(90deg,#ffd27d,#ff7aa2);
-  border-radius:20px;
-}
-
-/* PILLARS */
-.pillars{
-  margin-top:36px;
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-  gap:20px;
-}
-.pillar{
-  padding:24px;
-  border-radius:18px;
-  background:linear-gradient(#fff,#fffaf8);
-  box-shadow:var(--soft-shadow);
-  transition:0.3s;
-}
-.pillar:hover{
-  transform:translateY(-8px);
-}
-.pillar .icon{
-  font-size:36px;
-}
-
-/* WISDOM MODULE */
-.wisdom-core{
-  margin-top:40px;
-  padding:30px;
-  background:white;
-  border-radius:18px;
-  box-shadow:var(--soft-shadow);
-  margin-bottom:0;
-  padding-bottom:10px;
-}
-.wisdom-title{
-  text-align:center;
-  font-size:26px;
-  font-weight:800;
-  margin:0;
-  color:var(--accent);
-}
-.wisdom-lead{
-  text-align:center;
-  max-width:900px;
-  margin:10px auto 0;
-  color:var(--muted);
-  font-size:16px;
-}
-
-/* Values grid */
-.values-grid{
-  margin-top:30px;
-  display:grid;
-  gap:20px;
-  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-}
-.value-card{
-  background:#fff;
-  padding:18px;
-  border-radius:14px;
-  box-shadow:var(--soft-shadow);
-  transition:0.25s;
-}
-.value-card:hover{
-  transform:translateY(-6px);
-}
-.value-emoji{font-size:30px;margin-bottom:8px;}
-.value-title{font-weight:700;color:#333;}
-.value-desc{color:#666;font-size:14px;line-height:1.5;}
-
-/* WHY SECTION */
-.why-strip{
-  margin-top:30px;
-  display:grid;
-  gap:20px;
-  grid-template-columns:1fr 320px;
-}
-@media(max-width:900px){
-  .why-strip{grid-template-columns:1fr;}
-}
-.why-box{
-  background:white;
-  padding:20px;
-  border-radius:14px;
-  box-shadow:var(--soft-shadow);
-}
-.promise{
-  background:linear-gradient(180deg,#fff8f8,#f3fff7);
-  padding:20px;
-  border-radius:14px;
-  text-align:center;
-  min-width:280px;
-}
-
-/* CALENDAR */
-.calendar-preview{
-  margin-top:20px;
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-  gap:12px;
-}
-.month-tile{
-  padding:22px;
-  border-radius:14px;
-  color:white;
-  font-weight:700;
-  text-decoration:none;
-  transition:0.25s;
-}
-.month-tile:hover{
-  transform:translateY(-6px);
-}
-
-/* gradients */
-.m-jan{background:linear-gradient(135deg,#ffd27d,#ffb347);}
-.m-feb{background:linear-gradient(135deg,#ffb3c8,#ff7aa2);}
-.m-mar{background:linear-gradient(135deg,#bfeccf,#2fb06b);}
-.m-apr{background:linear-gradient(135deg,#c4b3ff,#9b7aff);}
-.m-may{background:linear-gradient(135deg,#ffd1c4,#ff9472);}
-.m-jun{background:linear-gradient(135deg,#b8f0e3,#00b894);}
-.m-jul{background:linear-gradient(135deg,#ffe7b3,#f08c3f);}
-.m-aug{background:linear-gradient(135deg,#fff4c3,#ffd27d);}
-.m-sep{background:linear-gradient(135deg,#cfe7ff,#2b6fbf);}
-.m-oct{background:linear-gradient(135deg,#ffd6d6,#ef4444);}
-.m-nov{background:linear-gradient(135deg,#e9deff,#7c3aed);}
-.m-dec{background:linear-gradient(135deg,#dff7fa,#0ea5a4);}
-
-/* LOTUS */
-.lotus-wrap{
-  margin-top:30px;
-  display:flex;
-  gap:20px;
-  align-items:center;
-  justify-content:center;
-}
-@media(max-width:800px){
-  .lotus-wrap{flex-direction:column;}
-}
-.lotus-anim{
-  width:150px;
-  height:150px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  border-radius:50%;
-  background:linear-gradient(#fff,#fff9fb);
-  animation:lotusPulse 6s infinite ease-in-out;
-}
-@keyframes lotusPulse{
-  0%{transform:scale(.94);}
-  50%{transform:scale(1.06);}
-  100%{transform:scale(.94);}
-}
-
-/* JOIN */
-.join{
-  margin-top:30px;
-  text-align:center;
-}
-.footer{
-  margin-top:30px;
-  text-align:center;
-  color:#666;
-  padding-bottom:20px;
-}
-
-</style>
-
-<div class="container">
-
-  <!-- HERO -->
-  <section class="hero">
-    <h1>Stress ends here.<br>Peace begins here.</h1>
-    <p>Welcome to JoyfulBeing — a sanctuary for the heart and mind. We weave ancient Indian wisdom, compassion and modern science into tiny practices that transform your day.</p>
-    <a href="/emotions" class="cta">Begin Your Healing Journey</a>
-  </section>
-
-  <!-- PURPOSE -->
-  <section class="purpose">
-    <h2>We exist so humanity can breathe again.</h2>
-    <div class="underline"></div>
-    <p>Hearts are heavy, minds are crowded. JoyfulBeing brings clarity through timeless Indian moral values: gentle thinking, dharmic action, daily rituals and community support. Stress becomes simple when life regains meaning.</p>
-    <div class="underline"></div>
-  </section>
-
-  <!-- PILLARS -->
-  <section class="pillars">
-    <div class="pillar">
-      <div class="icon">💗</div>
-      <h3>Emotional Healing</h3>
-      <p>Soft, compassionate guidance to understand and soothe your feelings.</p>
-    </div>
-    <div class="pillar">
-      <div class="icon">🌿</div>
-      <h3>Stress Relief</h3>
-      <p>Micro-practices from breathwork and traditional grounding.</p>
-    </div>
-    <div class="pillar">
-      <div class="icon">✨</div>
-      <h3>Daily Joy</h3>
-      <p>Simple daily acts rooted in Indian wisdom that lift the heart.</p>
-    </div>
-  </section>
-
-  <!-- WISDOM -->
-  <section class="wisdom-core">
-
-    <h2 class="wisdom-title">The Indian Way of Living Lightly</h2>
-    <p class="wisdom-lead">
-      Ancient Indian thinkers taught that suffering reduces when life is aligned with values, routine, clarity and compassion.
-      Stress shrinks when wisdom becomes daily practice.
-    </p>
-
-    <!-- VALUES GRID -->
-    <div class="values-grid">
-
-      <div class="value-card">
-        <div class="value-emoji">⚖️</div>
-        <div class="value-title">Dharma — Do the next right thing</div>
-        <div class="value-desc">Dharma simplifies life by removing confusion and emotional overwhelm.</div>
-      </div>
-
-      <div class="value-card">
-        <div class="value-emoji">☮️</div>
-        <div class="value-title">Ahimsa — Gentle mind, gentle life</div>
-        <div class="value-desc">Non-harm toward self dissolves inner storms and sharpens clarity.</div>
-      </div>
-
-      <div class="value-card">
-        <div class="value-emoji">🤝</div>
-        <div class="value-title">Seva — Healing through service</div>
-        <div class="value-desc">Helping others lightens the heart and reduces unnecessary rumination.</div>
-      </div>
-
-      <div class="value-card">
-        <div class="value-emoji">🔁</div>
-        <div class="value-title">Abhyasa — Daily practice</div>
-        <div class="value-desc">Consistency rewires emotional stability. Tiny rituals build resilience.</div>
-      </div>
-
-      <div class="value-card">
-        <div class="value-emoji">🕊️</div>
-        <div class="value-title">Vairagya — Letting go</div>
-        <div class="value-desc">Releasing attachment reduces mental tension and restores inner peace.</div>
-      </div>
-
-      <div class="value-card">
-        <div class="value-emoji">👥</div>
-        <div class="value-title">Satsang — Strength in community</div>
-        <div class="value-desc">We heal faster when we feel seen, supported and understood.</div>
-      </div>
-
-    </div>
-
-    <!-- WHY SECTION -->
-    <div class="why-strip">
-
-      <div class="why-box">
-        <h3>Why these teachings ease stress</h3>
-        <ul style="line-height:1.6; color:#555;">
-          <li>Breathing and posture calm the nervous system quickly.</li>
-          <li>Daily rituals reduce anxiety through predictability.</li>
-          <li>Service shifts attention from rumination to purpose.</li>
-          <li>Letting go breaks the cycle of stress-based attachment.</li>
-        </ul>
-
-        <h4 style="margin-top:16px;">Try one now</h4>
-        <div class="micro-grid">
-          <div class="micro">1-min Breathing</div>
-          <div class="micro">3-min Body Scan</div>
-          <div class="micro">5-min Heart Softening</div>
-          <div class="micro">7-min Seva Task</div>
-          <div class="micro">Night Gratitude</div>
+<!-- HERO SECTION - DYNAMIC & INSPIRING -->
+<section class="home-hero">
+    <div class="hero-content">
+        <h1 class="hero-title">Find Your Inner Peace</h1>
+        <p class="hero-subtitle">Start your journey today with daily wisdom, guided practices, and proven techniques</p>
+        <div class="hero-cta">
+            <a href="/calendar" class="cta-btn primary">📅 Daily Inspiration</a>
+            <a href="/stress" class="cta-btn secondary">🧘 Calm Your Mind</a>
         </div>
-      </div>
-
-      <div class="promise">
-        <h4>Our Promise</h4>
-        <p>
-          Stress becomes simple when wisdom meets routine.
-          Start with one tiny ritual — repeat it for a week.
-        </p>
-        <a href="/ideas" class="cta" style="margin-top:10px; display:inline-block;">Explore Practices</a>
-      </div>
-
     </div>
+</section>
 
-  </section>
+<!-- FEATURED DAILY WISDOM -->
+<section class="featured-section">
+    <div class="section-wrapper">
+        <h2 class="section-title">✨ Today's Inspiration</h2>
+        
+        <!-- Daily Quote -->
+        <div class="featured-cards">
+            <div class="featured-card quote-card">
+                <div class="card-icon">🕉️</div>
+                <h3>Daily Wisdom</h3>
+                <p class="featured-text">{{ daily_content.quote if daily_content else "Loading..." }}</p>
+                <button class="refresh-btn">New Quote</button>
+            </div>
 
-  <!-- CALENDAR -->
-  <section style="margin-top:10px;">
-    <h3 style="color:var(--accent);">Your Happiness Calendar</h3>
+            <!-- Daily Action -->
+            <div class="featured-card action-card">
+                <div class="card-icon">💚</div>
+                <h3>Today's Practice</h3>
+                <p class="featured-text">{{ daily_content.action if daily_content else "Loading..." }}</p>
+                <button class="refresh-btn">New Action</button>
+            </div>
 
-    <div class="calendar-preview">
-      <a href="/calendar?month=1" class="month-tile m-jan">January</a>
-      <a href="/calendar?month=2" class="month-tile m-feb">February</a>
-      <a href="/calendar?month=3" class="month-tile m-mar">March</a>
-      <a href="/calendar?month=4" class="month-tile m-apr">April</a>
-      <a href="/calendar?month=5" class="month-tile m-may">May</a>
-      <a href="/calendar?month=6" class="month-tile m-jun">June</a>
-      <a href="/calendar?month=7" class="month-tile m-jul">July</a>
-      <a href="/calendar?month=8" class="month-tile m-aug">August</a>
-      <a href="/calendar?month=9" class="month-tile m-sep">September</a>
-      <a href="/calendar?month=10" class="month-tile m-oct">October</a>
-      <a href="/calendar?month=11" class="month-tile m-nov">November</a>
-      <a href="/calendar?month=12" class="month-tile m-dec">December</a>
+            <!-- Daily Tip -->
+            <div class="featured-card tip-card">
+                <div class="card-icon">⚡</div>
+                <h3>Wellness Tip</h3>
+                <p class="featured-text">{{ daily_content.tip if daily_content else "Loading..." }}</p>
+                <button class="refresh-btn">New Tip</button>
+            </div>
+        </div>
     </div>
-  </section>
+</section>
 
-  <!-- LOTUS -->
-  <section class="lotus-wrap">
-    <div class="lotus-anim">
-      <div style="font-size:36px;">🪷</div>
+<!-- FEATURES OVERVIEW -->
+<section class="features-section">
+    <div class="section-wrapper">
+        <h2 class="section-title">What We Offer</h2>
+        <div class="features-grid">
+            <!-- Calendar Feature -->
+            <div class="feature-item">
+                <div class="feature-icon">📅</div>
+                <h3>Daily Calendar</h3>
+                <p>Every day brings a new quote, action, and wellness tip designed to elevate your spirit and guide you toward peace.</p>
+                <a href="/calendar" class="feature-link">Explore Calendar →</a>
+            </div>
+
+            <!-- Stress Relief Feature -->
+            <div class="feature-item">
+                <div class="feature-icon">🧘</div>
+                <h3>Stress Relief</h3>
+                <p>Master breathing techniques (Pranayama), meditation practices, and affirmations rooted in ancient Indian wisdom.</p>
+                <a href="/stress" class="feature-link">Find Calm →</a>
+            </div>
+
+            <!-- Emotions Feature -->
+            <div class="feature-item">
+                <div class="feature-icon">❤️</div>
+                <h3>Emotions Guide</h3>
+                <p>Understand and transform your emotions with compassionate guidance and practical tools for emotional wellness.</p>
+                <a href="/emotions" class="feature-link">Explore Emotions →</a>
+            </div>
+
+            <!-- Kindness Feature -->
+            <div class="feature-item">
+                <div class="feature-icon">🤝</div>
+                <h3>Kindness Ideas</h3>
+                <p>Discover meaningful ways to spread light and compassion. Transform lives through small acts of kindness.</p>
+                <a href="/ideas" class="feature-link">Share Kindness →</a>
+            </div>
+        </div>
     </div>
-    <div class="lotus-cta">
-      <h3 style="margin-top:0;color:var(--accent);">Take one calm breath</h3>
-      <p style="color:var(--muted);margin-bottom:14px;">Inhale 4 • Hold 2 • Exhale 6</p>
-      <a href="/stress" class="cta">Try a 60-second practice</a>
+</section>
+
+<!-- BHAGAVAD GITA WISDOM SECTION -->
+<section class="gita-section">
+    <div class="section-wrapper">
+        <h2 class="section-title">📖 Bhagavad Gita Wisdom</h2>
+        <p class="section-subtitle">Timeless teachings for equanimity and inner strength</p>
+        
+        <div class="gita-card">
+            <div class="gita-icon">🕉️</div>
+            <p class="gita-text">{{ daily_content.bhagavad_gita if daily_content else "You have the right to work, but never to the fruit of work. — Bhagavad Gita 2.47" }}</p>
+            <a href="/stress" class="gita-link">Explore More Verses →</a>
+        </div>
     </div>
-  </section>
+</section>
 
-  <!-- JOIN CTA -->
-  <section class="join">
-    <input id="emailInput" placeholder="Your email for early access"
-           style="padding:12px 14px;border-radius:10px;width:260px;border:1px solid #ddd;">
-    <button id="joinBtn" class="cta" style="border:none;cursor:pointer;">Join Us</button>
-  </section>
+<!-- WHY CHOOSE US -->
+<section class="why-section">
+    <div class="section-wrapper max-width-md">
+        <h2 class="section-title">Why This Matters</h2>
+        <div class="reasons-list">
+            <div class="reason-item">
+                <span class="reason-number">1</span>
+                <h3>Ancient Wisdom Meets Modern Science</h3>
+                <p>Proven techniques from Vedas, Upanishads, and Bhagavad Gita combined with evidence-based wellness practices.</p>
+            </div>
 
-</div>
+            <div class="reason-item">
+                <span class="reason-number">2</span>
+                <h3>Daily Guidance & Support</h3>
+                <p>Receive personalized inspiration every single day to keep you grounded, motivated, and connected to your purpose.</p>
+            </div>
+
+            <div class="reason-item">
+                <span class="reason-number">3</span>
+                <h3>Practical & Accessible</h3>
+                <p>Simple techniques you can practice anywhere, anytime—no special equipment needed, just commitment to yourself.</p>
+            </div>
+
+            <div class="reason-item">
+                <span class="reason-number">4</span>
+                <h3>Holistic Approach</h3>
+                <p>We address mind, body, and spirit. From breathing to emotions to kindness, we help you thrive completely.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- QUICK START SECTION -->
+<section class="quickstart-section">
+    <div class="section-wrapper max-width-md">
+        <h2 class="section-title">Start Your Journey</h2>
+        <div class="steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <h3>Pick a Practice</h3>
+                <p>Choose from our calendar, stress relief, emotions, or kindness sections based on what you need today.</p>
+            </div>
+
+            <div class="step-arrow">→</div>
+
+            <div class="step">
+                <div class="step-number">2</div>
+                <h3>Follow the Guide</h3>
+                <p>Read the daily wisdom, breathing techniques, or affirmations. Take your time. There's no rush.</p>
+            </div>
+
+            <div class="step-arrow">→</div>
+
+            <div class="step">
+                <div class="step-number">3</div>
+                <h3>Feel the Change</h3>
+                <p>As you practice daily, you'll notice more calm, clarity, and peace in your life. Small steps, big transformation.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- AFFIRMATION HIGHLIGHT -->
+<section class="affirmation-highlight">
+    <div class="section-wrapper max-width-md">
+        <h2 class="highlight-text">Remember: You Are Enough</h2>
+        <p class="highlight-subtitle">{{ daily_content.affirmation if daily_content else "I am peaceful and calm. My mind is clear and centered." }}</p>
+        <button class="highlight-btn">Get New Affirmation</button>
+    </div>
+</section>
+
+<!-- FINAL CTA SECTION -->
+<section class="final-cta">
+    <div class="section-wrapper max-width-md">
+        <h2>Ready to Begin?</h2>
+        <p>Your journey to inner peace, clarity, and authentic happiness starts with a single breath, a single moment of awareness.</p>
+        <div class="final-buttons">
+            <a href="/calendar" class="btn primary">📅 Explore Daily Calendar</a>
+            <a href="/about" class="btn secondary">Learn About Us</a>
+        </div>
+    </div>
+</section>
+
+<!-- STYLES -->
+<style>
+/* Home Page Specific Styles */
+.home-hero {
+    background: linear-gradient(90deg, rgba(135, 206, 235, 0.7) 0%, rgba(135, 206, 235, 0.7) 50%, rgba(255, 105, 180, 0.7) 50%, rgba(255, 105, 180, 0.7) 100%),
+                linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 100%);
+    backdrop-filter: blur(10px);
+    color: white;
+    padding: 100px 40px;
+    text-align: center;
+    margin-bottom: 60px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 15px 35px rgba(102, 126, 234, 0.2);
+}
+
+.hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.hero-title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    margin-bottom: 20px;
+    line-height: 1.2;
+}
+
+.hero-subtitle {
+    font-size: 1.3rem;
+    line-height: 1.8;
+    opacity: 0.95;
+    margin-bottom: 40px;
+}
+
+.hero-cta {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.cta-btn {
+    padding: 15px 35px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    display: inline-block;
+    border: none;
+    cursor: pointer;
+}
+
+.cta-btn.primary {
+    background: white;
+    color: #667eea;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.cta-btn.primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+}
+
+.cta-btn.secondary {
+    background: transparent;
+    color: white;
+    border: 2px solid white;
+}
+
+.cta-btn.secondary:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-3px);
+}
+
+/* Featured Section */
+.featured-section {
+    padding: 60px 40px;
+    margin-bottom: 40px;
+}
+
+.featured-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+    margin-top: 40px;
+}
+
+.featured-card {
+    background: white;
+    padding: 35px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(20, 20, 60, 0.08);
+    text-align: center;
+    transition: all 0.3s ease;
+    border-top: 4px solid #667eea;
+}
+
+.featured-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 40px rgba(102, 126, 234, 0.15);
+}
+
+.card-icon {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+}
+
+.featured-card h3 {
+    color: var(--text);
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+}
+
+.featured-text {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--muted);
+    margin-bottom: 20px;
+    min-height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-style: italic;
+}
+
+.refresh-btn {
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.refresh-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+}
+
+/* Features Section */
+.features-section {
+    padding: 60px 40px;
+    margin-bottom: 40px;
+    background: linear-gradient(135deg, #f5f7ff 0%, #f0f4ff 100%);
+    border-radius: 12px;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.feature-item {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(20, 20, 60, 0.05);
+    transition: all 0.3s ease;
+}
+
+.feature-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(102, 126, 234, 0.1);
+}
+
+.feature-icon {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+}
+
+.feature-item h3 {
+    color: var(--text);
+    margin-bottom: 12px;
+}
+
+.feature-item p {
+    color: var(--muted);
+    line-height: 1.6;
+    margin-bottom: 15px;
+    font-size: 0.95rem;
+}
+
+.feature-link {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    transition: all 0.3s ease;
+}
+
+.feature-link:hover {
+    color: var(--secondary);
+    gap: 10px;
+}
+
+/* Gita Section */
+.gita-section {
+    padding: 60px 40px;
+    margin-bottom: 40px;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.08) 0%, rgba(118, 75, 162, 0.08) 100%);
+    border-radius: 12px;
+}
+
+.gita-card {
+    background: white;
+    padding: 50px 40px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 8px 20px rgba(20, 20, 60, 0.08);
+    border-left: 6px solid var(--primary);
+}
+
+.gita-icon {
+    font-size: 3rem;
+    margin-bottom: 20px;
+}
+
+.gita-text {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    color: var(--text);
+    font-style: italic;
+    margin: 20px 0;
+    min-height: 80px;
+}
+
+.gita-link {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+    display: inline-block;
+    margin-top: 20px;
+    transition: all 0.3s ease;
+}
+
+.gita-link:hover {
+    color: var(--secondary);
+    transform: translateX(5px);
+}
+
+/* Why Section */
+.why-section {
+    padding: 60px 40px;
+    margin-bottom: 40px;
+    background: white;
+    border-radius: 12px;
+}
+
+.reasons-list {
+    display: grid;
+    gap: 25px;
+    margin-top: 40px;
+}
+
+.reason-item {
+    padding: 25px;
+    background: linear-gradient(135deg, #f5f7ff 0%, #f0f4ff 100%);
+    border-radius: 12px;
+    border-left: 4px solid var(--primary);
+    transition: all 0.3s ease;
+}
+
+.reason-item:hover {
+    transform: translateX(5px);
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.1);
+}
+
+.reason-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: var(--primary);
+    color: white;
+    border-radius: 50%;
+    font-weight: 700;
+    font-size: 1.2rem;
+    margin-bottom: 12px;
+}
+
+.reason-item h3 {
+    color: var(--text);
+    margin-bottom: 10px;
+}
+
+.reason-item p {
+    color: var(--muted);
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* Quick Start Section */
+.quickstart-section {
+    padding: 60px 40px;
+    margin-bottom: 40px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 12px;
+    color: white;
+}
+
+.steps {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    margin-top: 40px;
+    flex-wrap: wrap;
+}
+
+.step {
+    flex: 1;
+    min-width: 200px;
+    text-align: center;
+}
+
+.step-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px solid white;
+    border-radius: 50%;
+    font-weight: 700;
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+}
+
+.step h3 {
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+}
+
+.step p {
+    font-size: 0.95rem;
+    opacity: 0.9;
+    line-height: 1.6;
+}
+
+.step-arrow {
+    display: none;
+    font-size: 2rem;
+    opacity: 0.5;
+}
+
+@media (min-width: 768px) {
+    .step-arrow {
+        display: block;
+    }
+}
+
+/* Affirmation Highlight */
+.affirmation-highlight {
+    padding: 60px 40px;
+    margin-bottom: 40px;
+    background: linear-gradient(135deg, #F3E5F5 0%, #E8F5E9 100%);
+    border-radius: 12px;
+    text-align: center;
+}
+
+.highlight-text {
+    font-size: 2.5rem;
+    color: var(--text);
+    margin-bottom: 20px;
+}
+
+.highlight-subtitle {
+    font-size: 1.2rem;
+    color: var(--muted);
+    font-style: italic;
+    line-height: 1.8;
+    margin-bottom: 30px;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.highlight-btn {
+    padding: 12px 30px;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.highlight-btn:hover {
+    background: var(--secondary);
+    transform: translateY(-2px);
+}
+
+/* Final CTA */
+.final-cta {
+    padding: 60px 40px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 12px;
+    color: white;
+    text-align: center;
+}
+
+.final-cta h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+.final-cta p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    opacity: 0.95;
+    margin-bottom: 30px;
+}
+
+.final-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.btn {
+    padding: 14px 32px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 700;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.btn.primary {
+    background: white;
+    color: var(--primary);
+}
+
+.btn.primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.btn.secondary {
+    background: transparent;
+    color: white;
+    border: 2px solid white;
+}
+
+.btn.secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-3px);
+}
+
+/* Section Utilities */
+.section-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.section-title {
+    font-size: 2.5rem;
+    text-align: center;
+    color: var(--text);
+    margin-bottom: 10px;
+}
+
+.section-subtitle {
+    font-size: 1rem;
+    text-align: center;
+    color: var(--muted);
+    margin-bottom: 20px;
+}
+
+.max-width-md {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .home-hero {
+        padding: 60px 20px;
+    }
+
+    .hero-title {
+        font-size: 2.5rem;
+    }
+
+    .hero-subtitle {
+        font-size: 1.1rem;
+    }
+
+    .featured-cards,
+    .features-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .steps {
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .section-title {
+        font-size: 2rem;
+    }
+
+    .final-buttons {
+        flex-direction: column;
+    }
+
+    .btn {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .home-hero {
+        padding: 40px 15px;
+    }
+
+    .hero-title {
+        font-size: 1.8rem;
+    }
+
+    .hero-subtitle {
+        font-size: 0.95rem;
+    }
+
+    .hero-cta {
+        gap: 10px;
+    }
+
+    .cta-btn {
+        padding: 12px 25px;
+        font-size: 0.9rem;
+    }
+
+    .section-title {
+        font-size: 1.5rem;
+    }
+
+    .featured-cards {
+        gap: 15px;
+    }
+
+    .featured-card {
+        padding: 20px;
+    }
+}
+</style>
 
 {% endblock %}

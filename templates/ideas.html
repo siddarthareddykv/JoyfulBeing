@@ -1,132 +1,709 @@
 {% extends "base.html" %}
 {% block content %}
 
-<!-- Hero Section -->
-<section class="ideas-hero">
-    <div class="ideas-hero-inner">
-        <h1 class="ideas-title">Acts of Kindness for a Joyful Life</h1>
-        <p class="ideas-sub">Tap the button for a gentle act you can try today.</p>
+<style>
+:root {
+  --primary: #667eea;
+  --secondary: #764ba2;
+  --text: #2d3748;
+  --muted: #718096;
+  --light: #f7fafc;
+  --border: #e2e8f0;
+}
+
+* { box-sizing: border-box; }
+
+.ideas-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Hero Section */
+.hero-section {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 60px 40px;
+  border-radius: 20px;
+  text-align: center;
+  margin: 40px 0;
+  box-shadow: 0 20px 60px rgba(102, 126, 234, 0.25);
+}
+
+.hero-section h1 {
+  font-size: clamp(28px, 4vw, 48px);
+  font-weight: 700;
+  margin: 0 0 15px 0;
+  line-height: 1.2;
+}
+
+.hero-section p {
+  font-size: 18px;
+  line-height: 1.7;
+  opacity: 0.95;
+  margin: 0 0 30px 0;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.cta-btn {
+  padding: 14px 32px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  transition: all 0.3s ease;
+  font-size: 15px;
+  background: white;
+  color: #667eea;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.cta-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+}
+
+/* Intro Section */
+.intro-section {
+  background: linear-gradient(135deg, #f0f4ff 0%, #f8f9ff 100%);
+  padding: 40px;
+  border-radius: 16px;
+  border-left: 4px solid var(--primary);
+  margin: 40px 0;
+}
+
+.intro-section h2 {
+  font-size: 24px;
+  color: var(--text);
+  margin: 0 0 15px 0;
+}
+
+.intro-section p {
+  color: var(--muted);
+  line-height: 1.8;
+  font-size: 15px;
+}
+
+/* Kindness Ideas Grid */
+.ideas-section {
+  margin: 60px 0;
+}
+
+.section-title {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--text);
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.section-subtitle {
+  text-align: center;
+  color: var(--muted);
+  font-size: 16px;
+  margin-bottom: 40px;
+}
+
+.ideas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+.idea-card {
+  background: white;
+  padding: 30px;
+  border-radius: 16px;
+  border: 2px solid var(--border);
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 20px rgba(20, 20, 60, 0.05);
+  cursor: pointer;
+}
+
+.idea-card:hover {
+  transform: translateY(-8px);
+  border-color: var(--primary);
+  box-shadow: 0 15px 40px rgba(102, 126, 234, 0.15);
+}
+
+.idea-emoji {
+  font-size: 40px;
+  margin-bottom: 15px;
+  display: block;
+}
+
+.idea-card h3 {
+  font-size: 18px;
+  color: var(--text);
+  margin: 15px 0;
+  font-weight: 700;
+}
+
+.idea-card p {
+  color: var(--muted);
+  line-height: 1.7;
+  font-size: 14px;
+  margin: 0;
+}
+
+/* Modal */
+.kindness-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.kindness-modal-content {
+  background: white;
+  padding: 40px;
+  border-radius: 16px;
+  max-width: 500px;
+  width: 90%;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  position: relative;
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.modal-close {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 28px;
+  color: #999;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.modal-close:hover {
+  color: var(--primary);
+  transform: rotate(90deg);
+}
+
+.modal-heading {
+  font-size: 24px;
+  color: var(--text);
+  margin: 0 0 20px 0;
+  text-align: center;
+}
+
+.modal-idea {
+  font-size: 18px;
+  color: var(--text);
+  line-height: 1.8;
+  margin-bottom: 20px;
+  padding: 20px;
+  background: linear-gradient(135deg, #f0f4ff 0%, #f8f9ff 100%);
+  border-radius: 12px;
+  border-left: 3px solid var(--primary);
+  font-weight: 600;
+}
+
+.modal-quote {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.7;
+  font-style: italic;
+  margin-bottom: 25px;
+  padding: 15px;
+  background: #f9fafb;
+  border-radius: 10px;
+}
+
+.modal-btn {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  font-size: 15px;
+  transition: all 0.3s ease;
+}
+
+.modal-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+}
+
+/* 7-Day Challenge */
+.challenge-section {
+  background: white;
+  padding: 40px;
+  border-radius: 16px;
+  border: 2px solid var(--border);
+  margin: 60px 0;
+  box-shadow: 0 8px 20px rgba(20, 20, 60, 0.05);
+}
+
+.challenge-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.challenge-header h2 {
+  font-size: 28px;
+  color: var(--text);
+  margin: 0 0 10px 0;
+}
+
+.challenge-header p {
+  color: var(--muted);
+  font-size: 16px;
+  margin: 0;
+}
+
+.challenge-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 15px;
+}
+
+.challenge-item {
+  background: linear-gradient(135deg, #f0f4ff 0%, #f8f9ff 100%);
+  padding: 20px;
+  border-radius: 12px;
+  border-left: 4px solid var(--primary);
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.challenge-day {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  flex-shrink: 0;
+  font-size: 16px;
+}
+
+.challenge-text {
+  color: var(--text);
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.challenge-btn {
+  display: block;
+  width: 100%;
+  max-width: 300px;
+  margin: 30px auto 0;
+  padding: 14px 32px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  font-size: 15px;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.challenge-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+}
+
+/* Kindness Meter */
+.meter-section {
+  background: linear-gradient(135deg, #f0f4ff 0%, #f8f9ff 100%);
+  padding: 40px;
+  border-radius: 16px;
+  text-align: center;
+  border-left: 4px solid var(--primary);
+  margin: 60px 0;
+}
+
+.meter-section h2 {
+  font-size: 24px;
+  color: var(--text);
+  margin: 0 0 10px 0;
+}
+
+.meter-section p {
+  color: var(--muted);
+  margin-bottom: 25px;
+  font-size: 15px;
+}
+
+.meter-options {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.meter-emoji {
+  font-size: 40px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.meter-emoji:hover {
+  transform: scale(1.2);
+  background: rgba(102, 126, 234, 0.1);
+}
+
+.meter-status {
+  color: var(--muted);
+  font-size: 14px;
+  font-style: italic;
+  margin: 0;
+}
+
+/* Reflection Section */
+.reflection-section {
+  background: white;
+  padding: 40px;
+  border-radius: 16px;
+  border: 2px solid var(--border);
+  margin: 60px 0;
+  box-shadow: 0 8px 20px rgba(20, 20, 60, 0.05);
+}
+
+.reflection-section h2 {
+  font-size: 28px;
+  color: var(--text);
+  margin: 0 0 10px 0;
+}
+
+.reflection-section p {
+  color: var(--muted);
+  font-size: 15px;
+  margin-bottom: 25px;
+}
+
+.reflection-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 12px;
+}
+
+.reflection-item {
+  padding: 15px 20px;
+  background: linear-gradient(135deg, #f0f4ff 0%, #f8f9ff 100%);
+  border-radius: 10px;
+  border-left: 3px solid var(--primary);
+  color: var(--text);
+  font-weight: 500;
+}
+
+/* Mantra Section */
+.mantra-section {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 50px 40px;
+  border-radius: 16px;
+  text-align: center;
+  margin: 60px 0 40px;
+  box-shadow: 0 20px 60px rgba(102, 126, 234, 0.25);
+}
+
+.mantra-section h2 {
+  font-size: 28px;
+  margin: 0 0 15px 0;
+  font-weight: 700;
+}
+
+.mantra-section p {
+  font-size: 18px;
+  line-height: 1.7;
+  opacity: 0.95;
+  margin: 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .hero-section { padding: 40px 25px; }
+  .challenge-item { flex-direction: column; align-items: flex-start; }
+  .challenge-day { width: 40px; height: 40px; font-size: 14px; }
+}
+</style>
+
+<div class="ideas-page">
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <h1>🤝 Spread Kindness, Transform Lives</h1>
+    <p>Small acts of kindness create big ripples of change. Explore meaningful ways to help others and discover how serving others heals your own heart.</p>
+    <button class="cta-btn" onclick="randomPopup()">Get an Idea ✨</button>
+  </section>
+
+  <!-- Introduction -->
+  <section class="intro-section">
+    <h2>Why Acts of Kindness Matter</h2>
+    <p>
+      <strong>Kindness is medicine for both the giver and the receiver.</strong> When you help others without expecting anything in return, you experience:
+      <br><br>
+      ✓ A sense of purpose and meaning<br>
+      ✓ Reduced stress and anxiety<br>
+      ✓ Greater connection with your community<br>
+      ✓ The joy of knowing you made a difference<br>
+      ✓ A lighter, more open heart
+    </p>
+  </section>
+
+  <!-- Kindness Ideas -->
+  <section class="ideas-section">
+    <h2 class="section-title">Kindness Ideas for Every Day</h2>
+    <p class="section-subtitle">From small gestures to meaningful service — find the right act for you</p>
+
+    <div class="ideas-grid">
+      <div class="idea-card" onclick="showSpecificIdea('For Someone You Know', 'Send a heartfelt message to someone who has impacted your life. Tell them specifically why they matter to you.')">
+        <span class="idea-emoji">💌</span>
+        <h3>For Someone You Know</h3>
+        <p>Reach out with kindness to people in your life</p>
+      </div>
+
+      <div class="idea-card" onclick="showSpecificIdea('For a Stranger', 'Pay for someone\'s coffee, return a shopping cart, or offer to help someone carrying something heavy. Small acts, big impact.')">
+        <span class="idea-emoji">👤</span>
+        <h3>For a Stranger</h3>
+        <p>Surprise someone with unexpected kindness</p>
+      </div>
+
+      <div class="idea-card" onclick="showSpecificIdea('For Your Community', 'Volunteer, donate to a cause, or organize a community clean-up. Be the change you want to see.')">
+        <span class="idea-emoji">🏘️</span>
+        <h3>For Your Community</h3>
+        <p>Make a wider impact on your neighborhood</p>
+      </div>
+
+      <div class="idea-card" onclick="showSpecificIdea('Digital Kindness', 'Leave a genuine compliment online, share someone\'s work, or send an encouraging message to someone who\'s struggling.')">
+        <span class="idea-emoji">💻</span>
+        <h3>Digital Kindness</h3>
+        <p>Spread positivity in the online world</p>
+      </div>
+
+      <div class="idea-card" onclick="showSpecificIdea('For Yourself', 'Practice self-compassion: rest without guilt, speak kindly to yourself, take a break when needed. You deserve kindness too.')">
+        <span class="idea-emoji">🌸</span>
+        <h3>For Yourself</h3>
+        <p>Extend kindness inward with self-care</p>
+      </div>
+
+      <div class="idea-card" onclick="showSpecificIdea('Random Acts', 'Click the button to get a random kindness idea. You might discover something unexpected and wonderful.')">
+        <span class="idea-emoji">✨</span>
+        <h3>Random Inspiration</h3>
+        <p>Let chance guide your kindness today</p>
+      </div>
     </div>
+  </section>
 
-    <button class="try-today-main-btn" onclick="randomPopup()">Try Today ✨</button>
-</section>
-
-<!-- Modal -->
-<div id="kindnessModal" class="kindness-modal">
+  <!-- Modal -->
+  <div id="kindnessModal" class="kindness-modal">
     <div class="kindness-modal-content">
-        <button class="modal-close" onclick="closeModal()">&times;</button>
-
-        <h2 class="modal-heading">Your Kindness Inspiration</h2>
-
-        <p id="modalIdea" class="modal-idea"></p>
-        <p id="modalQuote" class="modal-quote"></p>
-
-        <button class="modal-btn" onclick="closeModal()">Got it 💛</button>
+      <button class="modal-close" onclick="closeModal()">&times;</button>
+      <h2 class="modal-heading" id="modalTitle">Your Kindness Inspiration</h2>
+      <p id="modalIdea" class="modal-idea"></p>
+      <p id="modalQuote" class="modal-quote"></p>
+      <button class="modal-btn" onclick="closeModal()">Got It 💛</button>
     </div>
+  </div>
+
+  <!-- 7-Day Challenge -->
+  <section class="challenge-section">
+    <div class="challenge-header">
+      <h2>🌟 7-Day Kindness Challenge</h2>
+      <p>Transform your life through one week of intentional, meaningful kindness</p>
+    </div>
+
+    <ul class="challenge-list">
+      <li class="challenge-item">
+        <div class="challenge-day">1</div>
+        <div class="challenge-text">Smile genuinely at a stranger and make them feel seen</div>
+      </li>
+      <li class="challenge-item">
+        <div class="challenge-day">2</div>
+        <div class="challenge-text">Do one act of help without being asked — silently</div>
+      </li>
+      <li class="challenge-item">
+        <div class="challenge-day">3</div>
+        <div class="challenge-text">Appreciate someone sincerely. Tell them exactly why you value them</div>
+      </li>
+      <li class="challenge-item">
+        <div class="challenge-day">4</div>
+        <div class="challenge-text">Call or message someone you've lost touch with</div>
+      </li>
+      <li class="challenge-item">
+        <div class="challenge-day">5</div>
+        <div class="challenge-text">Donate something — money, time, or items you no longer need</div>
+      </li>
+      <li class="challenge-item">
+        <div class="challenge-day">6</div>
+        <div class="challenge-text">Lift up someone struggling. Offer encouragement or a listening ear</div>
+      </li>
+      <li class="challenge-item">
+        <div class="challenge-day">7</div>
+        <div class="challenge-text">Do something kind for yourself. Rest, celebrate, and acknowledge your growth</div>
+      </li>
+    </ul>
+
+    <button class="challenge-btn" onclick="startChallenge()">Start the Challenge →</button>
+  </section>
+
+  <!-- Kindness Meter -->
+  <section class="meter-section">
+    <h2>How Kind Were You Today?</h2>
+    <p>Reflect on your kindness level. There's no judgment — just awareness.</p>
+
+    <div class="meter-options">
+      <span class="meter-emoji" onclick="recordKindness(5, '😊')">😊</span>
+      <span class="meter-emoji" onclick="recordKindness(4, '🙂')">🙂</span>
+      <span class="meter-emoji" onclick="recordKindness(3, '😐')">😐</span>
+      <span class="meter-emoji" onclick="recordKindness(2, '🙁')">🙁</span>
+      <span class="meter-emoji" onclick="recordKindness(1, '😞')">😞</span>
+    </div>
+
+    <p class="meter-status" id="meterStatus">Tap an emoji to record your kindness mood</p>
+  </section>
+
+  <!-- Reflection Section -->
+  <section class="reflection-section">
+    <h2>📝 Reflection Questions</h2>
+    <p>End your day with these gentle reflections on kindness and growth:</p>
+
+    <ul class="reflection-list">
+      <li class="reflection-item">✓ Did I help someone today, even in a small way?</li>
+      <li class="reflection-item">✓ Did I speak to myself and others with kindness?</li>
+      <li class="reflection-item">✓ Did I listen without judgment or interruption?</li>
+      <li class="reflection-item">✓ Did I show patience in a moment of frustration?</li>
+      <li class="reflection-item">✓ Did I release judgment and choose compassion instead?</li>
+      <li class="reflection-item">✓ What made me proud of myself today?</li>
+    </ul>
+  </section>
+
+  <!-- Mantra Section -->
+  <section class="mantra-section">
+    <h2>"Lokah Samastah Sukhino Bhavantu"</h2>
+    <p>🙏 May all beings everywhere be happy, healthy, and free. 🙏</p>
+  </section>
+
 </div>
 
 <script>
-// 1000+ ideas placeholder (I will generate real list after confirmation)
-const ideas = [
-    "Send a positive message to someone.",
-    "Call a family member you haven't spoken to in a while.",
-    "Help someone without them asking.",
-    "Leave a kind comment online.",
-    "Give someone a genuine compliment.",
-    "Forgive someone silently.",
-    "Smile to the next person you meet.",
-    "Share something useful with a friend.",
-    "Encourage someone trying something new.",
-    "Do one act that makes your area cleaner."
-    // I will replace with 1000+ real kindness ideas
+const kindnessIdeas = [
+  "Send a sincere message to someone you appreciate.",
+  "Call a family member you haven't spoken to in a while.",
+  "Help someone without them asking.",
+  "Leave a thoughtful comment on someone's post.",
+  "Give someone a genuine, specific compliment.",
+  "Forgive someone silently and release the anger.",
+  "Smile warmly to the next person you meet.",
+  "Share something valuable with a friend.",
+  "Encourage someone trying something new.",
+  "Pick up litter in your area.",
+  "Pay for someone's coffee or tea.",
+  "Write a thank you note to someone who helped you.",
+  "Listen fully without planning your response.",
+  "Offer to help a neighbor with a task.",
+  "Be kind to yourself today — rest without guilt.",
+  "Donate to a cause you believe in.",
+  "Volunteer your time or skills.",
+  "Defend someone who's being treated unkindly.",
+  "Share a meal or food with someone in need.",
+  "Teach someone something you know."
 ];
 
-// 1000+ Indian quotes placeholder
-const quotes = [
-    "“Peace comes from within.” — Buddha",
-    "“Where there is love, there is life.” — Gandhi",
-    "“Arise, awake, and stop not till the goal is reached.” — Vivekananda",
-    "“Compassion is the root of Dharma.” — Buddha",
-    "“The fragrance always stays with the hand that gives the rose.” — Kabir",
-    "“Do your duty without attachment.” — Bhagavad Gita",
-    "“Kindness is the greatest virtue.” — Tirukkural",
-    "“Love is the only reality.” — Sri Ramana Maharshi",
-    "“Be humble, be kind.” — Sathya Sai Baba",
-    "“Help ever, hurt never.” — Indian proverb"
-    // I will replace with 1000+ real quotes
+const inspirationalQuotes = [
+  '"Peace comes from within. Do not seek it without." — Buddha',
+  '"Where there is love, there is life." — Mahatma Gandhi',
+  '"Compassion is the root of all dharma." — Buddha',
+  '"The fragrance always stays with the hand that gives the rose." — Kabir',
+  '"Help ever, hurt never." — Indian proverb',
+  '"Kindness is the greatest virtue." — Tirukkural',
+  '"In service lies the greatest joy." — Sri Ramakrishna',
+  '"Love all, serve all." — Sathya Sai Baba',
+  '"An act of kindness is never wasted." — Aesop',
+  '"We are all connected. When you help another, you help yourself." — Eastern wisdom',
+  '"The purpose of life is to be useful, to be helpful." — Dalai Lama',
+  '"Kindness is the language the deaf can hear and the blind can see." — Mark Twain',
+  '"No act of kindness, no matter how small, is ever wasted." — Aesop'
 ];
 
 function randomPopup() {
-    const idea = ideas[Math.floor(Math.random() * ideas.length)];
-    const quote = quotes[Math.floor(Math.random() * quotes.length)];
+  const idea = kindnessIdeas[Math.floor(Math.random() * kindnessIdeas.length)];
+  const quote = inspirationalQuotes[Math.floor(Math.random() * inspirationalQuotes.length)];
+  
+  document.getElementById('modalTitle').innerText = 'Your Kindness Inspiration';
+  document.getElementById('modalIdea').innerText = idea;
+  document.getElementById('modalQuote').innerText = quote;
+  document.getElementById('kindnessModal').style.display = 'flex';
+}
 
-    document.getElementById("modalIdea").innerText = idea;
-    document.getElementById("modalQuote").innerText = quote;
-
-    document.getElementById("kindnessModal").style.display = "flex";
+function showSpecificIdea(title, idea) {
+  const quote = inspirationalQuotes[Math.floor(Math.random() * inspirationalQuotes.length)];
+  
+  document.getElementById('modalTitle').innerText = title;
+  document.getElementById('modalIdea').innerText = idea;
+  document.getElementById('modalQuote').innerText = quote;
+  document.getElementById('kindnessModal').style.display = 'flex';
 }
 
 function closeModal() {
-    document.getElementById("kindnessModal").style.display = "none";
+  document.getElementById('kindnessModal').style.display = 'none';
 }
+
+function startChallenge() {
+  alert('🌟 Your 7-Day Kindness Challenge begins today! Track your acts of kindness and feel the transformation. 💛');
+}
+
+function recordKindness(level, emoji) {
+  const messages = [
+    'Remember, every day is a new chance to be kind. Be patient with yourself. 💙',
+    'Keep going — you\'re working on being better. Small efforts matter. 💪',
+    'You\'re present and aware. That\'s already a form of kindness. 🌱',
+    'Good effort! Keep practicing kindness every day. 🌟',
+    'Wonderful! You\'re spreading joy and making a difference. Keep shining! ✨'
+  ];
+  
+  document.getElementById('meterStatus').innerText = `${emoji} Thank you for reflecting. ${messages[level - 1]}`;
+}
+
+// Close modal when clicking outside
+document.addEventListener('click', function(event) {
+  const modal = document.getElementById('kindnessModal');
+  if (event.target === modal) {
+    modal.style.display = 'none';
+  }
+});
 </script>
-
-<!-- Daily Kindness Challenge Section -->
-<section class="kindness-challenge">
-    <h2 class="kc-title">Accept 7-Day Kindness Challenge</h2>
-    <p class="kc-sub">Start small, build momentum, and let kindness flow through your days.</p>
-
-    <div class="kc-box">
-        <ul class="kc-list">
-            <li><strong>Day 1:</strong> Smile at a stranger.</li>
-            <li><strong>Day 2:</strong> Do one silent act of help.</li>
-            <li><strong>Day 3:</strong> Appreciate someone sincerely.</li>
-            <li><strong>Day 4:</strong> Call or message a loved one.</li>
-            <li><strong>Day 5:</strong> Donate something small.</li>
-            <li><strong>Day 6:</strong> Encourage someone who needs support.</li>
-            <li><strong>Day 7:</strong> Do a kind act for yourself.</li>
-        </ul>
-
-        <button class="kc-btn" onclick="alert('Your Kindness Journey Begins! 🌿')">
-            Start Challenge →
-        </button>
-    </div>
-</section>
-
-
-<!-- Kindness Meter -->
-<section class="kindness-meter">
-    <h2>How Kind Were You Today?</h2>
-    <div class="meter-options">
-        <span onclick="saveMeter(5)">😊</span>
-        <span onclick="saveMeter(4)">🙂</span>
-        <span onclick="saveMeter(3)">😐</span>
-        <span onclick="saveMeter(2)">🙁</span>
-        <span onclick="saveMeter(1)">😞</span>
-    </div>
-    <p id="meter-status" class="meter-status">Tap an emoji to record your kindness mood.</p>
-</section>
-
-<!-- Reflection Questions -->
-<section class="reflection">
-    <h2>Reflection for Today</h2>
-    <p class="reflection-sub">Gentle questions to end the day with awareness:</p>
-
-    <ul class="reflection-list">
-        <li>Did I help someone today?</li>
-        <li>Did I speak kindly to myself?</li>
-        <li>Did I listen without interrupting?</li>
-        <li>Did I show patience?</li>
-        <li>Did I avoid judging someone too quickly?</li>
-    </ul>
-</section>
-
-<!-- Mantra Section -->
-<section class="mantra-strip">
-    <h2>“Lokah Samastah Sukhino Bhavantu”</h2>
-    <p>May all beings everywhere be happy and free.</p>
-</section>
-
-
 
 {% endblock %}

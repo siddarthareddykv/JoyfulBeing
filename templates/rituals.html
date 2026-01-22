@@ -1,0 +1,419 @@
+<!-- RITUALS.HTML -->
+{% extends "base.html" %}
+{% block content %}
+
+<!-- HERO SECTION -->
+<section class="content-hero">
+    <div class="hero-content">
+        <h1 class="hero-title">🕯️ Vedic Rituals</h1>
+        <p class="hero-subtitle">
+            Ancient practices for daily wellness that align your body, mind, and spirit 
+            with the rhythms of nature and the universe.
+        </p>
+    </div>
+</section>
+
+<!-- FEATURED RITUAL -->
+<section class="featured-section">
+    <div class="section-wrapper">
+        <h2 class="section-title">✨ Featured Ritual</h2>
+        <div class="featured-ritual-card">
+            <h3 class="ritual-title">{{ featured_ritual.name }}</h3>
+            <div class="ritual-meta">
+                <span class="meta-item">⏰ {{ featured_ritual.time }}</span>
+                <span class="meta-item">⌛ {{ featured_ritual.duration }}</span>
+            </div>
+            
+            <div class="ritual-info">
+                <div class="info-box">
+                    <h4>Benefits</h4>
+                    <p>{{ featured_ritual.benefits }}</p>
+                </div>
+                
+                <div class="info-box">
+                    <h4>Steps</h4>
+                    <ol class="steps-list">
+                        {% for step in featured_ritual.steps %}
+                            <li>{{ step }}</li>
+                        {% endfor %}
+                    </ol>
+                </div>
+                
+                <div class="info-box">
+                    <h4>💡 Practice Tip</h4>
+                    <p>{{ featured_ritual.practice_tip }}</p>
+                </div>
+            </div>
+            
+            <button class="begin-btn">Begin This Ritual</button>
+        </div>
+    </div>
+</section>
+
+<!-- ALL RITUALS GRID -->
+<section class="rituals-section">
+    <div class="section-wrapper">
+        <h2 class="section-title">Daily Rituals for Wellness</h2>
+        <div class="rituals-grid">
+            {% for ritual in rituals %}
+                <div class="ritual-card">
+                    <h3>{{ ritual.name }}</h3>
+                    <div class="ritual-badges">
+                        <span class="badge">{{ ritual.time }}</span>
+                        <span class="badge">{{ ritual.duration }}</span>
+                    </div>
+                    <p class="ritual-benefit">{{ ritual.benefits }}</p>
+                    <p class="ritual-tip"><strong>Tip:</strong> {{ ritual.practice_tip[:80] }}...</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- RITUAL GUIDE -->
+<section class="guide-section">
+    <div class="section-wrapper max-width-md">
+        <h2 class="section-title">How to Practice Rituals</h2>
+        <div class="guide-content">
+            <h3>The Spirit of Ritual</h3>
+            <p>A ritual is not just an action—it's a sacred practice imbued with intention and devotion. When you practice rituals, you're not just going through motions; you're aligning yourself with cosmic rhythms and divine energy.</p>
+            
+            <h3>Keys to Effective Practice</h3>
+            <ul class="guide-list">
+                <li><strong>Intention:</strong> Start with a clear, positive intention</li>
+                <li><strong>Consistency:</strong> Practice at the same time daily for best results</li>
+                <li><strong>Presence:</strong> Be fully present—put away distractions</li>
+                <li><strong>Gratitude:</strong> Practice with a grateful heart</li>
+                <li><strong>Patience:</strong> Results unfold over time with dedicated practice</li>
+                <li><strong>Surrender:</strong> Trust the process and let go of outcomes</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<!-- RITUAL BENEFITS -->
+<section class="benefits-section">
+    <div class="section-wrapper max-width-md">
+        <h2 class="section-title">Why Ritual Matters</h2>
+        <div class="benefits-cards">
+            <div class="benefit-card">
+                <span class="benefit-icon">🧘</span>
+                <h3>Mind-Body Connection</h3>
+                <p>Rituals create harmony between your mind, body, and spirit through coordinated practice.</p>
+            </div>
+            <div class="benefit-card">
+                <span class="benefit-icon">⏰</span>
+                <h3>Rhythm & Routine</h3>
+                <p>Regular rituals establish healthy rhythms that support overall wellness and stability.</p>
+            </div>
+            <div class="benefit-card">
+                <span class="benefit-icon">🌍</span>
+                <h3>Cosmic Alignment</h3>
+                <p>By practicing rituals aligned with natural cycles, you sync with universal energy.</p>
+            </div>
+            <div class="benefit-card">
+                <span class="benefit-icon">💪</span>
+                <h3>Inner Transformation</h3>
+                <p>Consistent practice gradually transforms your consciousness and perspective on life.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+.content-hero {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 80px 40px;
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.hero-title {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    font-weight: 800;
+}
+
+.hero-subtitle {
+    font-size: 1.1rem;
+    opacity: 0.95;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.featured-section {
+    padding: 60px 40px;
+    margin-bottom: 40px;
+}
+
+.featured-ritual-card {
+    background: white;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(20, 20, 60, 0.08);
+    max-width: 900px;
+    margin: 0 auto;
+    border-left: 6px solid var(--primary);
+}
+
+.ritual-title {
+    font-size: 2rem;
+    color: var(--text);
+    margin-bottom: 15px;
+}
+
+.ritual-meta {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+}
+
+.meta-item {
+    background: rgba(102, 126, 234, 0.1);
+    color: var(--primary);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.ritual-info {
+    margin: 30px 0;
+}
+
+.info-box {
+    margin-bottom: 25px;
+    padding-bottom: 25px;
+    border-bottom: 1px solid var(--border);
+}
+
+.info-box:last-child {
+    border-bottom: none;
+}
+
+.info-box h4 {
+    color: var(--primary);
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+}
+
+.steps-list {
+    margin: 0;
+    padding-left: 20px;
+    color: var(--text);
+    line-height: 1.8;
+}
+
+.steps-list li {
+    margin-bottom: 8px;
+}
+
+.info-box p {
+    color: var(--text);
+    line-height: 1.7;
+    margin: 0;
+}
+
+.begin-btn {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.begin-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+}
+
+.rituals-section {
+    padding: 60px 40px;
+    margin-bottom: 40px;
+    background: linear-gradient(135deg, #f5f7ff 0%, #f0f4ff 100%);
+    border-radius: 12px;
+}
+
+.rituals-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin-top: 40px;
+}
+
+.ritual-card {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(20, 20, 60, 0.05);
+    border-top: 4px solid var(--primary);
+    transition: all 0.3s ease;
+}
+
+.ritual-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(102, 126, 234, 0.15);
+}
+
+.ritual-card h3 {
+    color: var(--text);
+    margin-bottom: 10px;
+}
+
+.ritual-badges {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+}
+
+.badge {
+    background: rgba(102, 126, 234, 0.1);
+    color: var(--primary);
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.ritual-benefit {
+    color: var(--text);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 10px;
+}
+
+.ritual-tip {
+    color: var(--muted);
+    font-size: 0.85rem;
+    margin: 0;
+}
+
+.guide-section {
+    padding: 60px 40px;
+    margin-bottom: 40px;
+    background: white;
+    border-radius: 12px;
+}
+
+.guide-content h3 {
+    color: var(--text);
+    margin-top: 20px;
+    margin-bottom: 12px;
+    font-size: 1.2rem;
+}
+
+.guide-content h3:first-child {
+    margin-top: 0;
+}
+
+.guide-content p {
+    color: var(--text);
+    line-height: 1.7;
+    margin-bottom: 15px;
+}
+
+.guide-list {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: 12px;
+}
+
+.guide-list li {
+    background: var(--light);
+    padding: 12px 15px;
+    border-radius: 8px;
+    color: var(--text);
+    line-height: 1.6;
+}
+
+.benefits-section {
+    padding: 60px 40px;
+    background: linear-gradient(135deg, #F3E5F5 0%, #E8F5E9 100%);
+    border-radius: 12px;
+}
+
+.benefits-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-top: 40px;
+}
+
+.benefit-card {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(20, 20, 60, 0.05);
+    transition: all 0.3s ease;
+}
+
+.benefit-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.1);
+}
+
+.benefit-icon {
+    font-size: 2.5rem;
+    display: block;
+    margin-bottom: 12px;
+}
+
+.benefit-card h3 {
+    color: var(--text);
+    margin-bottom: 10px;
+}
+
+.benefit-card p {
+    color: var(--muted);
+    line-height: 1.6;
+    margin: 0;
+    font-size: 0.95rem;
+}
+
+.section-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.section-title {
+    font-size: 2.5rem;
+    text-align: center;
+    color: var(--text);
+    margin-bottom: 10px;
+}
+
+.max-width-md {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+    .content-hero {
+        padding: 50px 20px;
+    }
+
+    .hero-title {
+        font-size: 2rem;
+    }
+
+    .section-title {
+        font-size: 2rem;
+    }
+
+    .featured-ritual-card {
+        padding: 20px;
+    }
+}
+</style>
+
+{% endblock %}

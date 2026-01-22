@@ -1,204 +1,404 @@
 {% extends "base.html" %}
 {% block content %}
 
-<style>
-/* --------------------------------------------------
-   STRESS PAGE MASTER STYLE (LOCAL TO THIS PAGE)
--------------------------------------------------- */
-
-.stress-hero {
-    padding: 80px 20px;
-    background: linear-gradient(135deg, #fdf8ff, #eef8ff);
-    border-radius: 20px;
-    text-align: center;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-}
-
-.stress-hero h1 {
-    font-size: 40px;
-    font-weight: 700;
-    color: #3d3f82;
-}
-
-.stress-hero p {
-    font-size: 18px;
-    max-width: 700px;
-    margin: auto;
-    margin-top: 14px;
-    color: #666;
-}
-
-/* BREATHING CARD */
-.breathing-box {
-    margin-top: 40px;
-    background: white;
-    padding: 40px;
-    border-radius: 20px;
-    text-align: center;
-    box-shadow: 0 6px 22px rgba(0,0,0,0.12);
-}
-
-.breath-text {
-    font-size: 20px;
-    font-weight: 600;
-    margin-bottom: 20px;
-}
-
-/* Breathing Animation */
-.breath-circle {
-    width: 130px;
-    height: 130px;
-    margin: auto;
-    background: #d8e8ff;
-    border-radius: 50%;
-    animation: breathe 8s infinite ease-in-out;
-}
-
-@keyframes breathe {
-    0% { transform: scale(0.9); background: #cfe2ff; }
-    50% { transform: scale(1.15); background: #eaf3ff; }
-    100% { transform: scale(0.9); background: #cfe2ff; }
-}
-
-/* SECTION TITLE */
-.section-title {
-    margin-top: 60px;
-    font-size: 28px;
-    font-weight: 700;
-    text-align: center;
-}
-
-/* GRID */
-.stress-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 22px;
-    margin-top: 30px;
-}
-
-.stress-card {
-    background: white;
-    padding: 25px;
-    border-radius: 18px;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
-    transition: 0.3s ease;
-}
-
-.stress-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 30px rgba(0,0,0,0.12);
-}
-
-.stress-card h3 {
-    color: #3d3f82;
-    margin-bottom: 8px;
-}
-
-.stress-card p {
-    color: #555;
-    font-size: 15px;
-}
-
-/* CALM QUOTE */
-.calm-quote {
-    margin-top: 60px;
-    background: linear-gradient(135deg, #fff6ed, #fff1f6);
-    padding: 40px;
-    border-radius: 18px;
-    text-align: center;
-    font-style: italic;
-    font-size: 20px;
-    color: #444;
-    box-shadow: 0 10px 26px rgba(0,0,0,0.08);
-}
-
-/* INSTANT RELIEF TOOLS */
-.relief-tools {
-    margin-top: 50px;
-}
-
-.tool-box {
-    background: white;
-    padding: 25px;
-    border-radius: 18px;
-    margin-bottom: 15px;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.07);
-}
-
-/* LOTUS FLOATING AURA */
-.stress-lotus {
-    position: fixed;
-    bottom: -40px;
-    left: -40px;
-    width: 220px;
-    height: 220px;
-    background: radial-gradient(circle, rgba(255,210,234,0.25), transparent);
-    filter: blur(18px);
-    animation: lotusFloat 7s infinite alternate ease-in-out;
-    z-index: -1;
-}
-
-@keyframes lotusFloat {
-    0%   { transform: translate(0, 0); opacity: 0.6; }
-    100% { transform: translate(30px, -40px); opacity: 0.9; }
-}
-</style>
-
-
-<div class="stress-hero">
-    <h1>Melting Stress, One Breath at a Time</h1>
-    <p>Stress is not your enemy — it's a signal. This space gently guides your mind and body back into balance through breath, awareness, and small, soothing actions.</p>
-</div>
-
-<!-- BREATHING BOX -->
-<div class="breathing-box">
-    <div class="breath-text">Follow the Circle — Inhale… Exhale…</div>
-    <div class="breath-circle"></div>
-</div>
-
-<!-- MAIN CATEGORIES -->
-<h2 class="section-title">Stress Relief Pathways</h2>
-
-<div class="stress-grid">
-    <div class="stress-card">
-        <h3>Mind</h3>
-        <p>Simple mindfulness practices to calm overthinking and bring clarity.</p>
+<!-- HERO SECTION -->
+<section class="stress-hero">
+    <div class="hero-content">
+        <h1 class="hero-title fade-in">🧘 Your Sanctuary for Peace</h1>
+        <p class="hero-subtitle fade-in">
+            Ancient Indian wisdom meets modern science. Discover breathing techniques, 
+            meditations, and profound teachings to calm your mind and restore inner peace.
+        </p>
     </div>
+</section>
 
-    <div class="stress-card">
-        <h3>Body</h3>
-        <p>Micro-movements, stretches, and grounding exercises.</p>
+<!-- BHAGAVAD GITA WISDOM SECTION -->
+<section class="wisdom-section">
+    <div class="section-wrapper">
+        <h2 class="section-title">📖 Bhagavad Gita Wisdom</h2>
+        <p class="section-subtitle">Timeless teachings on equanimity and inner peace</p>
+        
+        <div class="wisdom-card featured">
+            <div class="wisdom-icon">🕉️</div>
+            <p class="wisdom-text">{{ daily_content.bhagavad_gita if daily_content else "You have the right to work, but never to the fruit of work. — Bhagavad Gita 2.47" }}</p>
+            <button class="refresh-btn" onclick="loadNewWisdom('bhagavad_gita')">✨ New Verse</button>
+        </div>
     </div>
+</section>
 
-    <div class="stress-card">
-        <h3>Emotions</h3>
-        <p>Healthy ways to release emotional tension and reconnect with ease.</p>
+<!-- VEDIC WISDOM SECTION -->
+<section class="wisdom-section alt">
+    <div class="section-wrapper">
+        <h2 class="section-title">🌊 Vedic & Upanishadic Wisdom</h2>
+        <p class="section-subtitle">Ancient truths about the nature of consciousness and peace</p>
+        
+        <div class="wisdom-card featured">
+            <div class="wisdom-icon">☮️</div>
+            <p class="wisdom-text">{{ daily_content.vedic_wisdom if daily_content else "The mind is like water. When still, it reflects clearly. — Katha Upanishad" }}</p>
+            <button class="refresh-btn" onclick="loadNewWisdom('vedic')">✨ New Teaching</button>
+        </div>
     </div>
+</section>
 
-    <div class="stress-card">
-        <h3>Lifestyle</h3>
-        <p>Daily habits that silently reduce stress and strengthen resilience.</p>
+<!-- PRANAYAMA TECHNIQUES SECTION -->
+<section class="technique-section">
+    <div class="section-wrapper">
+        <h2 class="section-title">🫁 Pranayama: Breathing Techniques</h2>
+        <p class="section-subtitle">Control your breath, control your mind. Calm your nervous system instantly.</p>
+        
+        <div class="techniques-grid">
+            <!-- Nadi Shodhana -->
+            <div class="technique-card">
+                <div class="technique-header">
+                    <h3>Nadi Shodhana</h3>
+                    <span class="duration">5-10 min</span>
+                </div>
+                <p class="technique-name">Alternate Nostril Breathing</p>
+                <div class="technique-benefit">
+                    <strong>Benefit:</strong> Balances both hemispheres of the brain, calms the nervous system
+                </div>
+                <div class="technique-instructions">
+                    <strong>How to do it:</strong>
+                    <ol>
+                        <li>Sit comfortably with spine straight</li>
+                        <li>Close your right nostril with thumb</li>
+                        <li>Inhale slowly through left nostril</li>
+                        <li>Close left nostril, open right</li>
+                        <li>Exhale through right nostril</li>
+                        <li>Reverse the pattern</li>
+                        <li>Continue for 5-10 minutes</li>
+                    </ol>
+                </div>
+                <button class="practice-btn">Start Practice</button>
+            </div>
+
+            <!-- Ujjayi Breathing -->
+            <div class="technique-card">
+                <div class="technique-header">
+                    <h3>Ujjayi Breathing</h3>
+                    <span class="duration">5-15 min</span>
+                </div>
+                <p class="technique-name">Ocean Breath</p>
+                <div class="technique-benefit">
+                    <strong>Benefit:</strong> Soothes the mind, reduces anxiety and stress
+                </div>
+                <div class="technique-instructions">
+                    <strong>How to do it:</strong>
+                    <ol>
+                        <li>Sit or lie comfortably</li>
+                        <li>Inhale through your nose</li>
+                        <li>Exhale through mouth with a 'ha' sound</li>
+                        <li>Do this 3-4 times</li>
+                        <li>Gradually close your mouth while exhaling</li>
+                        <li>Continue with nasal breathing</li>
+                        <li>Maintain the ocean-like sound</li>
+                    </ol>
+                </div>
+                <button class="practice-btn">Start Practice</button>
+            </div>
+
+            <!-- Sama Vritti -->
+            <div class="technique-card">
+                <div class="technique-header">
+                    <h3>Sama Vritti</h3>
+                    <span class="duration">5 min</span>
+                </div>
+                <p class="technique-name">Equal Breathing</p>
+                <div class="technique-benefit">
+                    <strong>Benefit:</strong> Stabilizes the mind, reduces stress and anxiety
+                </div>
+                <div class="technique-instructions">
+                    <strong>How to do it:</strong>
+                    <ol>
+                        <li>Sit comfortably with closed eyes</li>
+                        <li>Count to 4 while inhaling</li>
+                        <li>Hold breath for count of 4</li>
+                        <li>Exhale for count of 4</li>
+                        <li>Keep all counts equal</li>
+                        <li>Continue for 5 minutes</li>
+                    </ol>
+                </div>
+                <button class="practice-btn">Start Practice</button>
+            </div>
+
+            <!-- Bhramari -->
+            <div class="technique-card">
+                <div class="technique-header">
+                    <h3>Bhramari</h3>
+                    <span class="duration">3-5 min</span>
+                </div>
+                <p class="technique-name">Bee Breath</p>
+                <div class="technique-benefit">
+                    <strong>Benefit:</strong> Instantly calms the mind, relieves tension
+                </div>
+                <div class="technique-instructions">
+                    <strong>How to do it:</strong>
+                    <ol>
+                        <li>Sit comfortably with spine straight</li>
+                        <li>Close your eyes</li>
+                        <li>Inhale deeply through both nostrils</li>
+                        <li>Exhale while humming like a bee</li>
+                        <li>Feel the vibration in your head</li>
+                        <li>Repeat 5-10 times</li>
+                    </ol>
+                </div>
+                <button class="practice-btn">Start Practice</button>
+            </div>
+
+            <!-- Shitali -->
+            <div class="technique-card">
+                <div class="technique-header">
+                    <h3>Shitali</h3>
+                    <span class="duration">5 min</span>
+                </div>
+                <p class="technique-name">Cooling Breath</p>
+                <div class="technique-benefit">
+                    <strong>Benefit:</strong> Reduces body heat, calms agitation
+                </div>
+                <div class="technique-instructions">
+                    <strong>How to do it:</strong>
+                    <ol>
+                        <li>Sit comfortably with spine straight</li>
+                        <li>Curl your tongue (or purse lips if unable)</li>
+                        <li>Inhale deeply through the tongue</li>
+                        <li>Close your mouth</li>
+                        <li>Exhale slowly through your nose</li>
+                        <li>Repeat 10-15 times</li>
+                    </ol>
+                </div>
+                <button class="practice-btn">Start Practice</button>
+            </div>
+
+            <!-- 4-7-8 Breathing -->
+            <div class="technique-card">
+                <div class="technique-header">
+                    <h3>4-7-8 Breathing</h3>
+                    <span class="duration">3-5 min</span>
+                </div>
+                <p class="technique-name">Deep Relaxation Breath</p>
+                <div class="technique-benefit">
+                    <strong>Benefit:</strong> Activates parasympathetic nervous system for deep relaxation
+                </div>
+                <div class="technique-instructions">
+                    <strong>How to do it:</strong>
+                    <ol>
+                        <li>Sit comfortably with closed eyes</li>
+                        <li>Inhale through nose for count of 4</li>
+                        <li>Hold breath for count of 7</li>
+                        <li>Exhale through mouth for count of 8</li>
+                        <li>This is one round</li>
+                        <li>Repeat 4 times</li>
+                    </ol>
+                </div>
+                <button class="practice-btn">Start Practice</button>
+            </div>
+        </div>
     </div>
-</div>
+</section>
 
-<!-- CALM QUOTE -->
-<div class="calm-quote">
-    “Within you, there is a stillness and a sanctuary you can retreat to anytime.”  
-    — Hermann Hesse
-</div>
+<!-- MEDITATION TECHNIQUES SECTION -->
+<section class="technique-section alt">
+    <div class="section-wrapper">
+        <h2 class="section-title">🧘 Meditation Techniques</h2>
+        <p class="section-subtitle">Find your inner sanctuary. Choose a technique that resonates with you.</p>
+        
+        <div class="meditation-grid">
+            <!-- Mantra Meditation -->
+            <div class="meditation-card">
+                <div class="card-icon">🕉️</div>
+                <h3>Mantra Meditation</h3>
+                <p class="duration">10-20 minutes</p>
+                <p class="benefit">Focuses the mind, reduces stress, brings inner peace</p>
+                <p class="description">
+                    Repeat a sacred mantra like 'Om', 'So-Hum', or 'Aham Brahmasmi' silently. 
+                    Let it anchor your awareness and guide you to stillness.
+                </p>
+                <button class="explore-btn">Begin Mantra Practice</button>
+            </div>
 
-<!-- RELIEF TOOLS -->
-<h2 class="section-title">Instant Relief Tools</h2>
+            <!-- Chakra Meditation -->
+            <div class="meditation-card">
+                <div class="card-icon">💫</div>
+                <h3>Chakra Meditation</h3>
+                <p class="duration">15-20 minutes</p>
+                <p class="benefit">Balances energy, releases blockages, promotes healing</p>
+                <p class="description">
+                    Focus on each chakra from root to crown, visualizing healing light 
+                    flowing through your entire being.
+                </p>
+                <button class="explore-btn">Begin Chakra Practice</button>
+            </div>
 
-<div class="relief-tools">
-    <div class="tool-box">⭐ 5-4-3-2-1 Grounding Technique</div>
-    <div class="tool-box">⭐ Slow Breathing (4–4–6 Method)</div>
-    <div class="tool-box">⭐ Quick Body Scan</div>
-    <div class="tool-box">⭐ Sip Water Slowly with Awareness</div>
-    <div class="tool-box">⭐ Write down one worry you release today</div>
-</div>
+            <!-- Mindfulness Meditation -->
+            <div class="meditation-card">
+                <div class="card-icon">🌸</div>
+                <h3>Mindfulness Meditation</h3>
+                <p class="duration">10-15 minutes</p>
+                <p class="benefit">Increases awareness, reduces stress, improves focus</p>
+                <p class="description">
+                    Observe your thoughts without judgment. Let them pass like clouds 
+                    drifting across the sky.
+                </p>
+                <button class="explore-btn">Begin Mindfulness Practice</button>
+            </div>
 
-<!-- Background Aura -->
-<div class="stress-lotus"></div>
+            <!-- Loving-Kindness Meditation -->
+            <div class="meditation-card">
+                <div class="card-icon">❤️</div>
+                <h3>Loving-Kindness Meditation</h3>
+                <p class="duration">15 minutes</p>
+                <p class="benefit">Cultivates compassion, reduces anxiety and anger</p>
+                <p class="description">
+                    Send wishes of love and peace to yourself, loved ones, and all beings. 
+                    Feel the warmth in your heart expand.
+                </p>
+                <button class="explore-btn">Begin Loving-Kindness Practice</button>
+            </div>
+
+            <!-- Yoga Nidra -->
+            <div class="meditation-card">
+                <div class="card-icon">😴</div>
+                <h3>Yoga Nidra</h3>
+                <p class="duration">20-45 minutes</p>
+                <p class="benefit">Deep relaxation, healing at all levels</p>
+                <p class="description">
+                    Guided relaxation where you lie still and follow verbal guidance through 
+                    layers of consciousness. Profoundly restorative.
+                </p>
+                <button class="explore-btn">Begin Yoga Nidra Practice</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- AFFIRMATIONS SECTION -->
+<section class="affirmation-section">
+    <div class="section-wrapper max-width-md">
+        <h2 class="section-title">✨ Stress-Relief Affirmations</h2>
+        <p class="section-subtitle">Reprogram your mind with powerful affirmations</p>
+        
+        <div class="affirmations-container">
+            {% if affirmations %}
+                {% for affirmation in affirmations %}
+                    <div class="affirmation-card">
+                        <p class="affirmation-text">"{{ affirmation }}"</p>
+                        <button class="copy-btn" onclick="copyToClipboard('{{ affirmation }}')">📋 Copy</button>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="affirmation-card">
+                    <p class="affirmation-text">"I am peaceful and calm. My mind is clear and centered."</p>
+                </div>
+            {% endif %}
+        </div>
+        
+        <div class="affirmation-practice">
+            <h3>How to use these affirmations:</h3>
+            <ul class="practice-list">
+                <li>💭 Repeat each affirmation 3-5 times daily</li>
+                <li>🪞 Say them while looking in the mirror</li>
+                <li>📝 Write them down in your journal</li>
+                <li>🎵 Speak them aloud with conviction</li>
+                <li>💚 Feel the words resonating in your heart</li>
+                <li>⏰ Make it a morning or evening ritual</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<!-- YOGA SUTRAS WISDOM -->
+<section class="wisdom-section">
+    <div class="section-wrapper">
+        <h2 class="section-title">📚 Yoga Sutras of Patanjali</h2>
+        <p class="section-subtitle">Classical wisdom on controlling the mind through practice</p>
+        
+        <div class="wisdom-card featured">
+            <div class="wisdom-icon">🎯</div>
+            <p class="wisdom-text">{{ daily_content.yoga_sutra if daily_content else "Yoga is the cessation of the movements of the mind. — Yoga Sutras 1.2" }}</p>
+            <button class="refresh-btn" onclick="loadNewWisdom('yoga')">✨ New Sutra</button>
+        </div>
+    </div>
+</section>
+
+<!-- DHARMA & ACCEPTANCE -->
+<section class="wisdom-section alt">
+    <div class="section-wrapper">
+        <h2 class="section-title">🙏 Dharma: Wisdom on Acceptance</h2>
+        <p class="section-subtitle">Find peace through duty and acceptance of what is</p>
+        
+        <div class="wisdom-card featured">
+            <div class="wisdom-icon">🌿</div>
+            <p class="wisdom-text">{{ daily_content.dharma if daily_content else "Do your duty (Dharma) with full dedication, without attachment to the results. — Hindu Philosophy" }}</p>
+            <button class="refresh-btn" onclick="loadNewWisdom('dharma')">✨ New Teaching</button>
+        </div>
+    </div>
+</section>
+
+<!-- QUICK RELIEF TIPS -->
+<section class="tips-section">
+    <div class="section-wrapper">
+        <h2 class="section-title">⚡ Quick Relief Tips</h2>
+        <p class="section-subtitle">When you need instant calm</p>
+        
+        <div class="tips-grid">
+            <div class="tip-card">
+                <div class="tip-icon">🫁</div>
+                <h3>Box Breathing</h3>
+                <p>Inhale-4, Hold-4, Exhale-4, Hold-4. Repeat 5 times. Takes 2 minutes.</p>
+            </div>
+            <div class="tip-card">
+                <div class="tip-icon">🌳</div>
+                <h3>5-4-3-2-1 Grounding</h3>
+                <p>Name 5 things you see, 4 you feel, 3 you hear, 2 you smell, 1 you taste.</p>
+            </div>
+            <div class="tip-card">
+                <div class="tip-icon">💧</div>
+                <h3>Cold Water Face Immersion</h3>
+                <p>Splash cold water on your face. It activates the vagus nerve for instant calm.</p>
+            </div>
+            <div class="tip-card">
+                <div class="tip-icon">🚶</div>
+                <h3>Slow Walk</h3>
+                <p>Take a mindful walk. Feel each step, breathe deeply. 10 minutes transforms mood.</p>
+            </div>
+            <div class="tip-card">
+                <div class="tip-icon">🍃</div>
+                <h3>Progressive Relaxation</h3>
+                <p>Tense and release each muscle group from toes to head. 5 minutes of relief.</p>
+            </div>
+            <div class="tip-card">
+                <div class="tip-icon">🎵</div>
+                <h3>Calming Music</h3>
+                <p>Listen to Vedic chants, nature sounds, or instrumental music. Let vibrations soothe you.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CALL TO ACTION -->
+<section class="cta-section">
+    <div class="section-wrapper max-width-md">
+        <h2>Remember</h2>
+        <p class="cta-text">
+            "The mind is like water. When still, it reflects clearly." Your peace is not far away—
+            it lies within you, waiting to be discovered through gentle practice and compassion for yourself.
+        </p>
+        <a href="/" class="cta-button">← Back to Home</a>
+    </div>
+</section>
+
+<!-- SCRIPTS -->
+<script>
+    function copyToClipboard(text) {
+        navigator.clipboard.writeText(text);
+        alert('Affirmation copied! ✨');
+    }
+
+    function loadNewWisdom(type) {
+        // This would fetch new wisdom from the API
+        console.log('Loading new ' + type + ' wisdom...');
+        alert('✨ Refresh the page to see new wisdom!');
+    }
+</script>
 
 {% endblock %}
