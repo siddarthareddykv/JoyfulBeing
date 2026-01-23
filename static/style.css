@@ -32,6 +32,7 @@ body {
   line-height: 1.6;
 }
 
+
 /* =========================================
    TYPOGRAPHY
 ========================================= */
@@ -1289,5 +1290,268 @@ h3 { font-size: 1.5rem; }
 
     .nav-list li:last-child {
         border-bottom: none;
+    }
+}
+/* FORCE GLOBAL LAVENDER BACKGROUND */
+html, body {
+    background: #F1E8F3 !important;
+}
+/* Let background show through more */
+.content {
+    background: transparent !important;
+}
+/* ===============================
+   PROMISING APPLE-STYLE NAVBAR
+   =============================== */
+
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 14px 32px;
+
+    background: rgba(241, 232, 243, 0.75); /* orchid glass */
+    backdrop-filter: saturate(180%) blur(18px);
+    -webkit-backdrop-filter: saturate(180%) blur(18px);
+
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* LOGO */
+.logo-img {
+    height: 40px;
+    transition: transform 0.3s ease;
+}
+
+.logo-img:hover {
+    transform: scale(1.05);
+}
+
+/* CENTER TAGLINE */
+.nav-tagline {
+    font-family: "Playfair Display", serif;
+    font-size: 15px;
+    color: #4b4453;
+    opacity: 0.9;
+    white-space: nowrap;
+}
+
+/* NAV LIST */
+.nav-list {
+    display: flex;
+    gap: 22px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-list a {
+    position: relative;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    color: #2e2a33;
+    padding: 6px 2px;
+    transition: color 0.2s ease;
+}
+
+/* UNDERLINE HOVER (Apple-style) */
+.nav-list a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    width: 0;
+    height: 2px;
+    background: #6b5b95; /* muted orchid */
+    transition: width 0.3s ease;
+}
+
+.nav-list a:hover {
+    color: #000;
+}
+
+.nav-list a:hover::after {
+    width: 100%;
+}
+
+/* HAMBURGER */
+.menu-toggle {
+    display: none;
+    font-size: 26px;
+    cursor: pointer;
+    color: #2e2a33;
+}
+
+/* ===============================
+   MOBILE NAV (CLEAN & PROMISING)
+   =============================== */
+
+@media (max-width: 768px) {
+
+    .menu-toggle {
+        display: block;
+    }
+
+    .nav-center {
+        display: none;
+    }
+
+    .nav-right {
+        display: none;
+        width: 100%;
+    }
+
+    .nav-right.active {
+        display: block;
+    }
+
+    .nav-list {
+        flex-direction: column;
+        margin-top: 16px;
+        background: rgba(241, 232, 243, 0.92);
+        backdrop-filter: blur(20px);
+        border-radius: 16px;
+        padding: 20px;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+    }
+
+    .nav-list li {
+        margin-bottom: 12px;
+    }
+
+    .nav-list a {
+        font-size: 16px;
+    }
+}
+/* ===============================
+   CLEAN PREMIUM NAVBAR (WHITE)
+   =============================== */
+
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 16px 36px;
+
+    background: #ffffff;   /* PURE WHITE */
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+/* LOGO */
+.logo-img {
+    height: 42px;
+}
+
+/* TAGLINE */
+.nav-tagline {
+    font-family: "Playfair Display", serif;
+    font-size: 15px;
+    letter-spacing: 0.3px;
+    color: #555;
+    opacity: 0.9;
+    white-space: nowrap;
+}
+
+/* NAV LIST */
+.nav-list {
+    display: flex;
+    gap: 26px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* LINKS */
+.nav-list a {
+    position: relative;
+    text-decoration: none;
+    font-family: "Poppins", system-ui, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.4px;
+    color: #111;
+    padding: 6px 0;
+    transition: color 0.2s ease;
+}
+
+/* CLEAN UNDERLINE ANIMATION */
+.nav-list a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+    width: 0;
+    height: 2px;
+    background: #000;
+    transition: width 0.3s ease;
+}
+
+.nav-list a:hover::after {
+    width: 100%;
+}
+
+.nav-list a:hover {
+    color: #000;
+}
+
+/* HAMBURGER */
+.menu-toggle {
+    display: none;
+    font-size: 26px;
+    cursor: pointer;
+    color: #111;
+}
+
+/* ===============================
+   MOBILE NAV (WHITE, CLEAN)
+   =============================== */
+
+@media (max-width: 768px) {
+
+    .menu-toggle {
+        display: block;
+    }
+
+    .nav-center {
+        display: none;
+    }
+
+    .nav-right {
+        display: none;
+        width: 100%;
+    }
+
+    .nav-right.active {
+        display: block;
+    }
+
+    .nav-list {
+        flex-direction: column;
+        margin-top: 16px;
+        background: #ffffff;
+        border-radius: 14px;
+        padding: 20px;
+        box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+    }
+
+    .nav-list li {
+        margin-bottom: 14px;
+    }
+
+    .nav-list a {
+        font-size: 16px;
+        letter-spacing: 0.6px;
     }
 }
