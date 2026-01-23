@@ -794,3 +794,208 @@ section::after,
 .bg-layer {
   pointer-events: none !important;
 }
+/* =========================================
+   ABOUT PAGE – ELEGANT ENDING REFINEMENT
+========================================= */
+
+/* Soft calm background instead of strong gradient */
+.about-page {
+  background: linear-gradient(
+    180deg,
+    #faf7ff 0%,
+    #ffffff 40%,
+    #ffffff 100%
+  );
+}
+
+/* Limit line width for emotional readability */
+.about-page p,
+.about-page h2,
+.about-page h3 {
+  max-width: 760px;
+}
+
+/* ---------- ABOUT STORY SECTION ---------- */
+
+.about-story,
+.about-message {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  border-radius: 28px;
+  padding: 64px 72px;
+  margin: 80px auto;
+  box-shadow: 0 20px 60px rgba(139, 92, 246, 0.12);
+  border: 1px solid rgba(139, 92, 246, 0.08);
+}
+
+.about-message h2 {
+  font-size: clamp(1.8rem, 3.5vw, 2.4rem);
+  margin-bottom: 28px;
+}
+
+.about-message p {
+  font-size: 17px;
+  line-height: 1.8;
+  color: #4a4458;
+}
+
+/* Emphasized emotional lines */
+.about-message strong {
+  color: #1e1b29;
+  font-weight: 600;
+}
+
+/* Italic reflective line */
+.about-message em {
+  display: block;
+  margin-top: 28px;
+  font-style: italic;
+  color: #6b5a7a;
+}
+
+/* ---------- SIGNATURE ---------- */
+
+.about-signature {
+  margin-top: 48px;
+  padding-top: 32px;
+  border-top: 1px solid rgba(139, 92, 246, 0.15);
+}
+
+.about-signature .name {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.about-signature .role {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+/* ---------- LET’S CONNECT (SINGLE, ELEGANT CTA) ---------- */
+
+.about-connect {
+  max-width: 900px;
+  margin: 100px auto 40px;
+  padding: 64px 72px;
+  background: linear-gradient(
+    135deg,
+    rgba(250, 245, 255, 0.9),
+    rgba(255, 255, 255, 0.95)
+  );
+  border-radius: 32px;
+  box-shadow: 0 24px 70px rgba(139, 92, 246, 0.14);
+  border: 1px solid rgba(139, 92, 246, 0.12);
+}
+
+.about-connect h3 {
+  font-size: 28px;
+  margin-bottom: 16px;
+}
+
+.about-connect p {
+  font-size: 16px;
+  margin-bottom: 28px;
+}
+
+/* Email link styling */
+.about-connect a {
+  font-weight: 600;
+  color: var(--primary-dark);
+  text-decoration: none;
+}
+
+.about-connect a:hover {
+  text-decoration: underline;
+}
+
+/* ---------- REMOVE DUPLICATE SIDE CARD ---------- */
+
+.about-side-connect {
+  display: none !important;
+}
+
+/* ---------- MOBILE REFINEMENT ---------- */
+
+@media (max-width: 768px) {
+  .about-story,
+  .about-message,
+  .about-connect {
+    padding: 40px 24px;
+    margin: 60px 16px;
+  }
+
+  .about-page p {
+    font-size: 16px;
+  }
+}
+/* =========================================
+   ABOUT PAGE – FINAL SECTION ELEGANCE FIX
+   (STRUCTURE-BASED, GUARANTEED TO APPLY)
+========================================= */
+
+/* Target only the ABOUT page */
+body:has(h1:contains("About")),
+body:has(h2:contains("A Message From The Heart")) {
+    
+}
+
+/* Make last sections calmer */
+section:last-of-type,
+section:nth-last-of-type(2),
+section:nth-last-of-type(3) {
+    background: linear-gradient(
+        180deg,
+        #faf7ff 0%,
+        #ffffff 55%
+    ) !important;
+
+    padding-top: 80px;
+    padding-bottom: 100px;
+}
+
+/* Narrow text for elegance */
+section:last-of-type p,
+section:nth-last-of-type(2) p {
+    max-width: 720px;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 16.5px;
+    line-height: 1.8;
+    color: #4a4458;
+}
+
+/* Headings refinement */
+section:last-of-type h2,
+section:nth-last-of-type(2) h2 {
+    font-size: 32px;
+    margin-bottom: 24px;
+    color: #1e1b29;
+}
+
+/* Signature / closing feel */
+section:last-of-type strong,
+section:last-of-type em {
+    display: block;
+    margin-top: 24px;
+    font-size: 16px;
+    color: #6b5a7a;
+}
+
+/* Contact / connect box refinement */
+section:last-of-type a[href^="mailto"] {
+    display: inline-block;
+    margin-top: 16px;
+    font-weight: 600;
+    color: #6b4eff;
+    text-decoration: none;
+}
+
+section:last-of-type a[href^="mailto"]:hover {
+    text-decoration: underline;
+}
+
+/* Reduce visual noise at the very end */
+section:last-of-type {
+    box-shadow: none !important;
+}
