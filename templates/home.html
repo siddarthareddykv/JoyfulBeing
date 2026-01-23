@@ -23,7 +23,7 @@
             <div class="featured-card quote-card">
                 <div class="card-icon">🕉️</div>
                 <h3>Daily Wisdom</h3>
-                <p class="featured-text">{{ daily_content.quote if daily_content else "Loading..." }}</p>
+                <p class="featured-text">{{ daily_content.quote if daily_content else "The only true wisdom is in knowing you know nothing. — Socrates" }}</p>
                 <button class="refresh-btn">New Quote</button>
             </div>
 
@@ -31,7 +31,7 @@
             <div class="featured-card action-card">
                 <div class="card-icon">💚</div>
                 <h3>Today's Practice</h3>
-                <p class="featured-text">{{ daily_content.action if daily_content else "Loading..." }}</p>
+                <p class="featured-text">{{ daily_content.action if daily_content else "Drink water and stay hydrated" }}</p>
                 <button class="refresh-btn">New Action</button>
             </div>
 
@@ -39,7 +39,7 @@
             <div class="featured-card tip-card">
                 <div class="card-icon">⚡</div>
                 <h3>Wellness Tip</h3>
-                <p class="featured-text">{{ daily_content.tip if daily_content else "Loading..." }}</p>
+                <p class="featured-text">{{ daily_content.tip if daily_content else "Start your day with gratitude. It shifts your vibration instantly." }}</p>
                 <button class="refresh-btn">New Tip</button>
             </div>
         </div>
@@ -95,7 +95,7 @@
         <div class="gita-card">
             <div class="gita-icon">🕉️</div>
             <p class="gita-text">{{ daily_content.bhagavad_gita if daily_content else "You have the right to work, but never to the fruit of work. — Bhagavad Gita 2.47" }}</p>
-            <a href="/stress" class="gita-link">Explore More Verses →</a>
+            <a href="#" class="gita-link">Explore More Verses →</a>
         </div>
     </div>
 </section>
@@ -317,6 +317,7 @@
     align-items: center;
     justify-content: center;
     font-style: italic;
+    transition: opacity 0.3s ease;
 }
 
 .refresh-btn {
@@ -424,6 +425,7 @@
     font-style: italic;
     margin: 20px 0;
     min-height: 80px;
+    transition: opacity 0.3s ease;
 }
 
 .gita-link {
@@ -577,6 +579,7 @@
     max-width: 700px;
     margin-left: auto;
     margin-right: auto;
+    transition: opacity 0.3s ease;
 }
 
 .highlight-btn {
@@ -750,5 +753,182 @@
     }
 }
 </style>
+
+<!-- JAVASCRIPT FOR DYNAMIC CONTENT -->
+<script>
+// Daily Wisdom Quotes
+const quotes = [
+    "The only true wisdom is in knowing you know nothing. — Socrates",
+    "The mind is everything. What you think you become. — Buddha",
+    "In the midst of chaos, there is also opportunity. — Sun Tzu",
+    "The journey of a thousand miles begins with one step. — Lao Tzu",
+    "Peace comes from within. Do not seek it without. — Buddha",
+    "You have power over your mind, not outside events. — Marcus Aurelius",
+    "The best time to plant a tree was 20 years ago. The second best time is now. — Chinese Proverb",
+    "When you let go of what you are, you become what you might be. — Lao Tzu",
+    "Your task is not to seek love, but to find all barriers you have built against it. — Rumi",
+    "The wise man in the storm prays to God, not for safety, but for deliverance. — Ralph Waldo Emerson",
+    "Knowing yourself is the beginning of all wisdom. — Aristotle",
+    "The soul becomes dyed with the color of its thoughts. — Marcus Aurelius",
+    "Be like water making its way through cracks. — Bruce Lee",
+    "Silence is the language of God, all else is poor translation. — Rumi",
+    "Yesterday I was clever, so I wanted to change the world. Today I am wise, so I am changing myself. — Rumi"
+];
+
+// Daily Actions
+const actions = [
+    "Drink water and stay hydrated",
+    "Take 5 deep breaths right now",
+    "Write down 3 things you're grateful for",
+    "Stretch your body for 2 minutes",
+    "Compliment someone genuinely today",
+    "Spend 10 minutes in nature",
+    "Practice mindful eating during one meal",
+    "Call or message a loved one",
+    "Do a random act of kindness",
+    "Meditate for 5 minutes",
+    "Journal your thoughts for 10 minutes",
+    "Take a walk without your phone",
+    "Practice smiling at strangers",
+    "Listen to calming music",
+    "Read something inspirational"
+];
+
+// Wellness Tips
+const tips = [
+    "Start your day with gratitude. It shifts your vibration instantly.",
+    "Your breath is your anchor. Return to it whenever you feel overwhelmed.",
+    "Sleep is not a luxury—it's essential for mental clarity and peace.",
+    "Movement is medicine. Even a 5-minute walk can transform your mood.",
+    "Let go of perfectionism. Progress over perfection, always.",
+    "Boundaries are healthy. Saying 'no' protects your energy.",
+    "Your thoughts create your reality. Choose them wisely.",
+    "Hydration affects everything: energy, mood, focus. Drink more water.",
+    "Connection heals. Reach out, be vulnerable, share your truth.",
+    "Nature restores. Step outside and breathe fresh air daily.",
+    "Laughter is powerful medicine. Find joy in small moments.",
+    "Your body holds tension. Stretch, breathe, release.",
+    "Digital detox regularly. Your mind needs rest from screens.",
+    "Self-compassion is not selfish. Treat yourself with kindness.",
+    "Slow down. Rushing creates stress. Presence creates peace."
+];
+
+// Bhagavad Gita Verses
+const gitaVerses = [
+    "You have the right to work, but never to the fruit of work. — Bhagavad Gita 2.47",
+    "The mind is restless and difficult to restrain, but it is subdued by practice. — Bhagavad Gita 6.35",
+    "One who sees inaction in action, and action in inaction, is intelligent among men. — Bhagavad Gita 4.18",
+    "The soul is neither born, and nor does it die. — Bhagavad Gita 2.20",
+    "Set thy heart upon thy work, but never on its reward. — Bhagavad Gita 2.47",
+    "When meditation is mastered, the mind is unwavering like the flame of a lamp in a windless place. — Bhagavad Gita 6.19",
+    "A person can rise through the efforts of his own mind; or draw himself down. — Bhagavad Gita 6.5",
+    "Reshape yourself through the power of your will. — Bhagavad Gita 6.5",
+    "Whatever happened, happened for the good. Whatever is happening, is happening for the good. — Bhagavad Gita"
+];
+
+// Affirmations
+const affirmations = [
+    "I am peaceful and calm. My mind is clear and centered.",
+    "I am worthy of love, success, and happiness.",
+    "I trust the journey of my life. Everything unfolds perfectly.",
+    "I release all fear and embrace faith.",
+    "I am strong, capable, and resilient.",
+    "I choose peace over worry, love over fear.",
+    "I am grateful for this moment and all its blessings.",
+    "I deserve rest, relaxation, and self-care.",
+    "I am enough, exactly as I am right now.",
+    "I attract positive energy and loving relationships.",
+    "My mind is quiet. My heart is open.",
+    "I forgive myself and others. I choose freedom.",
+    "I am the creator of my reality. I choose joy.",
+    "I breathe in peace, I breathe out tension.",
+    "I am connected to the infinite wisdom within me."
+];
+
+// Helper function to get random item from array
+function getRandomItem(array) {
+    return array[Math.floor(Math.random() * array.length)];
+}
+
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', function() {
+    
+    // Quote refresh button
+    const quoteRefreshBtn = document.querySelectorAll('.refresh-btn')[0];
+    const quoteText = document.querySelectorAll('.featured-text')[0];
+    
+    if (quoteRefreshBtn) {
+        quoteRefreshBtn.addEventListener('click', function() {
+            const newQuote = getRandomItem(quotes);
+            quoteText.style.opacity = '0';
+            setTimeout(() => {
+                quoteText.textContent = newQuote;
+                quoteText.style.opacity = '1';
+            }, 200);
+        });
+    }
+    
+    // Action refresh button
+    const actionRefreshBtn = document.querySelectorAll('.refresh-btn')[1];
+    const actionText = document.querySelectorAll('.featured-text')[1];
+    
+    if (actionRefreshBtn) {
+        actionRefreshBtn.addEventListener('click', function() {
+            const newAction = getRandomItem(actions);
+            actionText.style.opacity = '0';
+            setTimeout(() => {
+                actionText.textContent = newAction;
+                actionText.style.opacity = '1';
+            }, 200);
+        });
+    }
+    
+    // Tip refresh button
+    const tipRefreshBtn = document.querySelectorAll('.refresh-btn')[2];
+    const tipText = document.querySelectorAll('.featured-text')[2];
+    
+    if (tipRefreshBtn) {
+        tipRefreshBtn.addEventListener('click', function() {
+            const newTip = getRandomItem(tips);
+            tipText.style.opacity = '0';
+            setTimeout(() => {
+                tipText.textContent = newTip;
+                tipText.style.opacity = '1';
+            }, 200);
+        });
+    }
+    
+    // Gita verse refresh (if link is clicked)
+    const gitaLink = document.querySelector('.gita-link');
+    const gitaText = document.querySelector('.gita-text');
+    
+    if (gitaLink) {
+        gitaLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            const newVerse = getRandomItem(gitaVerses);
+            gitaText.style.opacity = '0';
+            setTimeout(() => {
+                gitaText.textContent = newVerse;
+                gitaText.style.opacity = '1';
+            }, 200);
+        });
+    }
+    
+    // Affirmation highlight button
+    const affirmationBtn = document.querySelector('.highlight-btn');
+    const affirmationText = document.querySelector('.highlight-subtitle');
+    
+    if (affirmationBtn) {
+        affirmationBtn.addEventListener('click', function() {
+            const newAffirmation = getRandomItem(affirmations);
+            affirmationText.style.opacity = '0';
+            setTimeout(() => {
+                affirmationText.textContent = newAffirmation;
+                affirmationText.style.opacity = '1';
+            }, 200);
+        });
+    }
+});
+</script>
 
 {% endblock %}
