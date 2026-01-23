@@ -1555,3 +1555,205 @@ html, body {
         letter-spacing: 0.6px;
     }
 }
+/* ===== NAVBAR FIX ===== */
+
+.navbar {
+    background: #ffffff !important;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    padding: 16px 36px;
+}
+
+.nav-list {
+    gap: 28px;
+}
+
+.nav-list a {
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.4px;
+    color: #111;
+    position: relative;
+}
+
+.nav-list a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+    width: 0;
+    height: 2px;
+    background: #000;
+    transition: width 0.25s ease;
+}
+
+.nav-list a:hover::after {
+    width: 100%;
+}
+
+.menu-toggle {
+    color: #111;
+}
+/* ===== HERO FIX ===== */
+
+.hero,
+.home-hero {
+    padding: 120px 20px 140px;
+    text-align: center;
+}
+
+.hero h1,
+.home-hero h1 {
+    font-size: clamp(42px, 6vw, 68px);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+.hero p,
+.home-hero p {
+    max-width: 520px;
+    margin: 24px auto 48px;
+    font-size: 18px;
+    line-height: 1.6;
+    color: #555;
+}
+/* ===== SECTION RHYTHM ===== */
+
+section {
+    padding-top: 100px;
+    padding-bottom: 100px;
+}
+
+/* ===== CARD SYSTEM ===== */
+
+.card,
+.featured-card,
+.feature-item,
+.wisdom-card {
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 32px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.05);
+    transition: transform 0.25s ease;
+}
+
+.card:hover,
+.featured-card:hover,
+.feature-item:hover {
+    transform: translateY(-4px);
+}
+
+.card p,
+.featured-card p {
+    color: #555;
+    line-height: 1.6;
+}
+/* ===== MOBILE POLISH ===== */
+
+@media (max-width: 768px) {
+
+    .nav-list {
+        background: #ffffff;
+        border-radius: 16px;
+        padding: 20px;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    }
+
+    .nav-list a {
+        font-size: 16px;
+        padding: 10px 0;
+    }
+
+    section {
+        padding-top: 80px;
+        padding-bottom: 80px;
+    }
+}
+/* ===== FOOTER POLISH ===== */
+
+.footer {
+    padding-top: 80px;
+    padding-bottom: 40px;
+}
+
+.footer-content {
+    gap: 40px;
+}
+
+.footer h4 {
+    margin-bottom: 14px;
+    font-weight: 600;
+}
+
+.footer a {
+    line-height: 1.8;
+}
+/* ===== FIX COLORLESS SECTIONS ===== */
+
+/* Start Your Journey + Ready to Begin */
+.journey-section,
+.cta-section,
+.start-journey,
+.ready-section {
+    background: #ffffff !important;
+}
+
+/* Headings */
+.journey-section h2,
+.cta-section h2,
+.start-journey h2,
+.ready-section h2 {
+    color: #1d1d1f !important;
+}
+
+/* Paragraph text */
+.journey-section p,
+.cta-section p,
+.start-journey p,
+.ready-section p {
+    color: #555555 !important;
+}
+
+/* Step numbers */
+.journey-step span,
+.step-number {
+    color: #6b4eff !important;
+    border-color: rgba(107, 78, 255, 0.2);
+}
+
+/* Buttons */
+.cta-section .btn,
+.ready-section .btn {
+    background: #ffffff;
+    color: #0071e3;
+    border: 1px solid rgba(0,0,0,0.1);
+}
+
+.cta-section .btn:hover {
+    background: #f5f5f7;
+}
+/* ===== CLICK FIX: REMOVE INVISIBLE BLOCKERS ===== */
+
+/* Ensure buttons are always clickable */
+button,
+a,
+.btn {
+    position: relative;
+    z-index: 10;
+}
+
+/* Disable click interception by decorative layers */
+section::before,
+section::after,
+.overlay,
+.background,
+.bg-layer {
+    pointer-events: none !important;
+}
+
+/* Fix cards blocking buttons */
+.card,
+.featured-card,
+.feature-item {
+    position: relative;
+    z-index: 2;
+}
