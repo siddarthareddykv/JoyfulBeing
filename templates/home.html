@@ -187,15 +187,25 @@
 <style>
 /* Home Page Specific Styles */
 .home-hero {
-    background: linear-gradient(90deg, rgba(135, 206, 235, 0.7) 0%, rgba(135, 206, 235, 0.7) 50%, rgba(255, 105, 180, 0.7) 50%, rgba(255, 105, 180, 0.7) 100%),
-                linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 100%);
-    backdrop-filter: blur(10px);
-    color: white;
-    padding: 100px 40px;
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.65) 0%,
+        rgba(245, 245, 247, 0.55) 100%
+    );
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+
+    color: #1d1d1f;
+    padding: 120px 40px;
     text-align: center;
-    margin-bottom: 60px;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    box-shadow: 0 15px 35px rgba(102, 126, 234, 0.2);
+    margin-bottom: 80px;
+
+    border-radius: 28px;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4);
 }
 
 .hero-content {
