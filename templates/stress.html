@@ -10,37 +10,7 @@
             meditations, and profound teachings to calm your mind and restore inner peace.
         </p>
     </div>
-</section>
-
-<!-- BHAGAVAD GITA WISDOM SECTION -->
-<section class="wisdom-section">
-    <div class="section-wrapper">
-        <h2 class="section-title">📖 Bhagavad Gita Wisdom</h2>
-        <p class="section-subtitle">Timeless teachings on equanimity and inner peace</p>
-        
-        <div class="wisdom-card featured">
-            <div class="wisdom-icon">🕉️</div>
-            <p class="wisdom-text">{{ daily_content.bhagavad_gita if daily_content else "You have the right to work, but never to the fruit of work. — Bhagavad Gita 2.47" }}</p>
-            <button class="refresh-btn" onclick="loadNewWisdom('bhagavad_gita')">✨ New Verse</button>
-        </div>
-    </div>
-</section>
-
-<!-- VEDIC WISDOM SECTION -->
-<section class="wisdom-section alt">
-    <div class="section-wrapper">
-        <h2 class="section-title">🌊 Vedic & Upanishadic Wisdom</h2>
-        <p class="section-subtitle">Ancient truths about the nature of consciousness and peace</p>
-        
-        <div class="wisdom-card featured">
-            <div class="wisdom-icon">☮️</div>
-            <p class="wisdom-text">{{ daily_content.vedic_wisdom if daily_content else "The mind is like water. When still, it reflects clearly. — Katha Upanishad" }}</p>
-            <button class="refresh-btn" onclick="loadNewWisdom('vedic')">✨ New Teaching</button>
-        </div>
-    </div>
-</section>
-
-<!-- PRANAYAMA TECHNIQUES SECTION -->
+</section><!-- PRANAYAMA TECHNIQUES SECTION -->
 <section class="technique-section">
     <div class="section-wrapper">
         <h2 class="section-title">🫁 Pranayama: Breathing Techniques</h2>
@@ -272,68 +242,25 @@
 </section>
 
 <!-- AFFIRMATIONS SECTION -->
-<section class="affirmation-section">
-    <div class="section-wrapper max-width-md">
-        <h2 class="section-title">✨ Stress-Relief Affirmations</h2>
-        <p class="section-subtitle">Reprogram your mind with powerful affirmations</p>
-        
-        <div class="affirmations-container">
-            {% if affirmations %}
-                {% for affirmation in affirmations %}
-                    <div class="affirmation-card">
-                        <p class="affirmation-text">"{{ affirmation }}"</p>
-                        <button class="copy-btn" onclick="copyToClipboard('{{ affirmation }}')">📋 Copy</button>
-                    </div>
-                {% endfor %}
-            {% else %}
-                <div class="affirmation-card">
-                    <p class="affirmation-text">"I am peaceful and calm. My mind is clear and centered."</p>
-                </div>
-            {% endif %}
-        </div>
-        
-        <div class="affirmation-practice">
-            <h3>How to use these affirmations:</h3>
-            <ul class="practice-list">
-                <li>💭 Repeat each affirmation 3-5 times daily</li>
-                <li>🪞 Say them while looking in the mirror</li>
-                <li>📝 Write them down in your journal</li>
-                <li>🎵 Speak them aloud with conviction</li>
-                <li>💚 Feel the words resonating in your heart</li>
-                <li>⏰ Make it a morning or evening ritual</li>
-            </ul>
-        </div>
-    </div>
-</section>
+<section class="breathing-section">
+  <div class="breathing-wrap">
 
-<!-- YOGA SUTRAS WISDOM -->
-<section class="wisdom-section">
-    <div class="section-wrapper">
-        <h2 class="section-title">📚 Yoga Sutras of Patanjali</h2>
-        <p class="section-subtitle">Classical wisdom on controlling the mind through practice</p>
-        
-        <div class="wisdom-card featured">
-            <div class="wisdom-icon">🎯</div>
-            <p class="wisdom-text">{{ daily_content.yoga_sutra if daily_content else "Yoga is the cessation of the movements of the mind. — Yoga Sutras 1.2" }}</p>
-            <button class="refresh-btn" onclick="loadNewWisdom('yoga')">✨ New Sutra</button>
-        </div>
-    </div>
-</section>
+    <h2 class="breathing-title">Pause for a moment</h2>
 
-<!-- DHARMA & ACCEPTANCE -->
-<section class="wisdom-section alt">
-    <div class="section-wrapper">
-        <h2 class="section-title">🙏 Dharma: Wisdom on Acceptance</h2>
-        <p class="section-subtitle">Find peace through duty and acceptance of what is</p>
-        
-        <div class="wisdom-card featured">
-            <div class="wisdom-icon">🌿</div>
-            <p class="wisdom-text">{{ daily_content.dharma if daily_content else "Do your duty (Dharma) with full dedication, without attachment to the results. — Hindu Philosophy" }}</p>
-            <button class="refresh-btn" onclick="loadNewWisdom('dharma')">✨ New Teaching</button>
-        </div>
-    </div>
-</section>
+    <p class="breathing-subtitle">
+      A simple breath can bring you back to the present.
+    </p>
 
+    <div class="circle"></div>
+
+    <p class="breath-text">Inhale</p>
+
+    <p class="breathing-note">
+      Follow the rhythm. No effort needed.
+    </p>
+
+  </div>
+</section>
 <!-- QUICK RELIEF TIPS -->
 <section class="tips-section">
     <div class="section-wrapper">
