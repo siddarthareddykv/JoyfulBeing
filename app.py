@@ -1,5 +1,9 @@
 import sys
 import os
+import datetime
+import datetime
+import calendar as pycalendar
+from flask import Flask, render_template, request
 
 def resource_path(relative_path):
     try:
@@ -9,7 +13,6 @@ def resource_path(relative_path):
     return os.path.join(base_path, relative_path)
 
 from flask import Flask, render_template, request, jsonify
-from datetime import datetime
 import calendar as pycalendar
 import random
 
@@ -503,6 +506,268 @@ wisdom_quotes = [
     "Happiness is not by chance, but by choice. — Jim Rohn",
     "Do not dwell in the past, do not dream of the future, concentrate the mind on the present moment. — Buddha",
     "The greatest glory in living lies not in never falling, but in rising every time we fall. — Nelson Mandela",
+    "Begin where you are.",
+    "Breathe before you react.",
+    "Small steps still move you forward.",
+    "Peace starts with awareness.",
+    "Let today unfold gently.",
+    "You are allowed to slow down.",
+    "Choose calm over noise.",
+    "Notice what is already enough.",
+    "Presence is power.",
+    "One mindful breath changes the moment.",
+    "Clarity comes from stillness.",
+    "You don’t need to rush.",
+    "Today is not a race.",
+    "Respond with kindness.",
+    "Be here fully.",
+    "Let go of what you cannot control.",
+    "Silence can heal.",
+    "Progress is not always loud.",
+    "Rest is also productive.",
+    "Trust the timing of your life.",
+    "Listen more than you speak.",
+    "Your breath is an anchor.",
+    "Peace is a daily practice.",
+    "Focus on what truly matters.",
+    "Let your mind soften.",
+    "You are doing better than you think.",
+    "Patience creates space.",
+    "Calm is a choice.",
+    "Release unnecessary tension.",
+    "Be gentle with yourself.",
+    "Clarity grows in quiet moments.",
+    "Nothing needs to be forced today.",
+    "Observe before judging.",
+    "Slow moments hold wisdom.",
+    "Your energy matters.",
+    "Inner peace is strength.",
+    "Choose simplicity.",
+    "Awareness is freedom.",
+    "One step at a time.",
+    "Stillness restores balance.",
+    "Kindness begins within.",
+    "Pause. Then proceed.",
+    "Let today be light.",
+    "Not everything needs a response.",
+    "Peace does not require perfection.",
+    "Stay rooted in the present.",
+    "Calm is contagious.",
+    "Less effort, more awareness.",
+    "Your pace is valid.",
+    "Notice the space between thoughts.",
+    "Softness is not weakness.",
+    "Allow things to be as they are.",
+    "Balance comes from within.",
+    "Today deserves your attention.",
+    "Breathe into the moment.",
+    "Trust small beginnings.",
+    "Let go, gently.",
+    "Quiet strength lasts longer.",
+    "Inner calm shapes outer life.",
+    "One mindful choice is enough.",
+    "Choose clarity over confusion.",
+    "Be patient with the process.",
+    "Awareness brings ease.",
+    "Peace is already available.",
+    "Move with intention.",
+    "Your breath knows the way.",
+    "Release what drains you.",
+    "Stillness speaks.",
+    "Let presence guide you.",
+    "Calm supports clarity.",
+    "Ease into the day.",
+    "Accept what is.",
+    "Let thoughts pass.",
+    "Presence changes perspective.",
+    "Choose depth over speed.",
+    "Peace grows quietly.",
+    "Allow space for rest.",
+    "Trust yourself more.",
+    "Attention is sacred.",
+    "Calm brings insight.",
+    "Today does not need fixing.",
+    "Return to your breath.",
+    "Soft focus reveals truth.",
+    "Inner quiet is powerful.",
+    "Observe without attachment.",
+    "Let calm lead.",
+    "Nothing is missing right now.",
+    "Be steady.",
+    "Stillness sharpens awareness.",
+    "Clarity lives here.",
+    "Choose mindful action.",
+    "Let ease replace effort.",
+    "Your breath is enough.",
+    "Peace comes from acceptance.",
+    "Be present, gently.",
+    "Slow clarity is real clarity.",
+    "Let awareness expand.",
+    "Pause invites wisdom.",
+    "Inner balance matters.",
+    "Stay with the moment.",
+    "Calm settles the mind.",
+    "Be kind to your pace.",
+    "Presence simplifies everything.",
+    "Release mental noise.",
+    "Quiet attention transforms.",
+    "Trust your inner rhythm.",
+    "Choose stillness when unsure.",
+    "Awareness dissolves tension.",
+    "Nothing needs rushing.",
+    "Be rooted, not reactive.",
+    "Peace thrives in simplicity.",
+    "Let the mind rest.",
+    "Stay open.",
+    "Calm reveals what matters.",
+    "Allow gentle focus.",
+    "Choose awareness today.",
+    "Be steady in breath.",
+    "Inner peace builds resilience.",
+    "Let calm arrive naturally.",
+    "Stay grounded.",
+    "Notice without judging.",
+    "Peace lives in attention.",
+    "Soft moments matter.",
+    "Ease is allowed.",
+    "Choose clarity.",
+    "Return to center.",
+    "Let life breathe.",
+    "Be aware, not anxious.",
+    "Stillness brings insight.",
+    "Calm guides wise action.",
+    "Today is enough.",
+    "Let go of excess effort.",
+    "Rest the mind.",
+    "Peace begins inside.",
+    "Trust quiet confidence.",
+    "Be calm, be clear.",
+    "Awareness shapes experience.",
+    "Slow is sustainable.",
+    "Stay attentive.",
+    "Release inner pressure.",
+    "Calm holds strength.",
+    "Nothing urgent right now.",
+    "Let breath lead.",
+    "Choose presence.",
+    "Peace follows acceptance.",
+    "Be here, fully.",
+    "Quiet focus sharpens clarity.",
+    "Allow balance.",
+    "Stay soft inside.",
+    "Calm creates space.",
+    "Observe with compassion.",
+    "Trust simplicity.",
+    "Let the day be light.",
+    "Inner stillness supports action.",
+    "Awareness reduces struggle.",
+    "Move gently.",
+    "Choose calm awareness.",
+    "Peace grows with practice.",
+    "Let the mind settle.",
+    "Notice what remains.",
+    "Be patient with thoughts.",
+    "Clarity does not hurry.",
+    "Rest in awareness.",
+    "Calm steadies decisions.",
+    "Be grounded in now.",
+    "Let go slowly.",
+    "Peace welcomes you.",
+    "Stay mindful.",
+    "Soft attention heals.",
+    "Nothing to prove today.",
+    "Calm opens perspective.",
+    "Allow the moment.",
+    "Trust presence.",
+    "Be attentive.",
+    "Inner quiet strengthens resolve.",
+    "Ease replaces force.",
+    "Peace lives here.",
+    "Choose mindful ease.",
+    "Let awareness guide action.",
+    "Stay calm within.",
+    "Presence clarifies intention.",
+    "Nothing extra needed.",
+    "Be gentle with effort.",
+    "Calm restores balance.",
+    "Stay centered.",
+    "Quiet wisdom emerges.",
+    "Trust inner calm.",
+    "Observe patiently.",
+    "Peace deepens over time.",
+    "Choose simplicity again.",
+    "Let attention rest.",
+    "Be calm in movement.",
+    "Awareness softens stress.",
+    "Stay steady.",
+    "Clarity through calm.",
+    "Let breath steady you.",
+    "Peace is practical.",
+    "Notice calm moments.",
+    "Trust the pause.",
+    "Be aware today.",
+    "Inner stillness supports growth.",
+    "Ease into clarity.",
+    "Calm is grounding.",
+    "Stay open to quiet.",
+    "Nothing to force.",
+    "Presence nurtures peace.",
+    "Let go of hurry.",
+    "Choose mindful focus.",
+    "Be relaxed and alert.",
+    "Calm brings understanding.",
+    "Trust gentle effort.",
+    "Peace is sustainable.",
+    "Stay with awareness.",
+    "Quiet moments guide.",
+    "Let calm shape action.",
+    "Be attentive now.",
+    "Clarity lives in stillness.",
+    "Allow ease.",
+    "Peace responds to attention.",
+    "Choose grounded calm.",
+    "Be centered.",
+    "Inner quiet is clarity.",
+    "Trust steady progress.",
+    "Observe calmly.",
+    "Peace comes naturally.",
+    "Let focus soften.",
+    "Stay balanced.",
+    "Calm supports insight.",
+    "Be aware of breath.",
+    "Nothing to chase.",
+    "Presence simplifies life.",
+    "Choose still awareness.",
+    "Let calm deepen.",
+    "Be quietly confident.",
+    "Peace begins again.",
+    "Stay mindful of now.",
+    "Ease creates flow.",
+    "Clarity through patience.",
+    "Trust gentle awareness.",
+    "Be steady today.",
+    "Calm brings order.",
+    "Observe with kindness.",
+    "Peace settles naturally.",
+    "Let awareness widen.",
+    "Stay grounded in breath.",
+    "Choose calm clarity.",
+    "Be present gently.",
+    "Inner balance is power.",
+    "Trust simplicity daily.",
+    "Peace grows steadily.",
+    "Let the mind rest again.",
+    "Be calmly focused.",
+    "Awareness reduces noise.",
+    "Stay centered today.",
+    "Quiet presence heals.",
+    "Choose patient awareness.",
+    "Let calm guide you.",
+    "Be steady and kind.",
+    "Peace feels natural.",
+    "Stay attentive and calm.",
+    "Ease supports clarity.",
+    "Trust inner stillness."
 ]
 
 daily_actions = [
@@ -568,36 +833,49 @@ def home():
 
 @app.route("/calendar")
 def calendar_view():
-    """Display calendar"""
-    # Get month from query parameter or use current month
-    month = request.args.get('month', default=datetime.now().month, type=int)
-    year = datetime.now().year
-    theme = month_themes[month]
-    
-    # Get calendar matrix (weeks of days)
+    today = datetime.date.today()
+    year = today.year
+
+    month = request.args.get(
+        "month",
+        default=today.month,
+        type=int
+    )
+
     weeks = pycalendar.monthcalendar(year, month)
-    
-    # Get month name
     month_name = pycalendar.month_name[month]
-    
-    # Create mapping of day numbers to quotes and actions
+    theme = month_themes.get(month, "Mindfulness")
+
     mapping = {}
-    for day in range(1, 32):
-        # Use day to seed random choice (so same day always gets same quote)
-        random.seed(day)
-        mapping[day] = {
-            "quote": random.choice(wisdom_quotes),
-            "action": random.choice(daily_actions)
-        }
-    
-    return render_template("calendar.html", 
-                          weeks=weeks,
-                          month=month,
-                          month_name=month_name,
-                          year=year,
-                          theme=theme,
-                          month_themes=month_themes,
-                          mapping=mapping)
+
+    for week in weeks:
+        for day in week:
+            if day == 0:
+                continue
+
+            date_obj = datetime.date(year, month, day)
+
+            # 🔑 THIS IS THE KEY LINE
+            day_of_year = date_obj.timetuple().tm_yday  # 1–365/366
+
+            quote_index = (day_of_year - 1) % len(wisdom_quotes)
+
+            mapping[day] = {
+                "quote": wisdom_quotes[quote_index],
+                "action": daily_actions[quote_index % len(daily_actions)]
+            }
+
+    return render_template(
+        "calendar.html",
+        weeks=weeks,
+        month=month,
+        month_name=month_name,
+        year=year,
+        theme=theme,
+        month_themes=month_themes,
+        mapping=mapping
+    )
+
 
 @app.route("/emotions")
 def emotions():
