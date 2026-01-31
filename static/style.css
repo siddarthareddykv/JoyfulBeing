@@ -9,40 +9,52 @@
 }
 
 :root {
-  /* Elegant Color Palette */
-  --primary: #8b5cf6;
-  --primary-light: #a78bfa;
-  --primary-dark: #7c3aed;
-  --accent: #d8b4fe;
-  --text-dark: #1e1b29;
-  --text-body: #4a4458;
-  --text-muted: #9ca3af;
-  
-  /* Sophisticated Backgrounds */
-  --bg-main: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 50%, #e9d5ff 100%);
+  /* 💖 Sparkling Valentine Pink Theme */
+  --primary: #ec4899;          /* main pink */
+  --primary-light: #f9a8d4;    /* soft blush */
+  --primary-dark: #db2777;     /* deep rose */
+  --accent: #fbcfe8;           /* sparkle accent */
+
+  --text-dark: #3b0a24;        /* deep heart tone */
+  --text-body: #5a1a3a;
+  --text-muted: #9d4c74;
+
+  /* Backgrounds */
+  --bg-main: linear-gradient(
+    135deg,
+    #fff1f7 0%,
+    #fde7f3 50%,
+    #fce7f3 100%
+  );
+
   --bg-white: #ffffff;
-  --bg-card: #fefeff;
-  --bg-light: #faf5ff;
-  --bg-elegant: linear-gradient(135deg, #faf5ff 0%, #f5f3ff 100%);
-  --bg-subtle: rgba(139, 92, 246, 0.03);
-  
-  /* Elegant Overlays */
-  --overlay-light: rgba(250, 245, 255, 0.7);
-  --overlay-glass: rgba(255, 255, 255, 0.85);
-  
+  --bg-card: #fffafb;
+  --bg-light: #fff1f7;
+  --bg-elegant: linear-gradient(
+    135deg,
+    #fff5fa 0%,
+    #ffe4f0 100%
+  );
+
+  --bg-subtle: rgba(236, 72, 153, 0.05);
+
+  /* Glass & overlays */
+  --overlay-light: rgba(255, 240, 246, 0.7);
+  --overlay-glass: rgba(255, 255, 255, 0.9);
+
   /* Borders */
-  --border: rgba(139, 92, 246, 0.1);
-  --border-light: rgba(139, 92, 246, 0.05);
-  
-  /* Refined Shadows */
-  --shadow-sm: 0 2px 8px rgba(139, 92, 246, 0.08), 0 1px 3px rgba(139, 92, 246, 0.05);
-  --shadow-md: 0 8px 24px rgba(139, 92, 246, 0.12), 0 4px 8px rgba(139, 92, 246, 0.08);
-  --shadow-lg: 0 16px 48px rgba(139, 92, 246, 0.15), 0 8px 16px rgba(139, 92, 246, 0.1);
-  --shadow-elegant: 0 20px 60px rgba(139, 92, 246, 0.18);
-  
+  --border: rgba(236, 72, 153, 0.15);
+  --border-light: rgba(236, 72, 153, 0.08);
+
+  /* Shadows – warm & romantic */
+  --shadow-sm: 0 4px 10px rgba(236, 72, 153, 0.12);
+  --shadow-md: 0 10px 30px rgba(236, 72, 153, 0.18);
+  --shadow-lg: 0 20px 60px rgba(236, 72, 153, 0.22);
+  --shadow-elegant: 0 28px 80px rgba(236, 72, 153, 0.25);
+
   /* Transitions */
   --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-fast: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-fast: all 0.2s ease;
 }
 
 html {
@@ -1171,4 +1183,14 @@ header * {
   font-size: 14px;
   font-weight: 500;
   text-decoration: none;
+}
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(circle at 20% 30%, rgba(236,72,153,0.08), transparent 40%),
+    radial-gradient(circle at 80% 70%, rgba(249,168,212,0.06), transparent 45%);
+  pointer-events: none;
+  z-index: 0;
 }
