@@ -89,19 +89,28 @@
     </div>
 </footer>
 <script>
+/* Mobile menu toggle */
 function toggleMenu() {
-    document.getElementById("navMenu").classList.toggle("active");
+    const menu = document.getElementById("navMenu");
+    if (menu) {
+        menu.classList.toggle("active");
+    }
 }
-<script>
-  const breathText = document.querySelector('.breath-text');
-  const cycle = ['Inhale', 'Hold', 'Exhale'];
-  let index = 0;
 
-  setInterval(() => {
-    breathText.textContent = cycle[index];
-    index = (index + 1) % cycle.length;
-  }, 3000);
+/* Optional breathing text animation (safe guard added) */
+document.addEventListener("DOMContentLoaded", function () {
+    const breathText = document.querySelector('.breath-text');
+    if (!breathText) return;
+
+    const cycle = ['Inhale', 'Hold', 'Exhale'];
+    let index = 0;
+
+    setInterval(() => {
+        breathText.textContent = cycle[index];
+        index = (index + 1) % cycle.length;
+    }, 3000);
+});
 </script>
-</script>
+
 </body>
 </html>

@@ -1194,3 +1194,29 @@ body::after {
   pointer-events: none;
   z-index: 0;
 }
+/* Mobile nav */
+.menu-toggle {
+  display: none;
+  font-size: 26px;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: block;
+  }
+
+  .nav-right {
+    display: none;
+    width: 100%;
+  }
+
+  .nav-right.active {
+    display: block;
+  }
+
+  .nav-list {
+    flex-direction: column;
+    gap: 12px;
+  }
+}
