@@ -301,6 +301,95 @@
         </div>
     </div>
 </section>
+<!-- EMOTIONAL REGULATION – INDIAN WISDOM -->
+<section class="technique-section">
+  <div class="section-wrapper">
+
+    <h2 class="section-title">🪔 Emotional Regulation the Indian Way</h2>
+    <p class="section-subtitle">
+      Indian philosophy does not suppress emotions. It teaches us to observe, regulate, and gently transform them.
+    </p>
+
+    <div class="techniques-grid">
+
+      <div class="technique-card">
+        <h3>🧠 Sakshi Bhava (Witness Awareness)</h3>
+        <p><strong>Core idea:</strong> You are not the emotion. You are the observer.</p>
+        <p>
+          When stress arises, pause and mentally say: <em>“I am noticing anxiety.”</em>
+          This simple shift reduces emotional intensity instantly.
+        </p>
+      </div>
+
+      <div class="technique-card">
+        <h3>🔥 Tapas (Emotional Discipline)</h3>
+        <p><strong>Core idea:</strong> Stay steady without force.</p>
+        <p>
+          Instead of reacting, sit with discomfort for 90 seconds.
+          Most stress hormones naturally dissolve within this window.
+        </p>
+      </div>
+
+      <div class="technique-card">
+        <h3>🌊 Pratipaksha Bhavana</h3>
+        <p><strong>Core idea:</strong> Replace disturbing thoughts consciously.</p>
+        <p>
+          When negative thinking repeats, gently introduce its opposite.
+          Fear → Trust. Anger → Compassion. Over time, the mind rewires.
+        </p>
+      </div>
+
+      <div class="technique-card">
+        <h3>🕯️ Santosha (Contentment)</h3>
+        <p><strong>Core idea:</strong> Peace grows when comparison ends.</p>
+        <p>
+          Stress often comes from imagined futures.
+          Contentment anchors the mind back into the present moment.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+<!-- DAILY STRESS RESET -->
+<section class="technique-section alt">
+  <div class="section-wrapper">
+
+    <h2 class="section-title">🌤️ 10-Minute Daily Stress Reset</h2>
+    <p class="section-subtitle">
+      A simple routine inspired by yoga, Vedanta, and neuroscience.
+    </p>
+
+    <div class="tips-grid">
+
+      <div class="tip-card">
+        <h3>Minute 1–2</h3>
+        <p>Sit still. Breathe slowly. Exhale longer than inhale.</p>
+      </div>
+
+      <div class="tip-card">
+        <h3>Minute 3–5</h3>
+        <p>Observe thoughts without engagement. No fixing.</p>
+      </div>
+
+      <div class="tip-card">
+        <h3>Minute 6–7</h3>
+        <p>Repeat a calming phrase: “I am safe in this moment.”</p>
+      </div>
+
+      <div class="tip-card">
+        <h3>Minute 8–9</h3>
+        <p>Feel gratitude for one simple thing.</p>
+      </div>
+
+      <div class="tip-card">
+        <h3>Minute 10</h3>
+        <p>Set one gentle intention for the day.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
 
 <!-- CALL TO ACTION -->
 <section class="cta-section">
@@ -326,6 +415,14 @@
         console.log('Loading new ' + type + ' wisdom...');
         alert('✨ Refresh the page to see new wisdom!');
     }
+</script>
+<script>
+document.getElementById("bellBtn")?.addEventListener("click", () => {
+  const bell = document.getElementById("bellSound");
+  bell.currentTime = 0;
+  bell.volume = 0.5;
+  bell.play();
+});
 </script>
 
 {% endblock %}
