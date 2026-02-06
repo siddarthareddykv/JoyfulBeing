@@ -1220,3 +1220,304 @@ body::after {
     gap: 12px;
   }
 }
+
+
+/* =========================================
+   FOUNDER SECTION ??? ABOUT PAGE
+========================================= */
+
+.about-me {
+  margin: 100px auto 40px;
+  padding: 72px 64px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 245, 250, 0.95));
+  border-radius: 28px;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border-light);
+  position: relative;
+  overflow: hidden;
+}
+
+.about-me::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 20% 20%, rgba(249, 168, 212, 0.18) 0%, transparent 45%);
+  pointer-events: none;
+}
+
+.about-me h2 {
+  margin-bottom: 22px;
+}
+
+.about-me p {
+  font-size: 17px;
+  line-height: 1.85;
+  color: #4a4458;
+}
+
+.about-me .about-lead {
+  font-size: 18px;
+  color: #3b2d3f;
+}
+
+.about-me .signature {
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(236, 72, 153, 0.2);
+}
+
+.about-me .signature em {
+  display: block;
+  margin-bottom: 12px;
+  color: #6b5a7a;
+}
+
+.about-me .signature-name {
+  display: inline-block;
+  margin-top: 6px;
+  font-size: 18px;
+  color: var(--primary);
+}
+
+@media (max-width: 768px) {
+  .about-me {
+    padding: 48px 28px;
+    margin: 70px 16px 30px;
+  }
+
+  .about-me p {
+    font-size: 16px;
+  }
+}
+
+
+/* =========================================
+   SIGNATURE CARD ??? ABOUT PAGE
+========================================= */
+
+.signature-card {
+  margin-top: 28px;
+  padding: 20px 22px;
+  background: rgba(255, 255, 255, 0.75);
+  border: 1px solid rgba(236, 72, 153, 0.18);
+  border-radius: 18px;
+  box-shadow: 0 10px 24px rgba(236, 72, 153, 0.08);
+}
+
+.signature-card .signature {
+  margin: 0;
+}
+
+.signature-card .signature strong {
+  display: block;
+  margin-top: 8px;
+  color: #3b2d3f;
+}
+
+.signature-card .signature-name {
+  display: inline-block;
+  margin-top: 6px;
+}
+
+@media (max-width: 768px) {
+  .signature-card {
+    padding: 16px 18px;
+  }
+}
+.about-me {
+  margin-top: 48px;
+  padding: 32px;
+  background: linear-gradient(180deg, #fff8fc, #ffffff);
+  border-radius: 18px;
+  box-shadow: 0 14px 40px rgba(20,20,60,0.06);
+}
+
+.about-me h2 {
+  text-align: center;
+  color: #3a3d84;
+  margin-bottom: 18px;
+}
+
+.about-lead {
+  font-size: 17px;
+  text-align: center;
+  color: #555;
+}
+
+.signature-card {
+  margin-top: 24px;
+  text-align: center;
+}
+
+.signature-name {
+  font-weight: 700;
+  color: #3a3d84;
+}
+/* Founder Section */
+.founder-section {
+  margin: 64px 0;
+  padding: 56px 20px;
+  background: linear-gradient(180deg, #fff7fb, #ffffff);
+}
+
+.founder-container {
+  max-width: 780px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.founder-title {
+  font-size: 30px;
+  font-weight: 700;
+  color: #3a3d84;
+  margin-bottom: 16px;
+  letter-spacing: -0.3px;
+}
+
+.founder-lead {
+  font-size: 18px;
+  font-weight: 500;
+  color: #444;
+  margin-bottom: 24px;
+}
+
+.founder-text {
+  font-size: 16px;
+  line-height: 1.7;
+  color: #5f647a;
+  margin-bottom: 18px;
+}
+
+.founder-signature {
+  margin-top: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.founder-quote {
+  font-size: 15px;
+  font-style: italic;
+  color: #777;
+  margin-bottom: 6px;
+}
+
+.founder-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: #3a3d84;
+}
+
+/* Mobile fine-tuning */
+@media (max-width: 600px) {
+  .founder-title {
+    font-size: 24px;
+  }
+
+  .founder-lead {
+    font-size: 16px;
+  }
+
+  .founder-text {
+    font-size: 15px;
+  }
+}
+/* Handwritten Signature */
+.founder-signature {
+  margin-top: 36px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.founder-quote {
+  font-size: 15px;
+  font-style: italic;
+  color: #777;
+  margin-bottom: 10px;
+}
+
+.founder-name {
+  font-family: 'Dancing Script', cursive;
+  font-size: 26px;
+  font-weight: 600;
+  color: #3a3d84;
+  letter-spacing: 0.5px;
+}
+/* Chatbot Container */
+#namaskaram-bot {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 9999;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Floating Button */
+#namaskaram-button {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ff7aa2, #ffb347);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  cursor: pointer;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+}
+
+/* Chat Window */
+#namaskaram-window {
+  display: none;
+  width: 300px;
+  height: 420px;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.18);
+  overflow: hidden;
+}
+
+/* Header */
+.nb-header {
+  background: linear-gradient(135deg, #ffb347, #ff7aa2);
+  color: white;
+  padding: 12px;
+  display: flex;
+  justify-content: space-between;
+  font-weight: 600;
+}
+
+/* Messages */
+#nb-messages {
+  padding: 12px;
+  height: 300px;
+  overflow-y: auto;
+  font-size: 14px;
+  color: #444;
+}
+
+/* Message bubbles */
+.nb-bot {
+  background: #fff3f7;
+  padding: 10px 12px;
+  border-radius: 12px;
+  margin-bottom: 10px;
+}
+
+.nb-user {
+  background: #f0f4ff;
+  padding: 10px 12px;
+  border-radius: 12px;
+  margin-bottom: 10px;
+  text-align: right;
+}
+
+/* Input */
+#nb-input {
+  width: 100%;
+  border: none;
+  padding: 12px;
+  border-top: 1px solid #eee;
+  outline: none;
+}

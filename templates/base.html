@@ -8,6 +8,9 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;600&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -112,5 +115,61 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 </script>
 
+<!-- Namaskaram Chatbot -->
+<div id="namaskaram-bot">
+
+  <!-- Floating Button -->
+  <div id="namaskaram-button">🙏</div>
+
+  <!-- Chat Window -->
+  <div id="namaskaram-window">
+    <div class="nb-header">
+      <span>🙏 Namaskaram</span>
+      <button id="nb-close">✕</button>
+    </div>
+
+    <div id="nb-messages">
+      <div class="nb-bot">
+        Namaskaram 🌿  
+        How is your heart feeling right now?
+      </div>
+    </div>
+
+    <input
+      id="nb-input"
+      type="text"
+      placeholder="Share gently…"
+    />
+  </div>
+
+</div>
+<script>
+const btn = document.getElementById("namaskaram-button");
+const win = document.getElementById("namaskaram-window");
+const closeBtn = document.getElementById("nb-close");
+const input = document.getElementById("nb-input");
+const messages = document.getElementById("nb-messages");
+
+btn.onclick = () => win.style.display = "block";
+closeBtn.onclick = () => win.style.display = "none";
+
+input.addEventListener("keypress", async (e) => {
+  if (e.key === "Enter" && input.value.trim()) {
+    const text = input.value;
+    messages.innerHTML += `<div class="nb-user">${text}</div>`;
+    input.value = "";
+
+    const res = await fetch("/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message: text })
+    });
+
+    const data = await res.json();
+    messages.innerHTML += `<div class="nb-bot">${data.reply}</div>`;
+    messages.scrollTop = messages.scrollHeight;
+  }
+});
+</script>
 </body>
 </html>

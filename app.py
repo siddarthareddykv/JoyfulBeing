@@ -3,6 +3,7 @@ import os
 import datetime
 import datetime
 import calendar as pycalendar
+import random
 from flask import Flask, render_template, request
 
 def resource_path(relative_path):
@@ -12,11 +13,51 @@ def resource_path(relative_path):
         base_path = os.path.abspath(".")
     return os.path.join(base_path, relative_path)
 
-from flask import Flask, render_template, request, jsonify
-import calendar as pycalendar
-import random
+from flask import request, jsonify
+from openai import OpenAI
+import os
 
 app = Flask(__name__)
+
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+
+SYSTEM_PROMPT = """
+You are Namaskaram, a calm, compassionate guide inspired by Indian wisdom.
+Your role is to gently reduce stress and emotional tension.
+
+Rules:
+- Speak softly and briefly (2–4 lines max)
+- No medical diagnosis
+- No urgency or fear-based language
+- Encourage breathing, grounding, and self-compassion
+- Sound like a temple guide, not a chatbot
+"""
+
+@app.route("/chat", methods=["POST"])
+def chat():
+    try:
+        data = request.get_json()
+        user_message = data.get("message", "")
+
+        response = client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=[
+                {"role": "system", "content": SYSTEM_PROMPT},
+                {"role": "user", "content": user_message}
+            ],
+            max_tokens=100,
+            temperature=0.4
+        )
+
+        reply = response.choices[0].message.content.strip()
+        return jsonify({"reply": reply})
+
+    except Exception as e:
+        # NEVER leave user without calm
+        return jsonify({
+            "reply": "Namaskaram 🌿 Take one slow breath. I am here with you."
+        })
+
 
 # ============================================================================
 # MONTH THEMES (elegant colors with seasonal harmony)
