@@ -7,9 +7,9 @@
         <h1 class="hero-title">Find Your Inner Peace</h1>
         <p class="hero-subtitle">Start your journey today with daily wisdom, guided practices, and proven techniques</p>
         <div class="hero-cta">
-            <a href="/mood" class="cta-btn primary">🌿 Mood Check</a>
-            <a href="/calendar" class="cta-btn primary">📅 Daily Inspiration</a>
-            <a href="/stress" class="cta-btn secondary">🧘 Calm Your Mind</a>
+            <a href="/mood" class="cta-btn primary">Mood Check</a>
+            <a href="/calendar" class="cta-btn primary">Daily Inspiration</a>
+            <a href="/stress" class="cta-btn secondary">Calm Your Mind</a>
         </div>
     </div>
 </section>
@@ -18,31 +18,31 @@
 <!-- FEATURED DAILY WISDOM -->
 <section class="featured-section">
     <div class="section-wrapper">
-        <h2 class="section-title">✨ Today's Inspiration</h2>
+        <h2 class="section-title">Today's Inspiration</h2>
         
         <!-- Daily Quote -->
         <div class="featured-cards">
             <div class="featured-card quote-card">
-                <div class="card-icon">🕉️</div>
+                <div class="card-icon">Quote</div>
                 <h3>Daily Wisdom</h3>
-                <p class="featured-text">{{ daily_content.quote if daily_content else "The only true wisdom is in knowing you know nothing. — Socrates" }}</p>
-                <button class="refresh-btn">New Quote</button>
+                <p class="featured-text">{{ daily_content.quote if daily_content else "The only true wisdom is in knowing you know nothing. - Socrates" }}</p>
+                <button class="refresh-btn">Refresh Quote</button>
             </div>
 
             <!-- Daily Action -->
             <div class="featured-card action-card">
-                <div class="card-icon">💚</div>
+                <div class="card-icon">Practice</div>
                 <h3>Today's Practice</h3>
                 <p class="featured-text">{{ daily_content.action if daily_content else "Drink water and stay hydrated" }}</p>
-                <button class="refresh-btn">New Action</button>
+                <button class="refresh-btn">Refresh Practice</button>
             </div>
 
             <!-- Daily Tip -->
             <div class="featured-card tip-card">
-                <div class="card-icon">⚡</div>
+                <div class="card-icon">Tip</div>
                 <h3>Wellness Tip</h3>
                 <p class="featured-text">{{ daily_content.tip if daily_content else "Start your day with gratitude. It shifts your vibration instantly." }}</p>
-                <button class="refresh-btn">New Tip</button>
+                <button class="refresh-btn">Refresh Tip</button>
             </div>
         </div>
     </div>
@@ -55,26 +55,26 @@
         <div class="features-grid">
             <!-- Calendar Feature -->
             <div class="feature-item">
-                <div class="feature-icon">📅</div>
+                <div class="feature-icon">Calendar</div>
                 <h3>Daily Calendar</h3>
                 <p>Every day brings a new quote, action, and wellness tip designed to elevate your spirit and guide you toward peace.</p>
-                <a href="/calendar" class="feature-link">Explore Calendar →</a>
+                <a href="/calendar" class="feature-link">Explore Calendar -></a>
             </div>
 
             <!-- Stress Relief Feature -->
             <div class="feature-item">
-                <div class="feature-icon">🧘</div>
+                <div class="feature-icon">Breath</div>
                 <h3>Stress Relief</h3>
                 <p>Master breathing techniques (Pranayama), meditation practices, and affirmations rooted in ancient Indian wisdom.</p>
-                <a href="/stress" class="feature-link">Find Calm →</a>
+                <a href="/stress" class="feature-link">Find Calm -></a>
             </div>
 
             <!-- Emotions Feature -->
             <div class="feature-item">
-                <div class="feature-icon">❤️</div>
+                <div class="feature-icon">Emotions</div>
                 <h3>Emotions Guide</h3>
                 <p>Understand and transform your emotions with compassionate guidance and practical tools for emotional wellness.</p>
-                <a href="/emotions" class="feature-link">Explore Emotions →</a>
+                <a href="/emotions" class="feature-link">Explore Emotions -></a>
             </div>
         </div>
     </div>
@@ -83,13 +83,13 @@
 <!-- BHAGAVAD GITA WISDOM SECTION -->
 <section class="gita-section">
     <div class="section-wrapper">
-        <h2 class="section-title">📖 Bhagavad Gita Wisdom</h2>
+        <h2 class="section-title">Bhagavad Gita Wisdom</h2>
         <p class="section-subtitle">Timeless teachings for equanimity and inner strength</p>
         
         <div class="gita-card">
-            <div class="gita-icon">🕉️</div>
-            <p class="gita-text">{{ daily_content.bhagavad_gita if daily_content else "You have the right to work, but never to the fruit of work. — Bhagavad Gita 2.47" }}</p>
-            <a href="#" class="gita-link">Explore More Verses →</a>
+            <div class="gita-icon">Verse</div>
+            <p class="gita-text">{{ daily_content.bhagavad_gita if daily_content else "You have the right to work, but never to the fruit of work. - Bhagavad Gita 2.47" }}</p>
+            <a href="#" class="gita-link">Explore More Verses -></a>
         </div>
     </div>
 </section>
@@ -161,7 +161,7 @@
     <div class="section-wrapper max-width-md">
         <h2 class="highlight-text">Remember: You Are Enough</h2>
         <p class="highlight-subtitle">{{ daily_content.affirmation if daily_content else "I am peaceful and calm. My mind is clear and centered." }}</p>
-        <button class="highlight-btn">Get New Affirmation</button>
+        <button class="highlight-btn">Refresh Affirmation</button>
     </div>
 </section>
 
@@ -242,7 +242,7 @@
 
 .cta-btn.primary {
     background: white;
-    color: #667eea;
+    color: #2f5141;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
@@ -252,9 +252,9 @@
 }
 
 .cta-btn.secondary {
-    background: transparent;
-    color: white;
-    border: 2px solid white;
+    background: rgba(255, 255, 255, 0.9);
+    color: #2f5141;
+    border: 2px solid #c8a66a;
 }
 
 .cta-btn.secondary:hover {
@@ -640,13 +640,13 @@
 }
 
 .btn.secondary {
-    background: transparent;
-    color: white;
-    border: 2px solid white;
+    background: rgba(255, 255, 255, 0.9);
+    color: #2f5141;
+    border: 2px solid #c8a66a;
 }
 
 .btn.secondary:hover {
-    background: rgba(255, 255, 255, 0.1);
+    background: #fff8eb;
     transform: translateY(-3px);
 }
 
@@ -752,7 +752,7 @@
 <script>
 // Daily Wisdom Quotes
 const quotes = [
-    "The only true wisdom is in knowing you know nothing. — Socrates",
+    "The only true wisdom is in knowing you know nothing. - Socrates",
     "The mind is everything. What you think you become. — Buddha",
     "In the midst of chaos, there is also opportunity. — Sun Tzu",
     "The journey of a thousand miles begins with one step. — Lao Tzu",
@@ -809,7 +809,7 @@ const tips = [
 
 // Bhagavad Gita Verses
 const gitaVerses = [
-    "You have the right to work, but never to the fruit of work. — Bhagavad Gita 2.47",
+    "You have the right to work, but never to the fruit of work. - Bhagavad Gita 2.47",
     "The mind is restless and difficult to restrain, but it is subdued by practice. — Bhagavad Gita 6.35",
     "One who sees inaction in action, and action in inaction, is intelligent among men. — Bhagavad Gita 4.18",
     "The soul is neither born, and nor does it die. — Bhagavad Gita 2.20",

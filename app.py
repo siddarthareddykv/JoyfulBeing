@@ -1,32 +1,23 @@
 import sys
 import os
 import datetime
-import datetime
 import calendar as pycalendar
 import random
 import sqlite3
 import traceback
-import os
 from textblob import TextBlob
 from dotenv import load_dotenv
 from openai import OpenAI
+from apscheduler.schedulers.background import BackgroundScheduler
+from flask import Flask, render_template, request, redirect, url_for, jsonify
 from agents.happiness_program_manager_agent import create_default_manager
 from agents.content_review_agent import review_content
-from apscheduler.schedulers.background import BackgroundScheduler
-from flask import Flask, render_template, request, redirect, url_for
 def resource_path(relative_path):
     try:
         base_path = sys._MEIPASS
     except Exception:
         base_path = os.path.abspath(".")
     return os.path.join(base_path, relative_path)
-
-from flask import request, jsonify
-from openai import OpenAI
-import os
-import os
-from dotenv import load_dotenv
-from openai import OpenAI
 
 load_dotenv(override=True)
 
@@ -37,8 +28,22 @@ if OPENAI_API_KEY and not OPENAI_API_KEY.startswith("sk-"):
 if not OPENAI_API_KEY:
     print("Warning: OPENAI_API_KEY is empty. Chat will run in fallback mode.")
 client = OpenAI(api_key=OPENAI_API_KEY) if OPENAI_API_KEY else None
+OPENAI_QUOTA_EXHAUSTED = False
 DATABASE = "joyfulbeing.db"
 program_manager = create_default_manager()
+
+
+def mark_quota_exhausted_if_needed(error):
+    global OPENAI_QUOTA_EXHAUSTED
+    error_code = str(getattr(error, "code", "") or "").lower()
+    error_type = str(getattr(error, "type", "") or "").lower()
+    error_text = str(error).lower()
+    if (
+        "insufficient_quota" in error_code
+        or "insufficient_quota" in error_type
+        or "insufficient_quota" in error_text
+    ):
+        OPENAI_QUOTA_EXHAUSTED = True
 
 def init_db():
     conn = sqlite3.connect(DATABASE)
@@ -59,7 +64,7 @@ You are Namaskaram, a calm, compassionate guide inspired by Indian wisdom.
 Your role is to gently reduce stress and emotional tension.
 
 Rules:
-- Speak softly and briefly (2–4 lines max)
+- Speak softly and briefly (2-4 lines max)
 - No medical diagnosis
 - No urgency or fear-based language
 - Encourage breathing, grounding, and self-compassion
@@ -72,6 +77,9 @@ def chat():
     user_message = (data.get("message") or data.get("input") or "").strip()
     if not user_message:
         return jsonify({"reply": "Please share what you are feeling, and I will respond gently."}), 400
+
+    if client is None or OPENAI_QUOTA_EXHAUSTED:
+        return jsonify({"reply": generate_local_guidance(user_message), "source": "fallback"})
 
     try:
         response = client.chat.completions.create(
@@ -88,8 +96,8 @@ def chat():
         return jsonify({"reply": reply, "source": "openai"})
 
     except Exception as e:
+        mark_quota_exhausted_if_needed(e)
         print(f"OpenAI chat error: {type(e).__name__}: {e}")
-        print(traceback.format_exc())
         # Input-aware fallback so chat still feels dynamic if OpenAI fails.
         return jsonify({"reply": generate_local_guidance(user_message), "source": "fallback"})
 
@@ -898,8 +906,8 @@ def init_db():
 
 
 def generate_ai_guidance(user_mood):
-    if client is None:
-        raise RuntimeError("OpenAI client is not configured. Missing OPENAI_API_KEY.")
+    if client is None or OPENAI_QUOTA_EXHAUSTED:
+        raise RuntimeError("OpenAI guidance is currently unavailable.")
     prompt = f"""
     A person is feeling {user_mood}.
     
@@ -912,21 +920,24 @@ def generate_ai_guidance(user_mood):
     Keep it simple and practical.
     """
 
-    response = client.chat.completions.create(
-        model="gpt-4o-mini",
-        messages=[
-            {"role": "system", "content": SYSTEM_PROMPT},
-            {"role": "user", "content": prompt}
-        ],
-        max_tokens=180,
-        temperature=0.5
-    )
-
-    return (response.choices[0].message.content or "").strip()
+    try:
+        response = client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=[
+                {"role": "system", "content": SYSTEM_PROMPT},
+                {"role": "user", "content": prompt}
+            ],
+            max_tokens=180,
+            temperature=0.5
+        )
+        return (response.choices[0].message.content or "").strip()
+    except Exception as e:
+        mark_quota_exhausted_if_needed(e)
+        raise
 
 
 def route_feature_with_openai(user_input, feature_catalog):
-    if client is None:
+    if client is None or OPENAI_QUOTA_EXHAUSTED:
         return None
     feature_lines = "\n".join(
         f"- {item['feature_id']}: {item['description']}" for item in feature_catalog
@@ -960,6 +971,7 @@ def route_feature_with_openai(user_input, feature_catalog):
         if selected in valid_ids:
             return selected
     except Exception as e:
+        mark_quota_exhausted_if_needed(e)
         print(f"OpenAI router error: {type(e).__name__}: {e}")
     return None
 
@@ -1050,25 +1062,42 @@ scheduler.start()
 @app.route("/mood", methods=["GET", "POST"])
 def mood():
     if request.method == "POST":
+        expects_json = (
+            request.headers.get("X-Requested-With") == "XMLHttpRequest"
+            or request.accept_mimetypes.best == "application/json"
+        )
         user_mood = (request.form.get("mood") or "").strip()
 
         if not user_mood:
-            if request.headers.get("X-Requested-With") == "XMLHttpRequest":
+            if expects_json:
                 return jsonify({"error": "Please share your mood first."}), 400
             return render_template("mood.html")
 
         try:
-            ai_response = generate_ai_guidance(user_mood)
+            try:
+                ai_response = generate_ai_guidance(user_mood)
+            except Exception as e:
+                if not OPENAI_QUOTA_EXHAUSTED:
+                    print(f"OpenAI mood guidance error: {type(e).__name__}: {e}")
+                ai_response = generate_local_guidance(user_mood)
+
+            if not ai_response:
+                ai_response = generate_local_guidance(user_mood)
+            sentiment_score = analyze_sentiment(ai_response)
+            save_mood(user_mood, ai_response, sentiment_score)
         except Exception as e:
-            print(f"OpenAI mood guidance error: {type(e).__name__}: {e}")
+            print(f"Mood route error: {type(e).__name__}: {e}")
+            print(traceback.format_exc())
+            if expects_json:
+                return jsonify({"error": "Unable to generate guidance right now. Please try again."}), 500
             ai_response = generate_local_guidance(user_mood)
-        if not ai_response:
-            ai_response = generate_local_guidance(user_mood)
-        sentiment_score = analyze_sentiment(ai_response)
+            return render_template(
+                "mood_result.html",
+                mood=user_mood,
+                ai_response=ai_response
+            )
 
-        save_mood(user_mood, ai_response, sentiment_score)
-
-        if request.headers.get("X-Requested-With") == "XMLHttpRequest":
+        if expects_json:
             return jsonify({
                 "mood": user_mood,
                 "ai_response": ai_response

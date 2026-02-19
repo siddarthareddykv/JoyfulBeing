@@ -1,0 +1,22 @@
+{
+  "name": "Joyful Being",
+  "short_name": "JoyfulBeing",
+  "description": "A calm space for emotional wellness, joy, and inner peace.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f8f5ec",
+  "theme_color": "#b08b5b",
+  "icons": [
+    {
+      "src": "/static/images/buddha-face.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/static/images/buddha-face.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
+

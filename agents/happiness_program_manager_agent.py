@@ -75,7 +75,7 @@ class HappinessProgramManager:
             for feature in self._features
         ]
 
-    def _resolve_feature(self, user_input: str, context: Dict[str, Any]) -> Optional[FeatureSpec]:
+    def _resolve_feature(self, user_input: str, context: Dict[str, Any]) -> tuple[Optional[FeatureSpec], Optional[str]]:
         router = context.get("route_feature")
         if callable(router):
             try:
@@ -86,22 +86,22 @@ class HappinessProgramManager:
                         None,
                     )
                     if selected is not None:
-                        return selected
+                        return selected, "openai_router"
             except Exception:
                 pass
 
         for feature in self._features:
             try:
                 if feature.can_handle(user_input, context):
-                    return feature
+                    return feature, "rule_match"
             except Exception:
                 continue
-        return None
+        return None, None
 
     def handle(self, user_input: str, context: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
         self.load_features()
         safe_context = context or {}
-        feature = self._resolve_feature(user_input, safe_context)
+        feature, routing_source = self._resolve_feature(user_input, safe_context)
 
         if feature is None:
             return {
@@ -111,6 +111,7 @@ class HappinessProgramManager:
                     "to extend manager behavior automatically."
                 ),
                 "available_features": self.feature_ids,
+                "routing_source": routing_source,
             }
 
         try:
@@ -119,12 +120,14 @@ class HappinessProgramManager:
                 "selected_feature": feature.feature_id,
                 "result": result,
                 "available_features": self.feature_ids,
+                "routing_source": routing_source,
             }
         except Exception as exc:
             return {
                 "selected_feature": feature.feature_id,
                 "error": str(exc),
                 "available_features": self.feature_ids,
+                "routing_source": routing_source,
             }
 
 

@@ -1,21 +1,24 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Your sanctuary for emotional wellness, daily happiness, and inner peace">
+    <meta name="theme-color" content="#b08b5b">
     <title>{{ title if title else "Live with Purpose & Peace" }}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/buddha-face.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='images/buddha-face.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='images/buddha-face.png') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='images/buddha-face.png') }}">
+    <link rel="manifest" href="{{ url_for('static', filename='site.webmanifest') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;600&display=swap" rel="stylesheet">
 </head>
-
 <body>
 
-<!-- MAIN NAVBAR -->
 <nav class="navbar">
     <div class="nav-left">
         <a href="/" class="logo">
@@ -24,36 +27,31 @@
     </div>
 
     <div class="nav-center">
-        <p class="nav-tagline">✨ Where Peace Begins</p>
+        <p class="nav-tagline">Where Peace Begins</p>
     </div>
 
-    <!-- Hamburger button -->
     <div class="menu-toggle" onclick="toggleMenu()">☰</div>
 
     <div class="nav-right" id="navMenu">
         <ul class="nav-list">
             <li><a href="/">Home</a></li>
-            <li><a href="/stress">🧘 Wellness</a></li>
-            <li><a href="/mantras">🕉️ Mantras</a></li>
-            <li><a href="/rituals">🕯️ Rituals</a></li>
-            <li><a href="/ideas">🪢 Modern Buddha</a></li>
-            <li><a href="/emotions">❤️ Emotions</a></li>
-            <li><a href="/calendar">📅 Calendar</a></li>
-            <li><a href="/mood">🌿 Mood Check</a></li>
+            <li><a href="/stress">Wellness</a></li>
+            <li><a href="/mantras">Mantras</a></li>
+            <li><a href="/rituals">Rituals</a></li>
+            <li><a href="/ideas">Modern Buddha</a></li>
+            <li><a href="/emotions">Emotions</a></li>
+            <li><a href="/calendar">Calendar</a></li>
+            <li><a href="/mood">Mood Check</a></li>
             <li><a href="/about">About Us</a></li>
         </ul>
     </div>
 </nav>
 
-
-
-<!-- MAIN CONTENT -->
 <main class="content">
     {% block content %}
     {% endblock %}
 </main>
 
-<!-- FOOTER -->
 <footer class="footer">
     <div class="footer-content">
         <div class="footer-section">
@@ -82,18 +80,18 @@
 
         <div class="footer-section">
             <h4>Connect</h4>
-            <p style="margin-bottom: 10px;">📧 <a href="mailto:contact@joyfulbeing.in" style="color: #667eea; text-decoration: none;">contact@joyfulbeing.in</a></p>
+            <p style="margin-bottom: 10px;">Email: <a href="mailto:contact@joyfulbeing.in" style="color: #667eea; text-decoration: none;">contact@joyfulbeing.in</a></p>
             <p style="font-size: 12px; color: #999;">We respond to every message with care and mindfulness.</p>
         </div>
     </div>
 
     <div class="footer-bottom">
-        <p>&copy; 2026 — Building a world where peace, purpose, and kindness flourish</p>
-        <p style="font-size: 12px; margin-top: 5px;">Crafted with ❤️ to nurture your wellbeing</p>
+        <p>&copy; 2026 - Building a world where peace, purpose, and kindness flourish</p>
+        <p style="font-size: 12px; margin-top: 5px;">Crafted with care to nurture your wellbeing</p>
     </div>
 </footer>
+
 <script>
-/* Mobile menu toggle */
 function toggleMenu() {
     const menu = document.getElementById("navMenu");
     if (menu) {
@@ -101,7 +99,6 @@ function toggleMenu() {
     }
 }
 
-/* Optional breathing text animation (safe guard added) */
 document.addEventListener("DOMContentLoaded", function () {
     const breathText = document.querySelector('.breath-text');
     if (!breathText) return;
@@ -116,34 +113,26 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 </script>
 
-<!-- Namaskaram Chatbot -->
 <div id="namaskaram-bot">
+  <div id="namaskaram-button">🌿 Chat</div>
 
-  <!-- Floating Button -->
-  <div id="namaskaram-button">🙏</div>
-
-  <!-- Chat Window -->
   <div id="namaskaram-window">
     <div class="nb-header">
-      <span>🙏 Namaskaram</span>
+      <span>Namaskaram 🌿</span>
       <button id="nb-close">✕</button>
     </div>
 
     <div id="nb-messages">
       <div class="nb-bot">
-        Namaskaram 🌿  
+        Namaskaram 🌿
         How is your heart feeling right now?
       </div>
     </div>
 
-    <input
-      id="nb-input"
-      type="text"
-      placeholder="Share gently…"
-    />
+    <input id="nb-input" type="text" placeholder="Share gently..." />
   </div>
-
 </div>
+
 <script>
 const btn = document.getElementById("namaskaram-button");
 const win = document.getElementById("namaskaram-window");
@@ -151,26 +140,39 @@ const closeBtn = document.getElementById("nb-close");
 const input = document.getElementById("nb-input");
 const messages = document.getElementById("nb-messages");
 
+function appendMessage(className, text) {
+  const message = document.createElement("div");
+  message.className = className;
+  message.textContent = text;
+  messages.appendChild(message);
+}
+
 btn.onclick = () => win.style.display = "block";
 closeBtn.onclick = () => win.style.display = "none";
 
 input.addEventListener("keypress", async (e) => {
-  if (e.key === "Enter" && input.value.trim()) {
-    const text = input.value;
-    messages.innerHTML += `<div class="nb-user">${text}</div>`;
-    input.value = "";
+  if (e.key !== "Enter" || !input.value.trim()) return;
 
+  const text = input.value.trim();
+  appendMessage("nb-user", text);
+  input.value = "";
+
+  try {
     const res = await fetch("/chat", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ message: text })
     });
-
     const data = await res.json();
-    const sourceTag = data.source === "fallback" ? " <small>(offline mode)</small>" : "";
-    messages.innerHTML += `<div class="nb-bot">${data.reply}${sourceTag}</div>`;
-    messages.scrollTop = messages.scrollHeight;
+    appendMessage("nb-bot", data.reply || "I could not generate a response.");
+    if (data.source === "fallback") {
+      appendMessage("nb-bot", "(offline mode)");
+    }
+  } catch (err) {
+    appendMessage("nb-bot", "Connection issue. Please try again.");
   }
+
+  messages.scrollTop = messages.scrollHeight;
 });
 </script>
 </body>

@@ -119,12 +119,13 @@ p {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 18px 40px;
-  background: var(--overlay-glass);
-  border-bottom: 1px solid var(--border);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  box-shadow: 0 1px 3px rgba(139, 92, 246, 0.05);
+  gap: 16px;
+  padding: 10px 28px;
+  background: rgba(250, 250, 252, 0.82);
+  border-bottom: 1px solid rgba(30, 30, 30, 0.08);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);
 }
 
 .nav-left {
@@ -141,8 +142,8 @@ p {
 }
 
 .logo-img {
-  height: 42px;
-  transition: transform 0.3s ease;
+  height: 34px;
+  transition: transform 0.25s ease;
 }
 
 .logo-img:hover {
@@ -161,11 +162,11 @@ p {
 }
 
 .nav-tagline {
-  font-family: "Playfair Display", serif;
-  font-size: 15px;
-  letter-spacing: 0.3px;
-  color: var(--text-body);
-  opacity: 0.9;
+  font-family: "SF Pro Display", "Poppins", sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.24px;
+  color: #4d4d53;
+  opacity: 0.86;
   white-space: nowrap;
   margin: 0;
 }
@@ -177,7 +178,7 @@ p {
 
 .nav-list {
   display: flex;
-  gap: 28px;
+  gap: 18px;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -186,34 +187,29 @@ p {
 .nav-list a {
   position: relative;
   text-decoration: none;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 500;
-  letter-spacing: 0.4px;
-  color: var(--text-dark);
-  padding: 6px 0;
+  letter-spacing: 0.1px;
+  color: #1d1d1f;
+  padding: 8px 10px;
+  border-radius: 999px;
   transition: var(--transition-fast);
 }
 
 .nav-list a::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: -6px;
-  width: 0;
-  height: 2px;
-  background: var(--text-dark);
-  transition: width 0.25s ease;
+  display: none;
 }
 
-.nav-list a:hover::after {
-  width: 100%;
+.nav-list a:hover {
+  background: rgba(20, 20, 20, 0.06);
+  color: #000;
 }
 
 .menu-toggle {
   display: none;
-  font-size: 26px;
+  font-size: 24px;
   cursor: pointer;
-  color: var(--text-dark);
+  color: #1d1d1f;
 }
 
 /* =========================================
@@ -693,9 +689,8 @@ section {
 
 @media (max-width: 768px) {
   .navbar {
-    flex-direction: column;
-    padding: 12px 20px;
-    gap: 12px;
+    padding: 10px 16px;
+    gap: 8px;
   }
 
   .nav-center {
@@ -708,7 +703,10 @@ section {
 
   .nav-right {
     display: none;
-    width: 100%;
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 12px;
+    width: min(300px, calc(100vw - 24px));
   }
 
   .nav-right.active {
@@ -717,20 +715,22 @@ section {
 
   .nav-list {
     flex-direction: column;
-    margin-top: 16px;
-    background: var(--bg-white);
-    border-radius: 16px;
-    padding: 20px;
-    box-shadow: var(--shadow-lg);
+    gap: 8px;
+    margin-top: 0;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 14px;
+    padding: 14px;
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.12);
   }
 
   .nav-list li {
-    margin-bottom: 12px;
+    margin-bottom: 0;
   }
 
   .nav-list a {
-    font-size: 16px;
-    padding: 10px 0;
+    font-size: 14px;
+    padding: 8px 10px;
   }
 
   section {
@@ -1208,7 +1208,10 @@ body::after {
 
   .nav-right {
     display: none;
-    width: 100%;
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 12px;
+    width: min(300px, calc(100vw - 24px));
   }
 
   .nav-right.active {
@@ -1217,7 +1220,7 @@ body::after {
 
   .nav-list {
     flex-direction: column;
-    gap: 12px;
+    gap: 8px;
   }
 }
 
@@ -1455,14 +1458,17 @@ body::after {
 
 /* Floating Button */
 #namaskaram-button {
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
+  min-width: 96px;
+  height: 48px;
+  padding: 0 14px;
+  border-radius: 999px;
   background: linear-gradient(135deg, #ff7aa2, #ffb347);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 24px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
   cursor: pointer;
   box-shadow: 0 12px 30px rgba(0,0,0,0.25);
 }

@@ -220,14 +220,28 @@ moodForm.addEventListener("submit", async (e) => {
             method: "POST",
             headers: {
                 "X-Requested-With": "XMLHttpRequest",
+                "Accept": "application/json",
                 "Content-Type": "application/x-www-form-urlencoded"
             },
             body: new URLSearchParams(formData)
         });
 
-        const data = await res.json();
+        const contentType = res.headers.get("content-type") || "";
+        let data = null;
+
+        if (contentType.includes("application/json")) {
+            data = await res.json();
+        } else {
+            const fallbackText = await res.text();
+            throw new Error(
+                res.ok
+                    ? "Received an unexpected server response. Please try again."
+                    : fallbackText || "Unable to generate guidance right now."
+            );
+        }
+
         if (!res.ok) {
-            throw new Error(data.error || "Unable to generate guidance right now.");
+            throw new Error(data?.error || "Unable to generate guidance right now.");
         }
 
         openMoodModal(data.mood || moodText, data.ai_response || "No guidance generated.");
