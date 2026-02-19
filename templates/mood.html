@@ -1,0 +1,243 @@
+{% extends "base.html" %}
+{% block content %}
+
+<section class="mood-container">
+    <div class="mood-card">
+        <div class="mood-icon">🌿</div>
+        <h1 class="mood-title">Mood Check</h1>
+        <p class="mood-subtitle">Share how you feel right now. You will get a short calming response.</p>
+
+        <form method="POST" action="/mood" class="mood-form" id="moodForm">
+            <label for="mood" class="mood-label">How are you feeling today?</label>
+            <textarea
+                id="mood"
+                name="mood"
+                class="mood-input"
+                rows="4"
+                placeholder="Example: I feel overwhelmed and tired..."
+                required
+            ></textarea>
+            <button type="submit" class="mood-btn" id="moodSubmitBtn">Get Guidance</button>
+        </form>
+    </div>
+</section>
+
+<div class="mood-modal-backdrop" id="moodModalBackdrop" aria-hidden="true">
+    <div class="mood-modal" role="dialog" aria-modal="true" aria-labelledby="moodModalTitle">
+        <button class="mood-modal-close" id="moodModalClose" type="button" aria-label="Close">x</button>
+        <h2 class="mood-modal-title" id="moodModalTitle">Your Guidance</h2>
+        <p class="mood-modal-label">You are feeling: <strong id="moodValue"></strong></p>
+        <pre class="mood-modal-content" id="moodGuidance"></pre>
+    </div>
+</div>
+
+<style>
+.mood-container {
+    min-height: 70vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+}
+
+.mood-card {
+    background: linear-gradient(145deg, #ffffff, #f6f1f8);
+    padding: 36px 28px;
+    border-radius: 18px;
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.08);
+    max-width: 620px;
+    width: 100%;
+    text-align: center;
+}
+
+.mood-icon {
+    font-size: 42px;
+    margin-bottom: 10px;
+}
+
+.mood-title {
+    margin: 0 0 8px;
+    font-size: 30px;
+    color: #3a2944;
+}
+
+.mood-subtitle {
+    margin: 0 0 24px;
+    color: #5f5468;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.mood-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    text-align: left;
+}
+
+.mood-label {
+    font-weight: 600;
+    color: #3a2944;
+}
+
+.mood-input {
+    width: 100%;
+    border: 1px solid #d6cde0;
+    border-radius: 10px;
+    padding: 12px 14px;
+    font-size: 15px;
+    line-height: 1.5;
+    resize: vertical;
+    font-family: inherit;
+}
+
+.mood-input:focus {
+    outline: none;
+    border-color: #7a1f4d;
+    box-shadow: 0 0 0 3px rgba(122, 31, 77, 0.12);
+}
+
+.mood-btn {
+    margin-top: 6px;
+    border: none;
+    border-radius: 10px;
+    background: #7a1f4d;
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 15px;
+    padding: 12px 16px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.mood-btn:hover {
+    background: #61163d;
+}
+
+.mood-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(20, 16, 24, 0.55);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    z-index: 2000;
+}
+
+.mood-modal-backdrop.active {
+    display: flex;
+}
+
+.mood-modal {
+    position: relative;
+    background: #ffffff;
+    width: min(680px, 100%);
+    border-radius: 14px;
+    padding: 26px 22px 20px;
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.25);
+}
+
+.mood-modal-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border: none;
+    background: #f0e7f5;
+    color: #3a2944;
+    border-radius: 8px;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    font-weight: 700;
+}
+
+.mood-modal-title {
+    margin: 0 0 10px;
+    color: #3a2944;
+}
+
+.mood-modal-label {
+    margin: 0 0 12px;
+    color: #5f5468;
+}
+
+.mood-modal-content {
+    margin: 0;
+    white-space: pre-wrap;
+    font-family: inherit;
+    font-size: 15px;
+    line-height: 1.7;
+    color: #2f2a34;
+    background: #faf7fc;
+    border: 1px solid #e6dff0;
+    border-radius: 10px;
+    padding: 14px;
+}
+</style>
+
+<script>
+const moodForm = document.getElementById("moodForm");
+const moodSubmitBtn = document.getElementById("moodSubmitBtn");
+const moodModalBackdrop = document.getElementById("moodModalBackdrop");
+const moodModalClose = document.getElementById("moodModalClose");
+const moodValue = document.getElementById("moodValue");
+const moodGuidance = document.getElementById("moodGuidance");
+
+function closeMoodModal() {
+    moodModalBackdrop.classList.remove("active");
+    moodModalBackdrop.setAttribute("aria-hidden", "true");
+}
+
+function openMoodModal(mood, guidance) {
+    moodValue.textContent = mood;
+    moodGuidance.textContent = guidance;
+    moodModalBackdrop.classList.add("active");
+    moodModalBackdrop.setAttribute("aria-hidden", "false");
+}
+
+moodModalClose.addEventListener("click", closeMoodModal);
+moodModalBackdrop.addEventListener("click", (e) => {
+    if (e.target === moodModalBackdrop) {
+        closeMoodModal();
+    }
+});
+
+moodForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(moodForm);
+    const moodText = (formData.get("mood") || "").toString().trim();
+    if (!moodText) {
+        return;
+    }
+
+    moodSubmitBtn.disabled = true;
+    moodSubmitBtn.textContent = "Getting guidance...";
+
+    try {
+        const res = await fetch("/mood", {
+            method: "POST",
+            headers: {
+                "X-Requested-With": "XMLHttpRequest",
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: new URLSearchParams(formData)
+        });
+
+        const data = await res.json();
+        if (!res.ok) {
+            throw new Error(data.error || "Unable to generate guidance right now.");
+        }
+
+        openMoodModal(data.mood || moodText, data.ai_response || "No guidance generated.");
+    } catch (err) {
+        openMoodModal(moodText, err.message || "Something went wrong. Please try again.");
+    } finally {
+        moodSubmitBtn.disabled = false;
+        moodSubmitBtn.textContent = "Get Guidance";
+    }
+});
+</script>
+
+{% endblock %}

@@ -4,8 +4,16 @@ import datetime
 import datetime
 import calendar as pycalendar
 import random
-from flask import Flask, render_template, request
-
+import sqlite3
+import traceback
+import os
+from textblob import TextBlob
+from dotenv import load_dotenv
+from openai import OpenAI
+from agents.happiness_program_manager_agent import create_default_manager
+from agents.content_review_agent import review_content
+from apscheduler.schedulers.background import BackgroundScheduler
+from flask import Flask, render_template, request, redirect, url_for
 def resource_path(relative_path):
     try:
         base_path = sys._MEIPASS
@@ -16,10 +24,35 @@ def resource_path(relative_path):
 from flask import request, jsonify
 from openai import OpenAI
 import os
+import os
+from dotenv import load_dotenv
+from openai import OpenAI
+
+load_dotenv(override=True)
 
 app = Flask(__name__)
+OPENAI_API_KEY = (os.getenv("OPENAI_API_KEY") or "").strip().strip('"').strip("'")
+if OPENAI_API_KEY and not OPENAI_API_KEY.startswith("sk-"):
+    print("Warning: OPENAI_API_KEY does not look valid (missing 'sk-' prefix).")
+if not OPENAI_API_KEY:
+    print("Warning: OPENAI_API_KEY is empty. Chat will run in fallback mode.")
+client = OpenAI(api_key=OPENAI_API_KEY) if OPENAI_API_KEY else None
+DATABASE = "joyfulbeing.db"
+program_manager = create_default_manager()
 
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+def init_db():
+    conn = sqlite3.connect(DATABASE)
+    cursor = conn.cursor()
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS moods (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            mood TEXT NOT NULL,
+            sentiment REAL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    """)
+    conn.commit()
+    conn.close()
 
 SYSTEM_PROMPT = """
 You are Namaskaram, a calm, compassionate guide inspired by Indian wisdom.
@@ -35,10 +68,12 @@ Rules:
 
 @app.route("/chat", methods=["POST"])
 def chat():
-    try:
-        data = request.get_json()
-        user_message = data.get("message", "")
+    data = request.get_json(silent=True) or {}
+    user_message = (data.get("message") or data.get("input") or "").strip()
+    if not user_message:
+        return jsonify({"reply": "Please share what you are feeling, and I will respond gently."}), 400
 
+    try:
         response = client.chat.completions.create(
             model="gpt-4o-mini",
             messages=[
@@ -50,14 +85,13 @@ def chat():
         )
 
         reply = response.choices[0].message.content.strip()
-        return jsonify({"reply": reply})
+        return jsonify({"reply": reply, "source": "openai"})
 
     except Exception as e:
-        # NEVER leave user without calm
-        return jsonify({
-            "reply": "Namaskaram 🌿 Take one slow breath. I am here with you."
-        })
-
+        print(f"OpenAI chat error: {type(e).__name__}: {e}")
+        print(traceback.format_exc())
+        # Input-aware fallback so chat still feels dynamic if OpenAI fails.
+        return jsonify({"reply": generate_local_guidance(user_message), "source": "fallback"})
 
 # ============================================================================
 # MONTH THEMES (elegant colors with seasonal harmony)
@@ -833,10 +867,220 @@ bhagavad_gita_verses = [
     "It is better to live your own destiny imperfectly than to live an imitation of somebody else's life with perfection. — Bhagavad Gita 3.35",
 ]
 # ... (keep all other existing functions and content)
+# ============================================================================
+# JOY AI AGENT + MOOD TRACKING
+# ============================================================================
+
+def init_db():
+    conn = sqlite3.connect(DATABASE)
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS moods (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            mood TEXT,
+            ai_response TEXT,
+            sentiment_score REAL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    """)
+
+    # Backward-compatible migration for existing DBs.
+    cursor.execute("PRAGMA table_info(moods)")
+    existing_columns = {row[1] for row in cursor.fetchall()}
+    if "ai_response" not in existing_columns:
+        cursor.execute("ALTER TABLE moods ADD COLUMN ai_response TEXT")
+    if "sentiment_score" not in existing_columns:
+        cursor.execute("ALTER TABLE moods ADD COLUMN sentiment_score REAL")
+
+    conn.commit()
+    conn.close()
+
+
+def generate_ai_guidance(user_mood):
+    if client is None:
+        raise RuntimeError("OpenAI client is not configured. Missing OPENAI_API_KEY.")
+    prompt = f"""
+    A person is feeling {user_mood}.
+    
+    Provide:
+    1. A short calming message
+    2. A 2-minute breathing practice
+    3. One small joyful action for today
+    
+    Tone: peaceful, emotionally safe, gentle.
+    Keep it simple and practical.
+    """
+
+    response = client.chat.completions.create(
+        model="gpt-4o-mini",
+        messages=[
+            {"role": "system", "content": SYSTEM_PROMPT},
+            {"role": "user", "content": prompt}
+        ],
+        max_tokens=180,
+        temperature=0.5
+    )
+
+    return (response.choices[0].message.content or "").strip()
+
+
+def route_feature_with_openai(user_input, feature_catalog):
+    if client is None:
+        return None
+    feature_lines = "\n".join(
+        f"- {item['feature_id']}: {item['description']}" for item in feature_catalog
+    )
+    router_prompt = f"""
+    You are a strict feature router.
+    Choose the single best feature_id for this user request.
+
+    Features:
+    {feature_lines}
+
+    User request:
+    {user_input}
+
+    Rules:
+    - Return only one feature_id from the list above.
+    - If nothing fits, return NONE.
+    """
+    try:
+        response = client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=[
+                {"role": "system", "content": "Return only the exact feature id token."},
+                {"role": "user", "content": router_prompt}
+            ],
+            max_tokens=12,
+            temperature=0.0
+        )
+        selected = (response.choices[0].message.content or "").strip()
+        valid_ids = {item["feature_id"] for item in feature_catalog}
+        if selected in valid_ids:
+            return selected
+    except Exception as e:
+        print(f"OpenAI router error: {type(e).__name__}: {e}")
+    return None
+
+
+def generate_local_guidance(user_mood):
+    mood_text = (user_mood or "").lower()
+
+    if any(word in mood_text for word in ["happy", "joy", "good", "grateful", "excited", "peaceful"]):
+        return (
+            "Beautiful. Stay with this light feeling for one minute and enjoy it fully.\n"
+            "Breathing: inhale 4, hold 2, exhale 6 for 6 rounds.\n"
+            "Joy action: share one kind message with someone today."
+        )
+
+    if any(word in mood_text for word in ["sad", "low", "down", "lonely", "hurt", "empty"]):
+        return (
+            "Your feeling is valid. Be gentle with yourself in this moment.\n"
+            "Breathing: place a hand on your chest, inhale 4, exhale 6 for 2 minutes.\n"
+            "Joy action: step outside for 5 minutes and notice one calming detail."
+        )
+
+    if any(word in mood_text for word in ["anxious", "stress", "overwhelm", "worried", "panic", "tense"]):
+        return (
+            "You are safe right now. Let your body slow down first.\n"
+            "Breathing: inhale 4, hold 4, exhale 8 for 8 rounds.\n"
+            "Joy action: write down one task only, and do it slowly."
+        )
+
+    if any(word in mood_text for word in ["angry", "frustrated", "irritated", "mad"]):
+        return (
+            "Pause before reacting. Your calm is your strength.\n"
+            "Breathing: inhale through nose 4, exhale through mouth 8 for 10 rounds.\n"
+            "Joy action: take a 3-minute walk before your next decision."
+        )
+
+    return (
+        "Thank you for checking in with yourself. Start with one soft breath.\n"
+        "Breathing: inhale 4, hold 4, exhale 6 for 2 minutes.\n"
+        "Joy action: drink water slowly and relax your shoulders."
+    )
+
+
+def analyze_sentiment(text):
+    blob = TextBlob(text)
+    return blob.sentiment.polarity
+
+
+def save_mood(mood, ai_response, sentiment_score):
+    conn = sqlite3.connect(DATABASE)
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        INSERT INTO moods (mood, ai_response, sentiment_score)
+        VALUES (?, ?, ?)
+    """, (mood, ai_response, sentiment_score))
+
+    conn.commit()
+    conn.close()
+
+
+def generate_weekly_joy_index():
+    conn = sqlite3.connect(DATABASE)
+    cursor = conn.cursor()
+
+    try:
+        cursor.execute("""
+            SELECT AVG(sentiment_score) FROM moods
+            WHERE created_at >= datetime('now', '-7 days')
+        """)
+        result = cursor.fetchone()
+        avg_score = result[0] if result and result[0] is not None else 0
+    except sqlite3.OperationalError:
+        avg_score = 0
+
+    print("🌿 Weekly Joy Index:", round(avg_score, 3))
+
+    conn.close()
+
+
+scheduler = BackgroundScheduler()
+scheduler.add_job(generate_weekly_joy_index, 'interval', weeks=1)
+scheduler.start()
 
 # ============================================================================
 # NEW ROUTES FOR MYTHOLOGY, MANTRAS, RITUALS, ETC.
 # ============================================================================
+
+@app.route("/mood", methods=["GET", "POST"])
+def mood():
+    if request.method == "POST":
+        user_mood = (request.form.get("mood") or "").strip()
+
+        if not user_mood:
+            if request.headers.get("X-Requested-With") == "XMLHttpRequest":
+                return jsonify({"error": "Please share your mood first."}), 400
+            return render_template("mood.html")
+
+        try:
+            ai_response = generate_ai_guidance(user_mood)
+        except Exception as e:
+            print(f"OpenAI mood guidance error: {type(e).__name__}: {e}")
+            ai_response = generate_local_guidance(user_mood)
+        if not ai_response:
+            ai_response = generate_local_guidance(user_mood)
+        sentiment_score = analyze_sentiment(ai_response)
+
+        save_mood(user_mood, ai_response, sentiment_score)
+
+        if request.headers.get("X-Requested-With") == "XMLHttpRequest":
+            return jsonify({
+                "mood": user_mood,
+                "ai_response": ai_response
+            })
+
+        return render_template(
+            "mood_result.html",
+            mood=user_mood,
+            ai_response=ai_response
+        )
+
+    return render_template("mood.html")
 
 @app.route("/mantras")
 def mantras():
@@ -933,11 +1177,33 @@ def stress():
     """Display stress relief page"""
     return render_template("stress.html")
 
+@app.route("/api/program-manager", methods=["POST"])
+def run_program_manager():
+    data = request.get_json(silent=True) or {}
+    user_input = (data.get("input") or "").strip()
+    context = data.get("context") or {}
+
+    if not user_input:
+        return jsonify({"error": "Missing required field: input"}), 400
+
+    context["generate_ai_guidance"] = generate_ai_guidance
+    context["generate_local_guidance"] = generate_local_guidance
+    if client is not None:
+        context["review_content"] = lambda article: review_content(article, llm_client=client)
+    context["analyze_sentiment"] = analyze_sentiment
+    context["generate_weekly_joy_index"] = generate_weekly_joy_index
+    context["route_feature"] = route_feature_with_openai
+
+    result = program_manager.handle(user_input=user_input, context=context)
+    return jsonify(result)
+
 @app.route("/about")
 def about():
     """Display about page"""
     return render_template("about.html")
 
 if __name__ == "__main__":
+    init_db()
     app.run(debug=True)
+
 # ... (keep all existing routes and error handling)

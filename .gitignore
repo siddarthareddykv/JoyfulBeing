@@ -1,0 +1,5 @@
+﻿.env
+API key.txt
+__pycache__/
+*.py[cod]
+*.db
