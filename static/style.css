@@ -9,48 +9,43 @@
 }
 
 :root {
-  /* 💖 Sparkling Valentine Pink Theme */
-  --primary: #ec4899;          /* main pink */
-  --primary-light: #f9a8d4;    /* soft blush */
-  --primary-dark: #db2777;     /* deep rose */
-  --accent: #fbcfe8;           /* sparkle accent */
+  /* Warm editorial palette inspired by Cyient's confident contrast */
+  --primary: #e5483f;
+  --primary-light: #f47b62;
+  --primary-dark: #b92f32;
+  --accent: #e4b96a;
 
-  --text-dark: #3b0a24;        /* deep heart tone */
-  --text-body: #5a1a3a;
-  --text-muted: #9d4c74;
+  --text-dark: #202322;
+  --text-body: #4f514d;
+  --text-muted: #777971;
 
   /* Backgrounds */
-  --bg-main: linear-gradient(
-    135deg,
-    #fff1f7 0%,
-    #fde7f3 50%,
-    #fce7f3 100%
-  );
+  --bg-main: #f2f0eb;
 
-  --bg-white: #ffffff;
-  --bg-card: #fffafb;
-  --bg-light: #fff1f7;
+  --bg-white: #fffefa;
+  --bg-card: rgba(255, 254, 250, 0.92);
+  --bg-light: #e8e6df;
   --bg-elegant: linear-gradient(
-    135deg,
-    #fff5fa 0%,
-    #ffe4f0 100%
+    120deg,
+    #fffefa 0%,
+    #e8e5de 100%
   );
 
-  --bg-subtle: rgba(236, 72, 153, 0.05);
+  --bg-subtle: rgba(229, 72, 63, 0.06);
 
   /* Glass & overlays */
-  --overlay-light: rgba(255, 240, 246, 0.7);
-  --overlay-glass: rgba(255, 255, 255, 0.9);
+  --overlay-light: rgba(255, 254, 250, 0.76);
+  --overlay-glass: rgba(255, 254, 250, 0.9);
 
   /* Borders */
-  --border: rgba(236, 72, 153, 0.15);
-  --border-light: rgba(236, 72, 153, 0.08);
+  --border: rgba(32, 35, 34, 0.16);
+  --border-light: rgba(32, 35, 34, 0.09);
 
   /* Shadows – warm & romantic */
-  --shadow-sm: 0 4px 10px rgba(236, 72, 153, 0.12);
-  --shadow-md: 0 10px 30px rgba(236, 72, 153, 0.18);
-  --shadow-lg: 0 20px 60px rgba(236, 72, 153, 0.22);
-  --shadow-elegant: 0 28px 80px rgba(236, 72, 153, 0.25);
+  --shadow-sm: 0 6px 18px rgba(32, 35, 34, 0.08);
+  --shadow-md: 0 14px 34px rgba(32, 35, 34, 0.12);
+  --shadow-lg: 0 24px 60px rgba(32, 35, 34, 0.16);
+  --shadow-elegant: 0 28px 80px rgba(32, 35, 34, 0.2);
 
   /* Transitions */
   --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -60,7 +55,6 @@
 html {
   scroll-behavior: smooth;
   background: var(--bg-main);
-  background-attachment: fixed;
 }
 
 body {
@@ -80,10 +74,11 @@ body::before {
   left: 0;
   width: 100%;
   height: 100%;
-  background: 
-    radial-gradient(circle at 20% 30%, rgba(216, 180, 254, 0.15) 0%, transparent 50%),
-    radial-gradient(circle at 80% 70%, rgba(167, 139, 250, 0.12) 0%, transparent 50%),
-    radial-gradient(circle at 50% 50%, rgba(139, 92, 246, 0.08) 0%, transparent 60%);
+  background-image:
+    linear-gradient(118deg, transparent 0 58%, rgba(229, 72, 63, 0.06) 58.2%, transparent 58.5%),
+    linear-gradient(28deg, transparent 0 76%, rgba(228, 185, 106, 0.08) 76.2%, transparent 76.5%),
+    repeating-linear-gradient(90deg, rgba(32, 35, 34, 0.035) 0, rgba(32, 35, 34, 0.035) 1px, transparent 1px, transparent 72px),
+    repeating-linear-gradient(0deg, rgba(32, 35, 34, 0.025) 0, rgba(32, 35, 34, 0.025) 1px, transparent 1px, transparent 72px);
   pointer-events: none;
   z-index: 0;
 }
@@ -137,23 +132,80 @@ p {
 .logo {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   text-decoration: none;
 }
 
-.logo-img {
-  height: 34px;
-  transition: transform 0.25s ease;
+.logo-mark {
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--primary);
+  position: relative;
+  transition: transform 0.25s ease, background 0.25s ease;
 }
 
-.logo-img:hover {
-  transform: scale(1.05);
+.logo-mark::before,
+.logo-mark::after {
+  content: '';
+  position: absolute;
+  bottom: 6px;
+  width: 21px;
+  height: 7px;
+  border-radius: 50% 50% 45% 45%;
+  background: #fffefa;
 }
 
-.logo-text {
+.logo-mark::before {
+  left: 4px;
+  transform: rotate(-18deg);
+}
+
+.logo-mark::after {
+  right: 4px;
+  transform: rotate(18deg);
+}
+
+.logo-petal {
+  position: absolute;
+  bottom: 8px;
+  width: 9px;
+  height: 16px;
+  border-radius: 80% 20% 70% 30%;
+  background: #fffefa;
+  z-index: 1;
+}
+
+.logo-petal-left {
+  left: 7px;
+  transform: rotate(-38deg);
+}
+
+.logo-petal-center {
+  left: 10px;
+  bottom: 10px;
+  height: 18px;
+  border-radius: 50% 50% 35% 35%;
+}
+
+.logo-petal-right {
+  right: 7px;
+  transform: scaleX(-1) rotate(-38deg);
+}
+
+.logo:hover .logo-mark {
+  transform: rotate(30deg) scale(1.05);
+  background: var(--primary-dark);
+}
+
+.logo-name {
   font-weight: 800;
-  font-size: 20px;
-  color: var(--primary);
+  font-size: 17px;
+  letter-spacing: 0.02em;
+  color: var(--text-dark);
+  white-space: nowrap;
 }
 
 .nav-center {
@@ -239,9 +291,9 @@ p {
   left: 0;
   right: 0;
   bottom: 0;
-  background: 
-    radial-gradient(circle at 30% 20%, rgba(216, 180, 254, 0.2) 0%, transparent 50%),
-    radial-gradient(circle at 70% 80%, rgba(167, 139, 250, 0.15) 0%, transparent 50%);
+  background:
+    linear-gradient(112deg, rgba(229, 72, 63, 0.1), transparent 42%),
+    linear-gradient(290deg, rgba(228, 185, 106, 0.14), transparent 46%);
   pointer-events: none;
 }
 
@@ -323,7 +375,7 @@ section {
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(135deg, rgba(216, 180, 254, 0.05) 0%, rgba(167, 139, 250, 0.02) 100%);
+  background: linear-gradient(135deg, rgba(229, 72, 63, 0.06) 0%, rgba(228, 185, 106, 0.04) 100%);
   border-radius: 24px;
   pointer-events: none;
   opacity: 0;
@@ -369,7 +421,7 @@ section {
 .wisdom-section.alt,
 .technique-section.alt {
   background: var(--bg-elegant);
-  box-shadow: inset 0 1px 3px rgba(139, 92, 246, 0.05);
+  box-shadow: inset 0 1px 3px rgba(32, 35, 34, 0.06);
 }
 
 /* =========================================
@@ -409,7 +461,7 @@ section {
   transition: var(--transition);
   position: relative;
   z-index: 10;
-  box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+  box-shadow: 0 4px 15px rgba(185, 47, 50, 0.24);
   overflow: hidden;
 }
 
@@ -452,7 +504,7 @@ section {
 .explore-btn:hover,
 .refresh-btn:hover {
   transform: translateY(-3px);
-  box-shadow: 0 8px 25px rgba(139, 92, 246, 0.4);
+  box-shadow: 0 8px 25px rgba(185, 47, 50, 0.32);
 }
 
 .btn.outline,
@@ -471,7 +523,7 @@ section {
 .btn.outline:hover,
 .copy-btn:hover {
   color: white;
-  box-shadow: 0 4px 15px rgba(139, 92, 246, 0.25);
+  box-shadow: 0 4px 15px rgba(185, 47, 50, 0.2);
 }
 
 /* =========================================
@@ -502,8 +554,9 @@ section {
   left: -50%;
   width: 200%;
   height: 200%;
-  background: 
-    radial-gradient(circle, rgba(216, 180, 254, 0.15) 0%, transparent 50%);
+  background:
+    linear-gradient(135deg, rgba(229, 72, 63, 0.1), transparent 45%),
+    linear-gradient(315deg, rgba(228, 185, 106, 0.12), transparent 50%);
   animation: float 20s ease-in-out infinite;
   pointer-events: none;
 }
@@ -814,9 +867,9 @@ section::after,
 .about-page {
   background: linear-gradient(
     180deg,
-    #faf7ff 0%,
-    #ffffff 40%,
-    #ffffff 100%
+    #eeeae3 0%,
+    #fffefa 40%,
+    #fffefa 100%
   );
 }
 
@@ -836,8 +889,8 @@ section::after,
   border-radius: 28px;
   padding: 64px 72px;
   margin: 80px auto;
-  box-shadow: 0 20px 60px rgba(139, 92, 246, 0.12);
-  border: 1px solid rgba(139, 92, 246, 0.08);
+  box-shadow: 0 20px 60px rgba(32, 35, 34, 0.1);
+  border: 1px solid rgba(32, 35, 34, 0.08);
 }
 
 .about-message h2 {
@@ -870,7 +923,7 @@ section::after,
 .about-signature {
   margin-top: 48px;
   padding-top: 32px;
-  border-top: 1px solid rgba(139, 92, 246, 0.15);
+  border-top: 1px solid rgba(32, 35, 34, 0.15);
 }
 
 .about-signature .name {
@@ -892,12 +945,12 @@ section::after,
   padding: 64px 72px;
   background: linear-gradient(
     135deg,
-    rgba(250, 245, 255, 0.9),
-    rgba(255, 255, 255, 0.95)
+    rgba(255, 254, 250, 0.92),
+    rgba(241, 238, 231, 0.96)
   );
   border-radius: 32px;
-  box-shadow: 0 24px 70px rgba(139, 92, 246, 0.14);
-  border: 1px solid rgba(139, 92, 246, 0.12);
+  box-shadow: 0 24px 70px rgba(32, 35, 34, 0.12);
+  border: 1px solid rgba(32, 35, 34, 0.12);
 }
 
 .about-connect h3 {
@@ -946,20 +999,14 @@ section::after,
    (STRUCTURE-BASED, GUARANTEED TO APPLY)
 ========================================= */
 
-/* Target only the ABOUT page */
-body:has(h1:contains("About")),
-body:has(h2:contains("A Message From The Heart")) {
-    
-}
-
 /* Make last sections calmer */
 section:last-of-type,
 section:nth-last-of-type(2),
 section:nth-last-of-type(3) {
     background: linear-gradient(
         180deg,
-        #faf7ff 0%,
-        #ffffff 55%
+      #eeeae3 0%,
+      #fffefa 55%
     ) !important;
 
     padding-top: 80px;
