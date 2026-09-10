@@ -7,11 +7,11 @@ import sqlite3
 import traceback
 from textblob import TextBlob
 from dotenv import load_dotenv
-from openai import OpenAI
 from apscheduler.schedulers.background import BackgroundScheduler
 from flask import Flask, render_template, request, redirect, url_for, jsonify
 from agents.happiness_program_manager_agent import create_default_manager
 from agents.content_review_agent import review_content
+from agents.ollama_client import OllamaClient
 def resource_path(relative_path):
     try:
         base_path = sys._MEIPASS
@@ -22,12 +22,9 @@ def resource_path(relative_path):
 load_dotenv(override=True)
 
 app = Flask(__name__)
-OPENAI_API_KEY = (os.getenv("OPENAI_API_KEY") or "").strip().strip('"').strip("'")
-if OPENAI_API_KEY and not OPENAI_API_KEY.startswith("sk-"):
-    print("Warning: OPENAI_API_KEY does not look valid (missing 'sk-' prefix).")
-if not OPENAI_API_KEY:
-    print("Warning: OPENAI_API_KEY is empty. Chat will run in fallback mode.")
-client = OpenAI(api_key=OPENAI_API_KEY) if OPENAI_API_KEY else None
+OLLAMA_HOST = (os.getenv("OLLAMA_HOST") or "http://localhost:11434").strip().strip('"').strip("'")
+OLLAMA_MODEL = (os.getenv("OLLAMA_MODEL") or "llama3.2:3b").strip().strip('"').strip("'")
+client = OllamaClient(base_url=OLLAMA_HOST, model=OLLAMA_MODEL)
 OPENAI_QUOTA_EXHAUSTED = False
 DATABASE = "joyfulbeing.db"
 program_manager = create_default_manager()
@@ -44,6 +41,49 @@ def mark_quota_exhausted_if_needed(error):
         or "insufficient_quota" in error_text
     ):
         OPENAI_QUOTA_EXHAUSTED = True
+
+
+def local_llm_available():
+    available, _ = client.is_available()
+    return available
+
+
+def generate_local_chatbot_response(user_message: str) -> str:
+    text = (user_message or "").strip().lower()
+    if not text:
+        return "I’m here to listen whenever you’re ready to share."
+
+    if any(word in text for word in ["hello", "hi", "hey", "namaste"]):
+        return "Hello. I’m Namaskaram 🌿. How are you feeling in your heart today?"
+
+    if any(word in text for word in ["stress", "anxious", "worried", "overwhelmed", "panic"]):
+        return (
+            "I hear you. Take one gentle breath with me: inhale 4, hold 2, exhale 6. "
+            "You are safe in this moment. Tell me one small thing that might help."
+        )
+
+    if any(word in text for word in ["sad", "down", "lonely", "hurt", "empty"]):
+        return (
+            "It’s okay to feel this way. Your feeling is real and seen. "
+            "Let’s stay with one soft breath and notice what your body is asking for."
+        )
+
+    if any(word in text for word in ["angry", "frustrated", "mad", "irritated"]):
+        return (
+            "Slow down and allow yourself a pause. A calm choice is always possible. "
+            "Try breathing in for 4 and out for 8, and then tell me what feels most important right now."
+        )
+
+    if any(word in text for word in ["happy", "joy", "good", "peaceful", "grateful"]):
+        return (
+            "That is beautiful. Stay with this gentle feeling for a moment. "
+            "What is one small way you can keep this light with you today?"
+        )
+
+    return (
+        "Thank you for sharing. I’m here with a calm presence. "
+        "If you like, tell me more about how your day has been or what you need right now."
+    )
 
 def init_db():
     conn = sqlite3.connect(DATABASE)
@@ -78,28 +118,27 @@ def chat():
     if not user_message:
         return jsonify({"reply": "Please share what you are feeling, and I will respond gently."}), 400
 
-    if client is None or OPENAI_QUOTA_EXHAUSTED:
-        return jsonify({"reply": generate_local_guidance(user_message), "source": "fallback"})
+    if not local_llm_available():
+        return jsonify({"reply": generate_local_chatbot_response(user_message), "source": "local-fallback"})
 
     try:
         response = client.chat.completions.create(
-            model="gpt-4o-mini",
+            model=OLLAMA_MODEL,
             messages=[
                 {"role": "system", "content": SYSTEM_PROMPT},
                 {"role": "user", "content": user_message}
             ],
-            max_tokens=100,
+            max_tokens=120,
             temperature=0.4
         )
 
         reply = response.choices[0].message.content.strip()
-        return jsonify({"reply": reply, "source": "openai"})
+        return jsonify({"reply": reply, "source": "ollama"})
 
     except Exception as e:
         mark_quota_exhausted_if_needed(e)
-        print(f"OpenAI chat error: {type(e).__name__}: {e}")
-        # Input-aware fallback so chat still feels dynamic if OpenAI fails.
-        return jsonify({"reply": generate_local_guidance(user_message), "source": "fallback"})
+        print(f"Ollama chat error: {type(e).__name__}: {e}")
+        return jsonify({"reply": generate_local_chatbot_response(user_message), "source": "local-fallback"})
 
 # ============================================================================
 # MONTH THEMES (elegant colors with seasonal harmony)
@@ -906,8 +945,8 @@ def init_db():
 
 
 def generate_ai_guidance(user_mood):
-    if client is None or OPENAI_QUOTA_EXHAUSTED:
-        raise RuntimeError("OpenAI guidance is currently unavailable.")
+    if not local_llm_available():
+        raise RuntimeError("Ollama guidance is currently unavailable.")
     prompt = f"""
     A person is feeling {user_mood}.
     
@@ -922,7 +961,7 @@ def generate_ai_guidance(user_mood):
 
     try:
         response = client.chat.completions.create(
-            model="gpt-4o-mini",
+            model=OLLAMA_MODEL,
             messages=[
                 {"role": "system", "content": SYSTEM_PROMPT},
                 {"role": "user", "content": prompt}
@@ -937,7 +976,7 @@ def generate_ai_guidance(user_mood):
 
 
 def route_feature_with_openai(user_input, feature_catalog):
-    if client is None or OPENAI_QUOTA_EXHAUSTED:
+    if OPENAI_QUOTA_EXHAUSTED:
         return None
     feature_lines = "\n".join(
         f"- {item['feature_id']}: {item['description']}" for item in feature_catalog
@@ -958,7 +997,7 @@ def route_feature_with_openai(user_input, feature_catalog):
     """
     try:
         response = client.chat.completions.create(
-            model="gpt-4o-mini",
+            model=OLLAMA_MODEL,
             messages=[
                 {"role": "system", "content": "Return only the exact feature id token."},
                 {"role": "user", "content": router_prompt}
@@ -1074,11 +1113,13 @@ def mood():
             return render_template("mood.html")
 
         try:
-            try:
-                ai_response = generate_ai_guidance(user_mood)
-            except Exception as e:
-                if not OPENAI_QUOTA_EXHAUSTED:
-                    print(f"OpenAI mood guidance error: {type(e).__name__}: {e}")
+            if local_llm_available():
+                try:
+                    ai_response = generate_ai_guidance(user_mood)
+                except Exception as e:
+                    print(f"Local LLM mood guidance error: {type(e).__name__}: {e}")
+                    ai_response = generate_local_guidance(user_mood)
+            else:
                 ai_response = generate_local_guidance(user_mood)
 
             if not ai_response:
@@ -1128,6 +1169,16 @@ def rituals():
 def api_mantra():
     """API endpoint for random mantra"""
     return jsonify(random.choice(sanskrit_mantras))
+
+@app.route("/api/llm-status")
+def llm_status():
+    available, message = client.is_available()
+    return jsonify({
+        "available": available,
+        "model": OLLAMA_MODEL,
+        "host": OLLAMA_HOST,
+        "message": message,
+    })
 
 @app.route("/api/ritual")
 def api_ritual():
@@ -1217,8 +1268,7 @@ def run_program_manager():
 
     context["generate_ai_guidance"] = generate_ai_guidance
     context["generate_local_guidance"] = generate_local_guidance
-    if client is not None:
-        context["review_content"] = lambda article: review_content(article, llm_client=client)
+    context["review_content"] = lambda article: review_content(article, llm_client=client)
     context["analyze_sentiment"] = analyze_sentiment
     context["generate_weekly_joy_index"] = generate_weekly_joy_index
     context["route_feature"] = route_feature_with_openai

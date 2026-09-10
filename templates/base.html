@@ -122,15 +122,18 @@ document.addEventListener("DOMContentLoaded", function () {
       <button id="nb-close">✕</button>
     </div>
 
-    <div id="nb-messages">
+    <div id="nb-messages" aria-live="polite">
       <div class="nb-bot">
         Namaskaram 🌿
         How is your heart feeling right now?
       </div>
     </div>
 
-    <div id="llm-status" class="nb-status">Checking local assistant…</div>
-    <input id="nb-input" type="text" placeholder="Share gently..." />
+    <div id="llm-status" class="nb-status">Calm fallback ready</div>
+    <form id="nb-form" class="nb-form">
+      <input id="nb-input" type="text" placeholder="Share gently..." autocomplete="off" />
+      <button id="nb-send" type="submit" aria-label="Send message">Send</button>
+    </form>
   </div>
 </div>
 
@@ -162,12 +165,12 @@ async function updateLlmStatus() {
       llmStatus.classList.add('nb-status-online');
       llmStatus.classList.remove('nb-status-offline');
     } else {
-      llmStatus.textContent = "Local chatbot is not available yet — using calm fallback guidance.";
+      llmStatus.textContent = "Calm fallback ready — local Ollama is optional.";
       llmStatus.classList.add('nb-status-offline');
       llmStatus.classList.remove('nb-status-online');
     }
   } catch (err) {
-    llmStatus.textContent = "Local chatbot check failed — using calm fallback guidance.";
+    llmStatus.textContent = "Calm fallback ready — local Ollama is optional.";
     llmStatus.classList.add('nb-status-offline');
     llmStatus.classList.remove('nb-status-online');
   }
@@ -175,12 +178,17 @@ async function updateLlmStatus() {
 
 updateLlmStatus();
 
-input.addEventListener("keypress", async (e) => {
-  if (e.key !== "Enter" || !input.value.trim()) return;
+const chatForm = document.getElementById("nb-form");
+const sendButton = document.getElementById("nb-send");
+
+chatForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  if (!input.value.trim()) return;
 
   const text = input.value.trim();
   appendMessage("nb-user", text);
   input.value = "";
+  sendButton.disabled = true;
 
   try {
     const res = await fetch("/chat", {
@@ -193,6 +201,9 @@ input.addEventListener("keypress", async (e) => {
     appendMessage("nb-bot", reply);
   } catch (err) {
     appendMessage("nb-bot", "Connection issue. Please try again.");
+  } finally {
+    sendButton.disabled = false;
+    input.focus();
   }
 
   messages.scrollTop = messages.scrollHeight;

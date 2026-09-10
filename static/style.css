@@ -1504,13 +1504,41 @@ body::after {
   text-align: right;
 }
 
-/* Input */
+.nb-form {
+  display: flex;
+  align-items: center;
+  border-top: 1px solid #eee;
+  background: #fff;
+}
+
 #nb-input {
-  width: 100%;
+  min-width: 0;
+  flex: 1;
   border: none;
   padding: 12px;
-  border-top: 1px solid #eee;
   outline: none;
+}
+
+#nb-send {
+  border: 0;
+  padding: 8px 12px;
+  margin-right: 6px;
+  border-radius: 8px;
+  background: var(--primary);
+  color: #fff;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+#nb-send:hover {
+  background: var(--primary-dark);
+}
+
+#nb-send:disabled {
+  opacity: 0.6;
+  cursor: wait;
 }
 /* CTA BUTTON */
 .cta-btn {
