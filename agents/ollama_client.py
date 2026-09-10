@@ -1,5 +1,6 @@
 import json
 import os
+import time
 import urllib.error
 import urllib.request
 from types import SimpleNamespace
@@ -11,18 +12,28 @@ class OllamaClient:
     def __init__(self, base_url: str | None = None, model: str | None = None) -> None:
         self.base_url = (base_url or os.getenv("OLLAMA_HOST") or "http://localhost:11434").rstrip("/")
         self.model = (model or os.getenv("OLLAMA_MODEL") or "llama3.2:3b").strip()
+        self._availability_cache: tuple[bool, str] | None = None
+        self._availability_checked_at = 0.0
 
     def is_available(self) -> tuple[bool, str]:
+        if self._availability_cache is not None and time.monotonic() - self._availability_checked_at < 30:
+            return self._availability_cache
+
         try:
             request = urllib.request.Request(f"{self.base_url}/api/models", method="GET")
-            with urllib.request.urlopen(request, timeout=5) as response:
+            with urllib.request.urlopen(request, timeout=1.5) as response:
                 data = json.loads(response.read().decode("utf-8"))
                 if isinstance(data, list) and len(data) > 0:
                     models = ", ".join(str(item.get("name", "unknown")) for item in data[:3])
-                    return True, f"Local Ollama available ({len(data)} models, sample: {models})"
-                return False, "Connected to Ollama but no models found"
+                    result = True, f"Local Ollama available ({len(data)} models, sample: {models})"
+                else:
+                    result = False, "Connected to Ollama but no models found"
         except Exception as exc:
-            return False, str(exc)
+            result = False, str(exc)
+
+        self._availability_cache = result
+        self._availability_checked_at = time.monotonic()
+        return result
 
     def _request(self, prompt: str, *, system_prompt: str = "", max_tokens: int = 180, temperature: float = 0.5) -> str | None:
         payload = {
