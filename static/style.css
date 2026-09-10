@@ -1971,6 +1971,7 @@ body::after {
 }
 
 .program-category,
+.program-audience,
 .verified-badge,
 .program-price {
   display: inline-flex;
@@ -1987,6 +1988,11 @@ body::after {
 .program-category {
   background: rgba(229, 72, 63, 0.09);
   color: var(--primary-dark);
+}
+
+.program-audience {
+  background: rgba(228, 185, 106, 0.2);
+  color: #926b2b;
 }
 
 .verified-badge {

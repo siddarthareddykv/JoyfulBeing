@@ -21,6 +21,7 @@
                 <option>Meditation</option>
                 <option>Mindfulness</option>
                 <option>Movement</option>
+                <option>Employee Wellness</option>
                 <option>Yoga</option>
             </select>
         </label>
@@ -67,6 +68,7 @@
                  data-start="{{ program.start_utc }}">
             <div class="program-card-topline">
                 <span class="program-category">{{ program.category }}</span>
+                {% if program.audience %}<span class="program-audience">{{ program.audience }}</span>{% endif %}
                 {% if program.verified %}<span class="verified-badge">Verified</span>{% endif %}
             </div>
             <h2>{{ program.title }}</h2>
