@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 120" role="img" aria-labelledby="title desc">
+  <title id="title">JoyfulBeing</title>
+  <desc id="desc">JoyfulBeing logo with an orange leaf and navy wordmark</desc>
+  <g transform="translate(8 8)">
+    <path fill="#ffad5c" d="M12 15C39 5 67 5 93 8c4 27 4 55-10 72-13 16-33 22-55 25l1-31c3-21 15-38 35-51-25 8-42 27-49 51l-2 31C3 75 3 42 12 15Z"/>
+    <path fill="none" stroke="#fffefa" stroke-linecap="round" stroke-width="8" d="M22 80c8-23 24-40 47-52"/>
+  </g>
+  <text x="112" y="82" fill="#182452" font-family="Trebuchet MS, Arial, sans-serif" font-size="61" font-weight="700" letter-spacing="-2">JoyfulBeing</text>
+</svg>
