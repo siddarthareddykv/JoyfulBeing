@@ -1184,8 +1184,110 @@ def calendar_view():
         year=year,
         theme=theme,
         month_themes=month_themes,
-        mapping=mapping
+        mapping=mapping,
+        today_day=today.day if month == today.month else None,
+        today_date=today.isoformat()
     )
+
+
+wellness_programs = [
+    {
+        "title": "Sunrise Breath Circle",
+        "organizer": "Joyful Being Community",
+        "category": "Breathwork",
+        "country": "India",
+        "city": "Bengaluru",
+        "format": "Online",
+        "price": "Free",
+        "language": "English",
+        "start_utc": "2026-09-10T16:30:00Z",
+        "duration": "30 min",
+        "description": "Begin the day with gentle breath awareness and a quiet intention.",
+        "registration_url": "mailto:contact@joyfulbeing.in?subject=Sunrise%20Breath%20Circle",
+        "verified": True,
+    },
+    {
+        "title": "Mindful Movement in the Park",
+        "organizer": "Open Ground Wellness",
+        "category": "Movement",
+        "country": "United Kingdom",
+        "city": "London",
+        "format": "In person",
+        "price": "Free",
+        "language": "English",
+        "start_utc": "2026-09-12T09:00:00Z",
+        "duration": "60 min",
+        "description": "A low-pressure morning walk, stretch, and grounding practice for all levels.",
+        "registration_url": "mailto:contact@joyfulbeing.in?subject=Mindful%20Movement%20in%20the%20Park",
+        "verified": True,
+    },
+    {
+        "title": "Community Meditation for Rest",
+        "organizer": "Stillpoint Collective",
+        "category": "Meditation",
+        "country": "United States",
+        "city": "New York",
+        "format": "Online",
+        "price": "Donation",
+        "language": "English",
+        "start_utc": "2026-09-12T16:00:00Z",
+        "duration": "45 min",
+        "description": "A guided practice for softening the nervous system and making space for rest.",
+        "registration_url": "mailto:contact@joyfulbeing.in?subject=Community%20Meditation%20for%20Rest",
+        "verified": True,
+    },
+    {
+        "title": "Quiet Evening Yoga",
+        "organizer": "Casa Serena",
+        "category": "Yoga",
+        "country": "Brazil",
+        "city": "Sao Paulo",
+        "format": "Online",
+        "price": "Free",
+        "language": "Portuguese",
+        "start_utc": "2026-09-13T22:00:00Z",
+        "duration": "50 min",
+        "description": "Slow, accessible movement to close the week with ease and gratitude.",
+        "registration_url": "mailto:contact@joyfulbeing.in?subject=Quiet%20Evening%20Yoga",
+        "verified": False,
+    },
+    {
+        "title": "Digital Sabbath Gathering",
+        "organizer": "The Gentle Hour",
+        "category": "Mindfulness",
+        "country": "Australia",
+        "city": "Melbourne",
+        "format": "Online",
+        "price": "Free",
+        "language": "English",
+        "start_utc": "2026-09-14T08:00:00Z",
+        "duration": "40 min",
+        "description": "Reflective prompts and practical ideas for creating a kinder relationship with screens.",
+        "registration_url": "mailto:contact@joyfulbeing.in?subject=Digital%20Sabbath%20Gathering",
+        "verified": True,
+    },
+    {
+        "title": "Ayurvedic Self-Care Workshop",
+        "organizer": "Prana House",
+        "category": "Ayurveda",
+        "country": "Sri Lanka",
+        "city": "Colombo",
+        "format": "In person",
+        "price": "Paid",
+        "language": "English",
+        "start_utc": "2026-09-15T11:00:00Z",
+        "duration": "90 min",
+        "description": "Learn simple, non-clinical daily rituals for rest, rhythm, and mindful nourishment.",
+        "registration_url": "mailto:contact@joyfulbeing.in?subject=Ayurvedic%20Self-Care%20Workshop",
+        "verified": False,
+    },
+]
+
+
+@app.route("/programs")
+def programs():
+    """Display curated global wellness programs."""
+    return render_template("programs.html", programs=wellness_programs)
 
 
 @app.route("/emotions")

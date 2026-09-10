@@ -18,6 +18,9 @@
   --text-dark: #202322;
   --text-body: #4f514d;
   --text-muted: #777971;
+  --text: var(--text-dark);
+  --muted: var(--text-muted);
+  --secondary: var(--primary-dark);
   --font-ui: 'Trebuchet MS', 'Poppins', sans-serif;
 
   /* Backgrounds */
@@ -1745,6 +1748,843 @@ body::after {
 
 .skip-link:focus {
   transform: translateY(0);
+}
+
+/* =========================================
+   GLOBAL WELLNESS PROGRAMS
+========================================= */
+
+.programs-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 44px 20px 88px;
+}
+
+.programs-hero {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(40px, 6vw, 68px) clamp(24px, 6vw, 72px);
+  border-radius: 24px;
+  background: #202322;
+  color: #fffefa;
+  box-shadow: var(--shadow-lg);
+}
+
+.programs-hero::after {
+  content: '';
+  position: absolute;
+  right: -80px;
+  bottom: -120px;
+  width: 360px;
+  height: 360px;
+  border: 1px solid rgba(228, 185, 106, 0.5);
+  border-radius: 50%;
+  box-shadow: 0 0 0 24px rgba(228, 185, 106, 0.06), 0 0 0 48px rgba(228, 185, 106, 0.04);
+  pointer-events: none;
+}
+
+.programs-hero .section-eyebrow {
+  color: #f3c979;
+  position: relative;
+  z-index: 1;
+}
+
+.wellness-needs {
+  padding: 24px 20px 72px;
+}
+
+.wellness-needs-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.wellness-need {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 16px 18px;
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  background: var(--bg-card);
+  color: var(--text-dark);
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: 800;
+  text-decoration: none;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.wellness-need:hover {
+  transform: translateY(-3px);
+  border-color: var(--primary);
+  color: var(--primary-dark);
+}
+
+.wellness-breath-controls {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.wellness-breath-active {
+  animation: wellness-breathe-in 4s ease-in-out infinite alternate;
+}
+
+@keyframes wellness-breathe-in {
+  from { transform: scale(1); }
+  to { transform: scale(1.28); }
+}
+
+@media (max-width: 900px) {
+  .wellness-needs-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 520px) {
+  .wellness-needs-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .wellness-breath-controls {
+    flex-wrap: wrap;
+  }
+}
+
+.programs-hero h1 {
+  max-width: 650px;
+  margin: 0 0 18px;
+  color: #fffefa;
+  font-family: var(--font-ui);
+  font-size: clamp(2.1rem, 4.6vw, 4.1rem);
+  line-height: 1.03;
+  letter-spacing: -0.04em;
+  position: relative;
+  z-index: 1;
+}
+
+.programs-hero > p:not(.section-eyebrow) {
+  max-width: 610px;
+  margin: 0;
+  color: rgba(255, 254, 250, 0.76);
+  font-size: 17px;
+  line-height: 1.7;
+  position: relative;
+  z-index: 1;
+}
+
+.programs-toolbar {
+  display: grid;
+  grid-template-columns: 1.5fr repeat(3, 1fr);
+  gap: 12px;
+  margin: 24px 0 18px;
+  padding: 16px;
+  border: 1px solid var(--border-light);
+  border-radius: 14px;
+  background: rgba(255, 254, 250, 0.88);
+  box-shadow: var(--shadow-sm);
+}
+
+.programs-toolbar label {
+  display: grid;
+  gap: 7px;
+  color: var(--text-muted);
+  font-family: var(--font-ui);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.programs-toolbar input,
+.programs-toolbar select {
+  width: 100%;
+  min-height: 42px;
+  padding: 9px 11px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  outline: none;
+  background: #fffefa;
+  color: var(--text-dark);
+  font: 14px var(--font-ui);
+}
+
+.programs-toolbar input:focus,
+.programs-toolbar select:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(229, 72, 63, 0.12);
+}
+
+.programs-summary {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 26px 2px 14px;
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+.programs-summary strong {
+  color: var(--text-dark);
+  font-family: var(--font-ui);
+}
+
+.programs-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.program-card {
+  display: flex;
+  min-height: 390px;
+  flex-direction: column;
+  padding: 24px;
+  border: 1px solid var(--border-light);
+  border-radius: 16px;
+  background: rgba(255, 254, 250, 0.9);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.program-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(229, 72, 63, 0.3);
+  box-shadow: var(--shadow-md);
+}
+
+.program-card[hidden] {
+  display: none;
+}
+
+.program-card-topline,
+.program-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.program-category,
+.verified-badge,
+.program-price {
+  display: inline-flex;
+  width: fit-content;
+  padding: 5px 8px;
+  border-radius: 999px;
+  font-family: var(--font-ui);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.program-category {
+  background: rgba(229, 72, 63, 0.09);
+  color: var(--primary-dark);
+}
+
+.verified-badge {
+  background: rgba(109, 137, 120, 0.13);
+  color: #4d6d5b;
+}
+
+.program-card h2 {
+  margin: 24px 0 5px;
+  font-family: var(--font-ui);
+  font-size: 21px;
+  line-height: 1.2;
+}
+
+.program-organizer {
+  margin: 0 0 14px;
+  color: var(--text-muted);
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.program-description {
+  min-height: 68px;
+  margin: 0 0 18px;
+  color: var(--text-body);
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+.program-details {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 14px 0;
+  border-top: 1px solid var(--border-light);
+  border-bottom: 1px solid var(--border-light);
+}
+
+.program-details div {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.program-details dt {
+  color: var(--text-muted);
+  font-size: 11px;
+}
+
+.program-details dd {
+  max-width: 70%;
+  margin: 0;
+  color: var(--text-dark);
+  font-size: 11px;
+  font-weight: 700;
+  text-align: right;
+}
+
+.program-card-footer {
+  margin-top: auto;
+  padding-top: 18px;
+}
+
+.program-card-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.program-calendar-button,
+.program-view-tab {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text-dark);
+  font-family: var(--font-ui);
+  font-size: 10px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.program-calendar-button {
+  padding: 7px 9px;
+}
+
+.program-calendar-button:hover,
+.program-view-tab:hover,
+.program-view-tab.is-active {
+  border-color: var(--primary);
+  background: var(--primary);
+  color: #fffefa;
+}
+
+.program-view-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.program-view-tab {
+  padding: 9px 13px;
+}
+
+.calendar-today {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 24px;
+  align-items: center;
+  margin: 28px 0 36px;
+  padding: 28px 32px;
+  border-radius: 16px;
+  background: #202322;
+  color: #fffefa;
+  box-shadow: var(--shadow-md);
+}
+
+.calendar-kicker {
+  margin: 0 0 8px;
+  color: #f3c979;
+  font-family: var(--font-ui);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.calendar-today h2 {
+  margin: 0 0 12px;
+  color: #fffefa;
+  font-family: var(--font-ui);
+  font-size: 25px;
+}
+
+.today-quote {
+  margin: 0;
+  color: rgba(255, 254, 250, 0.76);
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.today-action {
+  padding: 20px;
+  border-left: 2px solid #f3c979;
+  background: rgba(255, 254, 250, 0.06);
+}
+
+.today-action span,
+.today-action strong {
+  display: block;
+}
+
+.today-action span {
+  margin-bottom: 8px;
+  color: rgba(255, 254, 250, 0.6);
+  font-family: var(--font-ui);
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.today-action strong {
+  color: #f3c979;
+  font-family: var(--font-ui);
+  font-size: 16px;
+}
+
+.today-cell {
+  border-color: var(--primary) !important;
+  box-shadow: 0 0 0 3px rgba(229, 72, 63, 0.16), var(--shadow-sm) !important;
+}
+
+.reflection-section,
+.pause-section {
+  text-align: center;
+}
+
+.reflection-input {
+  display: block;
+  width: min(700px, 100%);
+  margin: 22px auto 14px;
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg-card);
+  color: var(--text-dark);
+  font: 14px/1.6 inherit;
+  resize: vertical;
+}
+
+.reflection-input:focus {
+  outline: 3px solid rgba(229, 72, 63, 0.14);
+  border-color: var(--primary);
+}
+
+.reflection-actions {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.reflection-status {
+  min-height: 24px;
+  margin: 12px 0 0;
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+.pause-timer {
+  margin: 22px 0;
+  color: var(--primary-dark);
+  font-family: var(--font-ui);
+  font-size: 42px;
+  font-weight: 800;
+}
+
+.mantra-practice-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.copy-mantra-btn {
+  padding: 10px 16px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text-dark);
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.copy-mantra-btn:hover {
+  border-color: var(--primary);
+  color: var(--primary-dark);
+}
+
+.chant-count {
+  color: var(--text-muted);
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.ritual-guide-panel {
+  margin-top: 22px;
+  padding: 20px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg-elegant);
+}
+
+.ritual-guide-label {
+  margin: 0 0 8px;
+  color: var(--primary-dark);
+  font-family: var(--font-ui);
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.ritual-guide-panel p:not(.ritual-guide-label) {
+  margin: 0 0 16px;
+  color: var(--text-dark);
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.ritual-guide-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.ritual-guide-actions .begin-btn {
+  width: auto;
+  padding: 10px 14px;
+  font-size: 12px;
+}
+
+.ritual-guide-actions .begin-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+@media (max-width: 700px) {
+  .calendar-today {
+    grid-template-columns: 1fr;
+    padding: 24px;
+  }
+
+  .program-view-tabs {
+    overflow-x: auto;
+  }
+
+  .program-card-actions {
+    flex-direction: column;
+    align-items: flex-end;
+  }
+}
+
+.program-price-free {
+  color: #4d6d5b;
+  background: rgba(109, 137, 120, 0.13);
+}
+
+.program-price-donation {
+  color: #926b2b;
+  background: rgba(228, 185, 106, 0.2);
+}
+
+.program-price-paid {
+  color: var(--primary-dark);
+  background: rgba(229, 72, 63, 0.09);
+}
+
+.program-register,
+.program-submit-link {
+  color: var(--primary-dark);
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.program-register:hover,
+.program-submit-link:hover {
+  color: var(--primary);
+}
+
+.programs-empty {
+  padding: 60px 20px;
+  border: 1px dashed var(--border);
+  border-radius: 14px;
+  text-align: center;
+}
+
+.programs-empty h2 {
+  font-family: var(--font-ui);
+  font-size: 22px;
+}
+
+.programs-empty p {
+  margin: 8px 0 0;
+  color: var(--text-muted);
+}
+
+.program-submit {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+  margin-top: 44px;
+  padding: 30px 34px;
+  border-radius: 16px;
+  background: linear-gradient(120deg, #e9eee8, #f1e9dc);
+  border: 1px solid var(--border-light);
+}
+
+.program-submit .section-eyebrow {
+  margin-bottom: 8px;
+}
+
+.program-submit h2 {
+  margin: 0 0 8px;
+  font-family: var(--font-ui);
+  font-size: 22px;
+}
+
+.program-submit p:not(.section-eyebrow) {
+  max-width: 600px;
+  margin: 0;
+  color: var(--text-body);
+  font-size: 13px;
+}
+
+.about-hero-actions {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.about-hero-secondary {
+  background: rgba(255, 254, 250, 0.12) !important;
+  border: 1px solid rgba(255, 254, 250, 0.4) !important;
+  color: #fffefa !important;
+}
+
+.about-how,
+.about-community {
+  text-align: center;
+}
+
+.about-steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 34px;
+  text-align: left;
+}
+
+.about-step {
+  padding: 24px;
+  border-top: 3px solid var(--primary);
+  background: var(--bg-card);
+  border-radius: 12px;
+  box-shadow: var(--shadow-sm);
+}
+
+.about-step span {
+  color: var(--accent);
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.about-step h3 {
+  margin: 18px 0 8px;
+  font-family: var(--font-ui);
+  font-size: 21px;
+}
+
+.about-step p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.about-inline-link {
+  display: inline-flex;
+  gap: 8px;
+  margin-top: 22px;
+  color: var(--primary-dark);
+  font-family: var(--font-ui);
+  font-size: 13px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.about-safety {
+  display: grid;
+  grid-template-columns: 0.8fr 1.2fr;
+  gap: 36px;
+  align-items: center;
+  margin: 40px auto;
+  padding: 28px 34px;
+  border-left: 3px solid var(--accent);
+  border-radius: 12px;
+  background: #202322;
+}
+
+.about-safety h2 {
+  margin: 0;
+  color: #fffefa;
+  font-family: var(--font-ui);
+  font-size: 22px;
+}
+
+.about-safety .section-eyebrow {
+  margin-bottom: 8px;
+  color: #f3c979;
+}
+
+.about-safety > p {
+  margin: 0;
+  color: rgba(255, 254, 250, 0.76);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+@media (max-width: 700px) {
+  .about-steps,
+  .about-safety {
+    grid-template-columns: 1fr;
+  }
+
+  .about-safety {
+    gap: 16px;
+    padding: 24px;
+  }
+}
+
+/* Bring older page-specific styles back into the current design system. */
+body::after {
+  display: none;
+}
+
+body,
+.emotion-page {
+  background: transparent !important;
+  color: var(--text-body) !important;
+}
+
+.content-hero,
+.calendar-intro,
+.emotion-hero {
+  background: var(--text-dark) !important;
+  box-shadow: var(--shadow-lg) !important;
+}
+
+.content-hero h1,
+.calendar-intro h1,
+.emotion-hero h1 {
+  color: #fffefa !important;
+}
+
+.calendar-intro p,
+.emotion-hero p {
+  color: rgba(255, 254, 250, 0.78) !important;
+}
+
+.calendar-header,
+.calendar-box,
+.featured-mantra-card,
+.featured-ritual-card,
+.emotion-intro,
+.calendar-tips,
+.mantras-section,
+.rituals-section,
+.benefits-section,
+.guide-section,
+.benefits-section {
+  background: var(--bg-elegant) !important;
+  border-color: var(--border-light) !important;
+  box-shadow: var(--shadow-sm) !important;
+}
+
+.calendar-page .calendar-box,
+.calendar-page .calendar-header,
+.calendar-page .cell,
+.mantra-card,
+.ritual-card,
+.benefit-item,
+.benefit-card,
+.emotion-card {
+  background: var(--bg-card) !important;
+  color: var(--text-body) !important;
+}
+
+.month-btn.active,
+.calendar-page .popup,
+.emotions-page .emotion-card.selected,
+.emotion-page .knob {
+  background: var(--primary) !important;
+}
+
+.month-btn:hover,
+.weekdays,
+.day-number,
+.gita-link,
+.feature-link,
+.calendar-page .month-btn.active {
+  color: var(--primary-dark) !important;
+}
+
+.calendar-page .month-btn.active {
+  color: #fffefa !important;
+}
+
+.gita-link {
+  border: 0;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+  font: inherit;
+}
+
+@media (max-width: 960px) {
+  .programs-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .programs-toolbar {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .programs-page {
+    padding: 24px 14px 60px;
+  }
+
+  .programs-toolbar,
+  .programs-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .programs-summary,
+  .program-submit {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
 }
 
 /* =========================================

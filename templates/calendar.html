@@ -248,6 +248,20 @@
   <p>Explore daily wisdom, actionable insights, and gentle reminders to cultivate happiness and inner strength.</p>
 </div>
 
+{% if today_day %}
+<section class="calendar-today" aria-labelledby="today-title">
+  <div>
+    <p class="calendar-kicker">Today · {{ today_date }}</p>
+    <h2 id="today-title">A small practice for today</h2>
+    <p class="today-quote">“{{ mapping[today_day].quote }}”</p>
+  </div>
+  <div class="today-action">
+    <span>Try this</span>
+    <strong>{{ mapping[today_day].action }}</strong>
+  </div>
+</section>
+{% endif %}
+
 
 <!-- ------------ TIPS SECTION ------------ -->
 <div class="calendar-tips">
@@ -272,7 +286,6 @@
   </div>
 </div>
 
-</div>
 <!-- ------------ HEADER ------------ -->
 <div class="calendar-header">
   <div class="month-title">{{ month_name }} {{ year }}</div>
@@ -300,7 +313,7 @@
         {% if day == 0 %}
           <div class="cell empty"></div>
         {% else %}
-          <div class="cell"
+          <div class="cell {% if today_day == day %}today-cell{% endif %}"
                data-quote="{{ mapping[day].quote | e }}"
                data-action="{{ mapping[day].action | e }}">
             <div class="day-number">{{day}}</div>

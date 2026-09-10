@@ -10,8 +10,23 @@
             meditations, and profound teachings to calm your mind and restore inner peace.
         </p>
     </div>
-</section><!-- PRANAYAMA TECHNIQUES SECTION -->
-<section class="technique-section">
+</section>
+
+<section class="wellness-needs" aria-labelledby="wellness-needs-title">
+    <div class="section-wrapper">
+        <p class="section-eyebrow"><span aria-hidden="true"></span> Start where you are</p>
+        <h2 id="wellness-needs-title" class="section-title">What do you need today?</h2>
+        <div class="wellness-needs-grid">
+            <a href="#breathing-tools" class="wellness-need">Calm my body <span aria-hidden="true">→</span></a>
+            <a href="#meditation-tools" class="wellness-need">Clear my mind <span aria-hidden="true">→</span></a>
+            <a href="#quick-relief" class="wellness-need">Find quick relief <span aria-hidden="true">→</span></a>
+            <a href="#daily-reset" class="wellness-need">Build a daily rhythm <span aria-hidden="true">→</span></a>
+        </div>
+    </div>
+</section>
+
+<!-- PRANAYAMA TECHNIQUES SECTION -->
+<section class="technique-section" id="breathing-tools">
     <div class="section-wrapper">
         <h2 class="section-title">🫁 Pranayama: Breathing Techniques</h2>
         <p class="section-subtitle">Control your breath, control your mind. Calm your nervous system instantly.</p>
@@ -39,7 +54,6 @@
                         <li>Continue for 5-10 minutes</li>
                     </ol>
                 </div>
-                <button class="practice-btn">Start Practice</button>
             </div>
 
             <!-- Ujjayi Breathing -->
@@ -64,7 +78,6 @@
                         <li>Maintain the ocean-like sound</li>
                     </ol>
                 </div>
-                <button class="practice-btn">Start Practice</button>
             </div>
 
             <!-- Sama Vritti -->
@@ -88,7 +101,6 @@
                         <li>Continue for 5 minutes</li>
                     </ol>
                 </div>
-                <button class="practice-btn">Start Practice</button>
             </div>
 
             <!-- Bhramari -->
@@ -112,7 +124,6 @@
                         <li>Repeat 5-10 times</li>
                     </ol>
                 </div>
-                <button class="practice-btn">Start Practice</button>
             </div>
 
             <!-- Shitali -->
@@ -136,7 +147,6 @@
                         <li>Repeat 10-15 times</li>
                     </ol>
                 </div>
-                <button class="practice-btn">Start Practice</button>
             </div>
 
             <!-- 4-7-8 Breathing -->
@@ -160,14 +170,13 @@
                         <li>Repeat 4 times</li>
                     </ol>
                 </div>
-                <button class="practice-btn">Start Practice</button>
             </div>
         </div>
     </div>
 </section>
 
 <!-- MEDITATION TECHNIQUES SECTION -->
-<section class="technique-section alt">
+<section class="technique-section alt" id="meditation-tools">
     <div class="section-wrapper">
         <h2 class="section-title">🧘 Meditation Techniques</h2>
         <p class="section-subtitle">Find your inner sanctuary. Choose a technique that resonates with you.</p>
@@ -183,7 +192,6 @@
                     Repeat a sacred mantra like 'Om', 'So-Hum', or 'Aham Brahmasmi' silently. 
                     Let it anchor your awareness and guide you to stillness.
                 </p>
-                <button class="explore-btn">Begin Mantra Practice</button>
             </div>
 
             <!-- Chakra Meditation -->
@@ -196,7 +204,6 @@
                     Focus on each chakra from root to crown, visualizing healing light 
                     flowing through your entire being.
                 </p>
-                <button class="explore-btn">Begin Chakra Practice</button>
             </div>
 
             <!-- Mindfulness Meditation -->
@@ -209,7 +216,6 @@
                     Observe your thoughts without judgment. Let them pass like clouds 
                     drifting across the sky.
                 </p>
-                <button class="explore-btn">Begin Mindfulness Practice</button>
             </div>
 
             <!-- Loving-Kindness Meditation -->
@@ -222,7 +228,6 @@
                     Send wishes of love and peace to yourself, loved ones, and all beings. 
                     Feel the warmth in your heart expand.
                 </p>
-                <button class="explore-btn">Begin Loving-Kindness Practice</button>
             </div>
 
             <!-- Yoga Nidra -->
@@ -235,14 +240,13 @@
                     Guided relaxation where you lie still and follow verbal guidance through 
                     layers of consciousness. Profoundly restorative.
                 </p>
-                <button class="explore-btn">Begin Yoga Nidra Practice</button>
             </div>
         </div>
     </div>
 </section>
 
 <!-- AFFIRMATIONS SECTION -->
-<section class="breathing-section">
+<section class="breathing-section" id="breathing-practice">
   <div class="breathing-wrap">
 
     <h2 class="breathing-title">Pause for a moment</h2>
@@ -251,18 +255,21 @@
       A simple breath can bring you back to the present.
     </p>
 
-    <div class="circle"></div>
+        <div class="circle" id="wellnessBreathCircle" aria-hidden="true"></div>
 
-    <p class="breath-text">Inhale</p>
+        <p class="breath-text" id="wellnessBreathText" aria-live="polite">Ready when you are</p>
 
-    <p class="breathing-note">
-      Follow the rhythm. No effort needed.
-    </p>
+        <p class="breathing-note">Follow the rhythm. Stop if you feel dizzy or uncomfortable.</p>
+        <div class="wellness-breath-controls">
+            <button type="button" class="dashboard-action" id="wellnessBreathStart">Start</button>
+            <button type="button" class="dashboard-action dashboard-action-muted" id="wellnessBreathPause">Pause</button>
+            <button type="button" class="dashboard-action dashboard-action-muted" id="wellnessBreathReset">Reset</button>
+        </div>
 
   </div>
 </section>
 <!-- QUICK RELIEF TIPS -->
-<section class="tips-section">
+<section class="tips-section" id="quick-relief">
     <div class="section-wrapper">
         <h2 class="section-title">⚡ Quick Relief Tips</h2>
         <p class="section-subtitle">When you need instant calm</p>
@@ -352,7 +359,7 @@
   </div>
 </section>
 <!-- DAILY STRESS RESET -->
-<section class="technique-section alt">
+<section class="technique-section alt" id="daily-reset">
   <div class="section-wrapper">
 
     <h2 class="section-title">🌤️ 10-Minute Daily Stress Reset</h2>
@@ -403,16 +410,50 @@
     </div>
 </section>
 
-<!-- SCRIPTS -->
 <script>
-    function copyToClipboard(text) {
-        navigator.clipboard.writeText(text);
-        alert('Affirmation copied! ✨');
+    const breathText = document.getElementById('wellnessBreathText');
+    const breathCircle = document.getElementById('wellnessBreathCircle');
+    const breathStart = document.getElementById('wellnessBreathStart');
+    const breathPause = document.getElementById('wellnessBreathPause');
+    const breathReset = document.getElementById('wellnessBreathReset');
+    const breathCycle = [['Inhale', 4], ['Hold', 2], ['Exhale', 6]];
+    let breathTimer;
+    let breathStep = 0;
+    let breathRunning = false;
+
+    function runBreathStep() {
+        if (!breathRunning) return;
+        const [label, seconds] = breathCycle[breathStep];
+        breathText.textContent = `${label} gently · ${seconds}s`;
+        breathCircle.classList.toggle('wellness-breath-active', label === 'Inhale');
+        breathTimer = setTimeout(() => {
+            breathStep = (breathStep + 1) % breathCycle.length;
+            runBreathStep();
+        }, seconds * 1000);
     }
 
-    function loadNewWisdom(type) {
-        // This would fetch new wisdom from the API
-        console.log('Loading new ' + type + ' wisdom...');
-        alert('✨ Refresh the page to see new wisdom!');
-    }
+    breathStart.addEventListener('click', () => {
+        if (breathRunning) return;
+        breathRunning = true;
+        breathStart.textContent = 'Running';
+        runBreathStep();
+    });
+
+    breathPause.addEventListener('click', () => {
+        breathRunning = false;
+        clearTimeout(breathTimer);
+        breathCircle.classList.remove('wellness-breath-active');
+        breathText.textContent = 'Paused · return when ready';
+        breathStart.textContent = 'Resume';
+    });
+
+    breathReset.addEventListener('click', () => {
+        breathRunning = false;
+        clearTimeout(breathTimer);
+        breathStep = 0;
+        breathCircle.classList.remove('wellness-breath-active');
+        breathText.textContent = 'Ready when you are';
+        breathStart.textContent = 'Start';
+    });
+</script>
 {% endblock %}

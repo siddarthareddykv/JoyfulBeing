@@ -39,7 +39,11 @@
                     <p class="detail-value">{{ featured_mantra.how_to_use }}</p>
                 </div>
             </div>
-            <button class="practice-btn" onclick="chantMantra()">🎵 Chant This Mantra</button>
+            <div class="mantra-practice-controls">
+                <button class="practice-btn" type="button" id="chantButton">Begin Chant</button>
+                <button class="copy-mantra-btn" type="button" id="copyMantra">Copy mantra</button>
+                <span class="chant-count" id="chantCount" aria-live="polite">0 / 108</span>
+            </div>
         </div>
     </div>
 </section>
@@ -428,9 +432,23 @@
 </style>
 
 <script>
-function chantMantra() {
-    alert('🕉️ Begin chanting with devotion and intention. Chant 108 times for best results.');
-}
+let chantCount = 0;
+const chantButton = document.getElementById('chantButton');
+const chantCountLabel = document.getElementById('chantCount');
+const mantraText = document.querySelector('.mantra-main');
+chantButton.addEventListener('click', () => {
+    chantCount = chantCount >= 108 ? 0 : chantCount + 1;
+    chantCountLabel.textContent = `${chantCount} / 108`;
+    chantButton.textContent = chantCount >= 108 ? 'Start again' : 'Count one chant';
+});
+document.getElementById('copyMantra').addEventListener('click', async () => {
+    try {
+        await navigator.clipboard.writeText(mantraText.textContent.trim());
+        document.getElementById('copyMantra').textContent = 'Copied';
+    } catch (error) {
+        document.getElementById('copyMantra').textContent = 'Select to copy';
+    }
+});
 </script>
 <section class="youtube-section">
   <div class="wrap">

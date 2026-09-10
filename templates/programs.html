@@ -1,0 +1,176 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="programs-page" aria-labelledby="programs-title">
+    <div class="programs-hero">
+        <p class="section-eyebrow"><span aria-hidden="true"></span> JoyfulBeing worldwide</p>
+        <h1 id="programs-title">Global Wellness Programs</h1>
+        <p>Find thoughtful gatherings for breath, movement, meditation, and everyday wellbeing, wherever you are.</p>
+    </div>
+
+    <div class="programs-toolbar" aria-label="Filter wellness programs">
+        <label>
+            <span>Search</span>
+            <input id="programSearch" type="search" placeholder="Search programs or cities" autocomplete="off">
+        </label>
+        <label>
+            <span>Category</span>
+            <select id="programCategory">
+                <option value="">All categories</option>
+                <option>Ayurveda</option>
+                <option>Breathwork</option>
+                <option>Meditation</option>
+                <option>Mindfulness</option>
+                <option>Movement</option>
+                <option>Yoga</option>
+            </select>
+        </label>
+        <label>
+            <span>Format</span>
+            <select id="programFormat">
+                <option value="">Online or in person</option>
+                <option>Online</option>
+                <option>In person</option>
+            </select>
+        </label>
+        <label>
+            <span>Price</span>
+            <select id="programPrice">
+                <option value="">Any price</option>
+                <option>Free</option>
+                <option>Donation</option>
+                <option>Paid</option>
+            </select>
+        </label>
+    </div>
+
+    <div class="programs-summary" aria-live="polite">
+        <strong id="programCount">{{ programs|length }} programs</strong>
+        <span>Choose what meets you today.</span>
+    </div>
+
+    <div class="program-view-tabs" role="group" aria-label="Program time range">
+        <button type="button" class="program-view-tab is-active" data-range="all">All programs</button>
+        <button type="button" class="program-view-tab" data-range="today">Today</button>
+        <button type="button" class="program-view-tab" data-range="week">This week</button>
+    </div>
+
+    <div class="programs-grid" id="programGrid">
+        {% for program in programs %}
+        <article class="program-card"
+                 data-title="{{ program.title|lower }}"
+                 data-category="{{ program.category }}"
+                 data-format="{{ program.format }}"
+                 data-price="{{ program.price }}"
+                 data-program-title="{{ program.title }}"
+                 data-duration="{{ program.duration }}"
+                 data-search="{{ (program.title ~ ' ' ~ program.organizer ~ ' ' ~ program.city ~ ' ' ~ program.country)|lower }}"
+                 data-start="{{ program.start_utc }}">
+            <div class="program-card-topline">
+                <span class="program-category">{{ program.category }}</span>
+                {% if program.verified %}<span class="verified-badge">Verified</span>{% endif %}
+            </div>
+            <h2>{{ program.title }}</h2>
+            <p class="program-organizer">{{ program.organizer }}</p>
+            <p class="program-description">{{ program.description }}</p>
+            <dl class="program-details">
+                <div><dt>When</dt><dd class="program-time" data-utc="{{ program.start_utc }}">Loading local time...</dd></div>
+                <div><dt>Where</dt><dd>{{ program.city }}, {{ program.country }}</dd></div>
+                <div><dt>Format</dt><dd>{{ program.format }} · {{ program.duration }}</dd></div>
+                <div><dt>Language</dt><dd>{{ program.language }}</dd></div>
+            </dl>
+            <div class="program-card-footer">
+                <span class="program-price program-price-{{ program.price|lower }}">{{ program.price }}</span>
+                <div class="program-card-actions">
+                    <button type="button" class="program-calendar-button" aria-label="Add {{ program.title }} to calendar">Add to calendar</button>
+                    <a class="program-register" href="{{ program.registration_url }}">Register <span aria-hidden="true">→</span></a>
+                </div>
+            </div>
+        </article>
+        {% endfor %}
+    </div>
+
+    <div class="programs-empty" id="programsEmpty" hidden>
+        <h2>No programs match those filters</h2>
+        <p>Try a broader search or clear one of the filters.</p>
+    </div>
+
+    <section class="program-submit" aria-labelledby="submit-program-title">
+        <div>
+            <p class="section-eyebrow">For organizers</p>
+            <h2 id="submit-program-title">Host a program with care</h2>
+            <p>Share a mindful gathering with the JoyfulBeing community. Every listing is reviewed before it appears here.</p>
+        </div>
+        <a class="program-submit-link" href="mailto:contact@joyfulbeing.in?subject=Submit%20a%20wellness%20program">Submit a program <span aria-hidden="true">→</span></a>
+    </section>
+</section>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const cards = [...document.querySelectorAll('.program-card')];
+    const search = document.getElementById('programSearch');
+    const category = document.getElementById('programCategory');
+    const format = document.getElementById('programFormat');
+    const price = document.getElementById('programPrice');
+    const count = document.getElementById('programCount');
+    const empty = document.getElementById('programsEmpty');
+    const viewTabs = document.querySelectorAll('.program-view-tab');
+    let activeRange = 'all';
+    document.querySelectorAll('.program-time').forEach((element) => {
+        const date = new Date(element.dataset.utc);
+        element.textContent = new Intl.DateTimeFormat(undefined, {
+            weekday: 'short', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit'
+        }).format(date);
+    });
+
+    function updatePrograms() {
+        const query = search.value.trim().toLowerCase();
+        const now = new Date();
+        const endOfWeek = new Date(now);
+        endOfWeek.setDate(now.getDate() + (7 - now.getDay() || 7));
+        let visible = 0;
+        cards.forEach((card) => {
+            const start = new Date(card.dataset.start);
+            const sameDay = start.toDateString() === now.toDateString();
+            const thisWeek = start >= now && start <= endOfWeek;
+            const matches = (!query || card.dataset.search.includes(query)) &&
+                (!category.value || card.dataset.category === category.value) &&
+                (!format.value || card.dataset.format === format.value) &&
+                (!price.value || card.dataset.price === price.value) &&
+                (activeRange === 'all' || (activeRange === 'today' && sameDay) || (activeRange === 'week' && thisWeek));
+            card.hidden = !matches;
+            if (matches) visible += 1;
+        });
+        count.textContent = `${visible} program${visible === 1 ? '' : 's'}`;
+        empty.hidden = visible !== 0;
+    }
+
+    [search, category, format, price].forEach((control) => control.addEventListener('input', updatePrograms));
+
+    viewTabs.forEach((tab) => tab.addEventListener('click', () => {
+        activeRange = tab.dataset.range;
+        viewTabs.forEach((item) => item.classList.toggle('is-active', item === tab));
+        updatePrograms();
+    }));
+
+    document.querySelectorAll('.program-calendar-button').forEach((button) => {
+        button.addEventListener('click', () => {
+            const card = button.closest('.program-card');
+            const start = new Date(card.dataset.start);
+            const end = new Date(start.getTime() + 60 * 60 * 1000);
+            const formatDate = (date) => date.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}Z$/, 'Z');
+            const ics = [
+                'BEGIN:VCALENDAR', 'VERSION:2.0', 'BEGIN:VEVENT',
+                `DTSTART:${formatDate(start)}`, `DTEND:${formatDate(end)}`,
+                `SUMMARY:${card.dataset.programTitle}`, `DESCRIPTION:${card.querySelector('.program-description').textContent.trim()}`,
+                'END:VEVENT', 'END:VCALENDAR'
+            ].join('\r\n');
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(new Blob([ics], {type: 'text/calendar'}));
+            link.download = `${card.dataset.programTitle.replace(/\s+/g, '-')}.ics`;
+            link.click();
+            URL.revokeObjectURL(link.href);
+        });
+    });
+});
+</script>
+{% endblock %}

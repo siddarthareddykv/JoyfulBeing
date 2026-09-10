@@ -44,8 +44,17 @@
                     <p>{{ featured_ritual.practice_tip }}</p>
                 </div>
             </div>
+
+            <div class="ritual-guide-panel" id="ritualGuidePanel" hidden>
+                <p class="ritual-guide-label">Guided step <span id="ritualStepNumber">1</span></p>
+                <p id="ritualStepText"></p>
+                <div class="ritual-guide-actions">
+                    <button type="button" class="begin-btn" id="ritualPrevious">Previous</button>
+                    <button type="button" class="begin-btn" id="ritualNext">Start guided ritual</button>
+                </div>
+            </div>
+            <button type="button" class="begin-btn" id="ritualBegin">Start guided ritual</button>
             
-            <button class="begin-btn">Begin This Ritual</button>
         </div>
     </div>
 </section>
@@ -415,5 +424,49 @@
     }
 }
 </style>
+
+<script>
+const ritualSteps = [...document.querySelectorAll('.featured-ritual-card .steps-list li')].map(step => step.textContent.trim());
+const ritualPanel = document.getElementById('ritualGuidePanel');
+const ritualStepNumber = document.getElementById('ritualStepNumber');
+const ritualStepText = document.getElementById('ritualStepText');
+const ritualNext = document.getElementById('ritualNext');
+const ritualPrevious = document.getElementById('ritualPrevious');
+const ritualBegin = document.getElementById('ritualBegin');
+let ritualStep = -1;
+
+function renderRitualStep() {
+    ritualPanel.hidden = false;
+    ritualStepNumber.textContent = ritualStep + 1;
+    ritualStepText.textContent = ritualSteps[ritualStep];
+    ritualPrevious.disabled = ritualStep <= 0;
+    ritualNext.textContent = ritualStep === ritualSteps.length - 1 ? 'Finish ritual' : 'Next step';
+}
+
+ritualBegin.addEventListener('click', () => {
+    ritualStep = 0;
+    renderRitualStep();
+    ritualBegin.hidden = true;
+});
+
+ritualNext.addEventListener('click', () => {
+    if (ritualStep >= ritualSteps.length - 1) {
+        ritualStep = -1;
+        ritualPanel.hidden = true;
+        ritualBegin.hidden = false;
+        ritualNext.textContent = 'Start guided ritual';
+        return;
+    }
+    ritualStep += 1;
+    renderRitualStep();
+});
+
+ritualPrevious.addEventListener('click', () => {
+    if (ritualStep > 0) {
+        ritualStep -= 1;
+        renderRitualStep();
+    }
+});
+</script>
 
 {% endblock %}

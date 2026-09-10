@@ -34,14 +34,9 @@
 
     <div class="nav-right" id="navMenu">
         <ul class="nav-list">
-            <li><a href="/" class="{% if request.path == '/' %}is-current{% endif %}" {% if request.path == '/' %}aria-current="page"{% endif %}>Home</a></li>
             <li><a href="/stress" class="{% if request.path == '/stress' %}is-current{% endif %}" {% if request.path == '/stress' %}aria-current="page"{% endif %}>Wellness</a></li>
-            <li><a href="/mantras" class="{% if request.path == '/mantras' %}is-current{% endif %}" {% if request.path == '/mantras' %}aria-current="page"{% endif %}>Mantras</a></li>
-            <li><a href="/rituals" class="{% if request.path == '/rituals' %}is-current{% endif %}" {% if request.path == '/rituals' %}aria-current="page"{% endif %}>Rituals</a></li>
-            <li><a href="/ideas" class="{% if request.path == '/ideas' %}is-current{% endif %}" {% if request.path == '/ideas' %}aria-current="page"{% endif %}>Modern Buddha</a></li>
-            <li><a href="/emotions" class="{% if request.path == '/emotions' %}is-current{% endif %}" {% if request.path == '/emotions' %}aria-current="page"{% endif %}>Emotions</a></li>
             <li><a href="/calendar" class="{% if request.path == '/calendar' %}is-current{% endif %}" {% if request.path == '/calendar' %}aria-current="page"{% endif %}>Calendar</a></li>
-            <li><a href="/about" class="{% if request.path == '/about' %}is-current{% endif %}" {% if request.path == '/about' %}aria-current="page"{% endif %}>About Us</a></li>
+            <li><a href="/programs" class="{% if request.path == '/programs' %}is-current{% endif %}" {% if request.path == '/programs' %}aria-current="page"{% endif %}>Global Programs</a></li>
         </ul>
     </div>
 </nav>
@@ -74,6 +69,10 @@
                 <li><a href="/about">About Us</a></li>
                 <li><a href="/calendar">Daily Calendar</a></li>
                 <li><a href="/ideas">Modern Buddha</a></li>
+                <li><a href="/programs">Global Programs</a></li>
+                <li><a href="/mantras">Mantras</a></li>
+                <li><a href="/rituals">Rituals</a></li>
+                <li><a href="/about">About Us</a></li>
             </ul>
         </div>
 
@@ -88,7 +87,7 @@
 
         <div class="footer-section">
             <h4>Connect</h4>
-            <p style="margin-bottom: 10px;">Email: <a href="mailto:contact@joyfulbeing.in" style="color: #667eea; text-decoration: none;">contact@joyfulbeing.in</a></p>
+            <p style="margin-bottom: 10px;">Email: <a href="mailto:contact@joyfulbeing.in" style="color: var(--primary-dark); text-decoration: none;">contact@joyfulbeing.in</a></p>
             <p style="font-size: 12px; color: #999;">We respond to every message with care and mindfulness.</p>
         </div>
     </div>

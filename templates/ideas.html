@@ -1,6 +1,7 @@
-<div class="buddha-bg">
 {% extends "base.html" %}
 {% block content %}
+
+<div class="buddha-bg">
 
 <!-- HERO -->
 <section class="hero text-center">
@@ -102,6 +103,24 @@
 </p>
 </section>
 
+<section class="wisdom-section reflection-section" aria-labelledby="reflection-title">
+  <h2 id="reflection-title" class="text-center">A reflection to keep</h2>
+  <p class="text-center text-muted max-width-md">Write one honest sentence. It stays in this browser unless you clear it.</p>
+  <textarea id="reflectionInput" class="reflection-input" rows="4" placeholder="What are you noticing right now?" aria-label="Private reflection"></textarea>
+  <div class="reflection-actions">
+    <button type="button" class="btn cta-button" id="saveReflection"><span>Save reflection</span></button>
+    <button type="button" class="btn outline" id="clearReflection"><span>Clear</span></button>
+  </div>
+  <p class="reflection-status" id="reflectionStatus" aria-live="polite"></p>
+</section>
+
+<section class="wisdom-section pause-section text-center" aria-labelledby="pause-title">
+  <h2 id="pause-title">One-minute pause</h2>
+  <p class="text-muted max-width-md">Let the timer hold the minute. You only need to notice one breath at a time.</p>
+  <div class="pause-timer" id="pauseTimer">01:00</div>
+  <button type="button" class="btn cta-button" id="pauseStart"><span>Start pause</span></button>
+</section>
+
 <script>
 /* QUOTES DATA */
 const buddhaQuotes = [
@@ -146,7 +165,42 @@ function closeIdea() {
 document.getElementById("ideaModal").addEventListener("click", function(e) {
   if (e.target.id === "ideaModal") closeIdea();
 });
+
+const reflectionInput = document.getElementById('reflectionInput');
+const reflectionStatus = document.getElementById('reflectionStatus');
+const savedReflection = localStorage.getItem('joyfulBeingReflection');
+if (savedReflection) reflectionInput.value = savedReflection;
+document.getElementById('saveReflection').addEventListener('click', () => {
+  localStorage.setItem('joyfulBeingReflection', reflectionInput.value.trim());
+  reflectionStatus.textContent = reflectionInput.value.trim() ? 'Your reflection is saved on this device.' : 'Write something before saving.';
+});
+document.getElementById('clearReflection').addEventListener('click', () => {
+  reflectionInput.value = '';
+  localStorage.removeItem('joyfulBeingReflection');
+  reflectionStatus.textContent = 'Reflection cleared.';
+});
+
+let pauseSeconds = 60;
+let pauseTimer;
+const pauseDisplay = document.getElementById('pauseTimer');
+const pauseStart = document.getElementById('pauseStart');
+pauseStart.addEventListener('click', () => {
+  if (pauseTimer) return;
+  pauseStart.querySelector('span').textContent = 'In progress';
+  pauseTimer = setInterval(() => {
+    pauseSeconds -= 1;
+    pauseDisplay.textContent = `00:${String(pauseSeconds).padStart(2, '0')}`;
+    if (pauseSeconds <= 0) {
+      clearInterval(pauseTimer);
+      pauseTimer = null;
+      pauseSeconds = 60;
+      pauseStart.querySelector('span').textContent = 'Start again';
+      pauseDisplay.textContent = 'Complete';
+    }
+  }, 1000);
+});
 </script>
 
-{% endblock %}
 </div>
+
+{% endblock %}
