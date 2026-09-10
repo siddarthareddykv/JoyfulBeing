@@ -1098,60 +1098,6 @@ scheduler.start()
 # NEW ROUTES FOR MYTHOLOGY, MANTRAS, RITUALS, ETC.
 # ============================================================================
 
-@app.route("/mood", methods=["GET", "POST"])
-def mood():
-    if request.method == "POST":
-        expects_json = (
-            request.headers.get("X-Requested-With") == "XMLHttpRequest"
-            or request.accept_mimetypes.best == "application/json"
-        )
-        user_mood = (request.form.get("mood") or "").strip()
-
-        if not user_mood:
-            if expects_json:
-                return jsonify({"error": "Please share your mood first."}), 400
-            return render_template("mood.html")
-
-        try:
-            if local_llm_available():
-                try:
-                    ai_response = generate_ai_guidance(user_mood)
-                except Exception as e:
-                    print(f"Local LLM mood guidance error: {type(e).__name__}: {e}")
-                    ai_response = generate_local_guidance(user_mood)
-            else:
-                ai_response = generate_local_guidance(user_mood)
-
-            if not ai_response:
-                ai_response = generate_local_guidance(user_mood)
-            sentiment_score = analyze_sentiment(ai_response)
-            save_mood(user_mood, ai_response, sentiment_score)
-        except Exception as e:
-            print(f"Mood route error: {type(e).__name__}: {e}")
-            print(traceback.format_exc())
-            if expects_json:
-                return jsonify({"error": "Unable to generate guidance right now. Please try again."}), 500
-            ai_response = generate_local_guidance(user_mood)
-            return render_template(
-                "mood_result.html",
-                mood=user_mood,
-                ai_response=ai_response
-            )
-
-        if expects_json:
-            return jsonify({
-                "mood": user_mood,
-                "ai_response": ai_response
-            })
-
-        return render_template(
-            "mood_result.html",
-            mood=user_mood,
-            ai_response=ai_response
-        )
-
-    return render_template("mood.html")
-
 @app.route("/mantras")
 def mantras():
     """Display Sanskrit mantras with pronunciation and meanings"""

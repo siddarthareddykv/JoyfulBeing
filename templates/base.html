@@ -7,7 +7,7 @@
     <meta name="theme-color" content="#b08b5b">
     <title>{{ title if title else "Live with Purpose & Peace" }}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Poppins:wght@300;400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='images/joyful-being-logo.svg') }}">
     <link rel="apple-touch-icon" href="{{ url_for('static', filename='images/joyful-being-logo.svg') }}">
     <link rel="manifest" href="{{ url_for('static', filename='site.webmanifest') }}">
@@ -16,6 +16,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;600&display=swap" rel="stylesheet">
 </head>
 <body>
+
+<a class="skip-link" href="#main-content">Skip to content</a>
 
 <nav class="navbar">
     <div class="nav-left">
@@ -28,30 +30,38 @@
         <p class="nav-tagline">Where Peace Begins</p>
     </div>
 
-    <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+    <button class="menu-toggle" type="button" aria-label="Open navigation" aria-controls="navMenu" aria-expanded="false" onclick="toggleMenu()">☰</button>
 
     <div class="nav-right" id="navMenu">
         <ul class="nav-list">
-            <li><a href="/">Home</a></li>
-            <li><a href="/stress">Wellness</a></li>
-            <li><a href="/mantras">Mantras</a></li>
-            <li><a href="/rituals">Rituals</a></li>
-            <li><a href="/ideas">Modern Buddha</a></li>
-            <li><a href="/emotions">Emotions</a></li>
-            <li><a href="/calendar">Calendar</a></li>
-            <li><a href="/mood">Mood Check</a></li>
-            <li><a href="/about">About Us</a></li>
+            <li><a href="/" class="{% if request.path == '/' %}is-current{% endif %}" {% if request.path == '/' %}aria-current="page"{% endif %}>Home</a></li>
+            <li><a href="/stress" class="{% if request.path == '/stress' %}is-current{% endif %}" {% if request.path == '/stress' %}aria-current="page"{% endif %}>Wellness</a></li>
+            <li><a href="/mantras" class="{% if request.path == '/mantras' %}is-current{% endif %}" {% if request.path == '/mantras' %}aria-current="page"{% endif %}>Mantras</a></li>
+            <li><a href="/rituals" class="{% if request.path == '/rituals' %}is-current{% endif %}" {% if request.path == '/rituals' %}aria-current="page"{% endif %}>Rituals</a></li>
+            <li><a href="/ideas" class="{% if request.path == '/ideas' %}is-current{% endif %}" {% if request.path == '/ideas' %}aria-current="page"{% endif %}>Modern Buddha</a></li>
+            <li><a href="/emotions" class="{% if request.path == '/emotions' %}is-current{% endif %}" {% if request.path == '/emotions' %}aria-current="page"{% endif %}>Emotions</a></li>
+            <li><a href="/calendar" class="{% if request.path == '/calendar' %}is-current{% endif %}" {% if request.path == '/calendar' %}aria-current="page"{% endif %}>Calendar</a></li>
+            <li><a href="/about" class="{% if request.path == '/about' %}is-current{% endif %}" {% if request.path == '/about' %}aria-current="page"{% endif %}>About Us</a></li>
         </ul>
     </div>
 </nav>
 
-<main class="content">
+<main class="content" id="main-content" tabindex="-1">
     {% block content %}
-    {% endblock %}
+  {% endblock %}
 </main>
 
 <footer class="footer">
     <div class="footer-content">
+    <div class="footer-brand">
+      <img src="{{ url_for('static', filename='images/joyful-being-logo.svg') }}" alt="JoyfulBeing" class="footer-logo">
+      <p>A calmer rhythm for everyday life.</p>
+      <div class="footer-socials" aria-label="Social links">
+        <a href="https://www.linkedin.com" aria-label="LinkedIn">in</a>
+        <a href="https://www.instagram.com" aria-label="Instagram">ig</a>
+        <a href="mailto:contact@joyfulbeing.in" aria-label="Email">@</a>
+      </div>
+    </div>
         <div class="footer-section">
             <h4>About Us</h4>
             <p>Your companion on the journey to peace, clarity, and authentic happiness.</p>
@@ -92,10 +102,21 @@
 <script>
 function toggleMenu() {
     const menu = document.getElementById("navMenu");
+  const toggle = document.querySelector(".menu-toggle");
     if (menu) {
         menu.classList.toggle("active");
+    toggle?.setAttribute("aria-expanded", menu.classList.contains("active") ? "true" : "false");
     }
 }
+
+document.querySelectorAll(".nav-list a").forEach((link) => {
+  link.addEventListener("click", () => {
+    const menu = document.getElementById("navMenu");
+    const toggle = document.querySelector(".menu-toggle");
+    menu?.classList.remove("active");
+    toggle?.setAttribute("aria-expanded", "false");
+  });
+});
 
 document.addEventListener("DOMContentLoaded", function () {
     const breathText = document.querySelector('.breath-text');
@@ -112,7 +133,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </script>
 
 <div id="namaskaram-bot">
-  <div id="namaskaram-button">🌿 Chat</div>
+  <button id="namaskaram-button" type="button" aria-expanded="false">🌿 Chat</button>
 
   <div id="namaskaram-window">
     <div class="nb-header">
@@ -128,8 +149,13 @@ document.addEventListener("DOMContentLoaded", function () {
     </div>
 
     <div id="llm-status" class="nb-status">Calm fallback ready</div>
+    <div class="nb-prompts" aria-label="Quick prompts">
+      <button type="button" data-prompt="I feel stressed">I feel stressed</button>
+      <button type="button" data-prompt="Help me slow down">Help me slow down</button>
+      <button type="button" data-prompt="Give me a kind thought">A kind thought</button>
+    </div>
     <form id="nb-form" class="nb-form">
-      <input id="nb-input" type="text" placeholder="Share gently..." autocomplete="off" />
+      <input id="nb-input" type="text" placeholder="Share gently..." autocomplete="off" aria-label="Share how you feel" />
       <button id="nb-send" type="submit" aria-label="Send message">Send</button>
     </form>
   </div>
@@ -142,6 +168,8 @@ const closeBtn = document.getElementById("nb-close");
 const input = document.getElementById("nb-input");
 const messages = document.getElementById("nb-messages");
 const llmStatus = document.getElementById("llm-status");
+const promptButtons = document.querySelectorAll("[data-prompt]");
+const resetButton = document.createElement("button");
 
 function appendMessage(className, text) {
   const message = document.createElement("div");
@@ -150,8 +178,25 @@ function appendMessage(className, text) {
   messages.appendChild(message);
 }
 
-btn.onclick = () => win.style.display = "block";
-closeBtn.onclick = () => win.style.display = "none";
+resetButton.type = "button";
+resetButton.id = "nb-reset";
+resetButton.textContent = "Reset";
+resetButton.setAttribute("aria-label", "Reset chat");
+document.querySelector(".nb-header")?.appendChild(resetButton);
+
+resetButton.onclick = () => {
+  messages.innerHTML = '<div class="nb-bot">Namaskaram 🌿<br>How is your heart feeling right now?</div>';
+};
+
+btn.onclick = () => {
+  win.style.display = "block";
+  btn.setAttribute("aria-expanded", "true");
+  input.focus();
+};
+closeBtn.onclick = () => {
+  win.style.display = "none";
+  btn.setAttribute("aria-expanded", "false");
+};
 
 async function updateLlmStatus() {
   if (!llmStatus) return;
@@ -175,6 +220,13 @@ async function updateLlmStatus() {
 }
 
 updateLlmStatus();
+
+promptButtons.forEach((promptButton) => {
+  promptButton.addEventListener("click", () => {
+    input.value = promptButton.dataset.prompt || "";
+    input.focus();
+  });
+});
 
 const chatForm = document.getElementById("nb-form");
 const sendButton = document.getElementById("nb-send");

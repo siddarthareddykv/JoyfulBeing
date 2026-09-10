@@ -4,12 +4,54 @@
 <!-- HERO SECTION - DYNAMIC & INSPIRING -->
 <section class="home-hero">
     <div class="hero-content">
+        <p class="hero-kicker"><span aria-hidden="true"></span> A quieter way forward</p>
         <h1 class="hero-title">Find Your Inner Peace</h1>
         <p class="hero-subtitle">Start your journey today with daily wisdom, guided practices, and proven techniques</p>
         <div class="hero-cta">
-            <a href="/mood" class="cta-btn primary">Mood Check</a>
             <a href="/calendar" class="cta-btn primary">Daily Inspiration</a>
             <a href="/stress" class="cta-btn secondary">Calm Your Mind</a>
+        </div>
+    </div>
+</section>
+
+<!-- QUIET START DASHBOARD -->
+<section class="quiet-dashboard" aria-labelledby="quiet-dashboard-title">
+    <div class="section-wrapper">
+        <div class="dashboard-heading">
+            <div>
+                <p class="section-eyebrow">Your daily reset</p>
+                <h2 id="quiet-dashboard-title">A quiet start, made simple</h2>
+            </div>
+            <p class="dashboard-date" id="dashboardDate" aria-live="polite"></p>
+        </div>
+
+        <div class="dashboard-grid">
+            <article class="dashboard-card dashboard-focus">
+                <span class="dashboard-label">Today's focus</span>
+                <strong>Choose one gentle thing</strong>
+                <p>Small attention creates room for a calmer mind.</p>
+                <a href="/calendar" class="dashboard-link">Open your calendar <span aria-hidden="true">→</span></a>
+            </article>
+
+            <article class="dashboard-card dashboard-gratitude">
+                <span class="dashboard-label">Pause & notice</span>
+                <strong>What is already going well?</strong>
+                <p id="gratitudePrompt">Name one ordinary moment you are glad to have.</p>
+                <button type="button" class="dashboard-action" id="gratitudeBtn">New prompt</button>
+            </article>
+
+            <article class="dashboard-card breathing-card" aria-labelledby="breathing-title">
+                <div class="breathing-card-copy">
+                    <span class="dashboard-label">Two-minute practice</span>
+                    <h3 id="breathing-title">Breathe with the light</h3>
+                    <p id="breathingInstruction" aria-live="polite">Press start when you are ready.</p>
+                </div>
+                <div class="breathing-orb" id="breathingOrb" aria-hidden="true"><span></span></div>
+                <div class="breathing-controls">
+                    <button type="button" class="dashboard-action" id="breathingStart">Start</button>
+                    <button type="button" class="dashboard-action dashboard-action-muted" id="breathingReset">Reset</button>
+                </div>
+            </article>
         </div>
     </div>
 </section>
@@ -229,37 +271,47 @@
 }
 
 .cta-btn {
-    padding: 15px 35px;
-    border-radius: 50px;
+    min-width: 190px;
+    padding: 14px 24px;
+    border-radius: 12px;
     text-decoration: none;
-    font-weight: 700;
-    font-size: 1rem;
+    font-family: 'Trebuchet MS', 'Poppins', sans-serif;
+    font-weight: 800;
+    font-size: 13px;
+    letter-spacing: 0.01em;
     transition: all 0.3s ease;
-    display: inline-block;
-    border: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid transparent;
     cursor: pointer;
 }
 
 .cta-btn.primary {
-    background: white;
-    color: #2f5141;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    background: #e5483f;
+    color: #fffefa;
+    box-shadow: 0 10px 24px rgba(32, 35, 34, 0.12);
 }
 
 .cta-btn.primary:hover {
     transform: translateY(-3px);
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+    background: #b92f32;
+    box-shadow: 0 16px 32px rgba(32, 35, 34, 0.18);
 }
 
 .cta-btn.secondary {
-    background: rgba(255, 255, 255, 0.9);
-    color: #2f5141;
-    border: 2px solid #c8a66a;
+    background: rgba(255, 254, 250, 0.7);
+    color: #202322;
+    border: 1px solid rgba(32, 35, 34, 0.2);
+    box-shadow: 0 10px 24px rgba(32, 35, 34, 0.12);
 }
 
 .cta-btn.secondary:hover {
-    background: rgba(255, 255, 255, 0.15);
     transform: translateY(-3px);
+    background: #fffefa;
+    border-color: #e5483f;
+    color: #b92f32;
+    box-shadow: 0 16px 32px rgba(32, 35, 34, 0.18);
 }
 
 /* Featured Section */
@@ -921,6 +973,72 @@ document.addEventListener('DOMContentLoaded', function() {
                 affirmationText.style.opacity = '1';
             }, 200);
         });
+    }
+
+    const dashboardDate = document.getElementById('dashboardDate');
+    if (dashboardDate) {
+        dashboardDate.textContent = new Intl.DateTimeFormat(undefined, {
+            weekday: 'long', month: 'long', day: 'numeric'
+        }).format(new Date());
+    }
+
+    const gratitudePrompts = [
+        'Name one ordinary moment you are glad to have.',
+        'Who made today feel a little lighter?',
+        'What can your body do today that deserves thanks?',
+        'Which small comfort is available to you right now?'
+    ];
+    const gratitudeBtn = document.getElementById('gratitudeBtn');
+    const gratitudePrompt = document.getElementById('gratitudePrompt');
+    if (gratitudeBtn && gratitudePrompt) {
+        gratitudeBtn.addEventListener('click', function () {
+            const current = gratitudePrompt.textContent;
+            let next = getRandomItem(gratitudePrompts);
+            while (next === current) next = getRandomItem(gratitudePrompts);
+            gratitudePrompt.textContent = next;
+        });
+    }
+
+    const breathingOrb = document.getElementById('breathingOrb');
+    const breathingStart = document.getElementById('breathingStart');
+    const breathingReset = document.getElementById('breathingReset');
+    const breathingInstruction = document.getElementById('breathingInstruction');
+    let breathingTimer;
+    let breathingStep = 0;
+    const breathingCycle = [
+        ['Inhale', 4],
+        ['Hold', 2],
+        ['Exhale', 6]
+    ];
+
+    function resetBreathing() {
+        clearTimeout(breathingTimer);
+        breathingStep = 0;
+        breathingOrb.classList.remove('is-breathing');
+        breathingStart.textContent = 'Start';
+        breathingInstruction.textContent = 'Press start when you are ready.';
+    }
+
+    function runBreathingStep() {
+        const [label, seconds] = breathingCycle[breathingStep];
+        breathingOrb.classList.toggle('is-breathing', label === 'Inhale');
+        breathingInstruction.textContent = `${label} gently · ${seconds}s`;
+        breathingTimer = setTimeout(() => {
+            breathingStep = (breathingStep + 1) % breathingCycle.length;
+            runBreathingStep();
+        }, seconds * 1000);
+    }
+
+    if (breathingStart && breathingReset) {
+        breathingStart.addEventListener('click', function () {
+            if (breathingStart.textContent === 'Stop') {
+                resetBreathing();
+                return;
+            }
+            breathingStart.textContent = 'Stop';
+            runBreathingStep();
+        });
+        breathingReset.addEventListener('click', resetBreathing);
     }
 });
 </script>
