@@ -253,11 +253,11 @@
   <div>
     <p class="calendar-kicker">Today · {{ today_date }}</p>
     <h2 id="today-title">A small practice for today</h2>
-    <p class="today-quote">“{{ mapping[today_day].quote }}”</p>
+    <p class="today-quote">“{{ today_quote }}”</p>
   </div>
   <div class="today-action">
     <span>Try this</span>
-    <strong>{{ mapping[today_day].action }}</strong>
+    <strong>{{ today_action }}</strong>
   </div>
 </section>
 {% endif %}
@@ -292,7 +292,7 @@
   <div class="subtitle">📅 Click each day to discover your personal wellness prompt & action for the day</div>
 
   <div class="month-nav">
-    {% for m in range(1,13) %}
+    {% for m in months %}
       <a href="/calendar?month={{m}}" class="month-btn {% if m==month %}active{% endif %}">
         {{m}}
       </a>
@@ -310,18 +310,18 @@
   <div class="grid" id="gridBox">
     {% for week in weeks %}
       {% for day in week %}
-        {% if day == 0 %}
+        {% if day.Day == 0 %}
           <div class="cell empty"></div>
         {% else %}
-          <div class="cell {% if today_day == day %}today-cell{% endif %}"
-               data-quote="{{ mapping[day].quote | e }}"
-               data-action="{{ mapping[day].action | e }}">
-            <div class="day-number">{{day}}</div>
-            <div class="mini-quote">{{mapping[day].quote}}</div>
+          <div class="cell {% if day.IsToday %}today-cell{% endif %}"
+               data-quote="{{ day.Quote }}"
+               data-action="{{ day.Action }}">
+            <div class="day-number">{{day.Day}}</div>
+            <div class="mini-quote">{{day.Quote}}</div>
 
             <div class="popup">
-              <div class="quote-text">"{{ mapping[day].quote }}"</div>
-              <div class="action-text">✨ Try: {{ mapping[day].action }}</div>
+              <div class="quote-text">"{{ day.Quote }}"</div>
+              <div class="action-text">✨ Try: {{ day.Action }}</div>
             </div>
           </div>
         {% endif %}

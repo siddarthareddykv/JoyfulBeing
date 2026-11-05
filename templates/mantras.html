@@ -13,6 +13,20 @@
     </div>
 </section>
 
+<!-- SACRED TANPURA AMBIANCE BAR -->
+<div class="mantra-ambiance-bar">
+    <div class="ambiance-info">
+        <span class="ambiance-icon">🪷</span>
+        <div>
+            <strong>Sacred Tanpura Ambiance</strong>
+            <p>Immerse your space in the continuous meditative drone of ancient Indian classical tanpura.</p>
+        </div>
+    </div>
+    <button class="mantra-sound-btn" type="button" id="tanpuraAmbianceBtn" data-mantra="tanpura">
+        <span class="sound-icon">▶</span> <span class="sound-label">Play Sacred Drone</span>
+    </button>
+</div>
+
 <!-- FEATURED MANTRA -->
 <section class="featured-section">
     <div class="section-wrapper">
@@ -41,6 +55,9 @@
             </div>
             <div class="mantra-practice-controls">
                 <button class="practice-btn" type="button" id="chantButton">Begin Chant</button>
+                <button class="mantra-sound-btn featured-sound-btn" type="button" id="featuredMantraSoundBtn" data-mantra="{{ featured_mantra.mantra }}">
+                    <span class="sound-icon">▶</span> <span class="sound-label">Listen & Meditate</span>
+                </button>
                 <button class="copy-mantra-btn" type="button" id="copyMantra">Copy mantra</button>
                 <span class="chant-count" id="chantCount" aria-live="polite">0 / 108</span>
             </div>
@@ -54,12 +71,17 @@
         <h2 class="section-title">Sacred Mantras</h2>
         <div class="mantras-grid">
             {% for mantra in mantras %}
-                <div class="mantra-card">
-                    <p class="mantra-text">{{ mantra.mantra }}</p>
+                <div class="mantra-card" data-mantra="{{ mantra.mantra }}">
+                    <div class="mantra-card-top">
+                        <p class="mantra-text">{{ mantra.mantra }}</p>
+                        <button class="card-sound-btn" type="button" aria-label="Listen to {{ mantra.mantra }}" data-mantra="{{ mantra.mantra }}">
+                            <span class="sound-icon">▶</span> <span class="sound-text">Listen</span>
+                        </button>
+                    </div>
                     <p class="pronunciation">{{ mantra.pronunciation }}</p>
                     <p class="meaning">{{ mantra.meaning }}</p>
                     <div class="mantra-footer">
-                        <span class="benefit-tag">{{ mantra.benefits.split(',')[0] }}</span>
+                        <span class="benefit-tag">{{ mantra.benefits }}</span>
                     </div>
                 </div>
             {% endfor %}
@@ -391,6 +413,131 @@
     font-size: 0.95rem;
 }
 
+.sanctuary-hub-section {
+    padding: 70px 40px;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.04) 0%, rgba(118, 75, 162, 0.06) 100%);
+    border-radius: 16px;
+    margin: 50px 0 30px;
+    border: 1px solid rgba(102, 126, 234, 0.12);
+}
+
+.hub-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.hub-eyebrow {
+    display: inline-block;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--primary);
+    background: rgba(102, 126, 234, 0.1);
+    padding: 6px 16px;
+    border-radius: 20px;
+    margin-bottom: 12px;
+}
+
+.hub-subtitle {
+    color: var(--muted);
+    font-size: 1.05rem;
+    max-width: 680px;
+    margin: 10px auto 0;
+    line-height: 1.6;
+}
+
+.sanctuary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+}
+
+.sanctuary-card {
+    background: white;
+    border-radius: 16px;
+    padding: 28px;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(20, 20, 60, 0.06);
+    box-shadow: 0 4px 16px rgba(20, 20, 60, 0.04);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.sanctuary-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #667eea, #764ba2);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.sanctuary-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 16px 36px rgba(102, 126, 234, 0.16);
+    border-color: rgba(102, 126, 234, 0.3);
+}
+
+.sanctuary-card:hover::before {
+    opacity: 1;
+}
+
+.sanctuary-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.sanctuary-icon {
+    font-size: 2rem;
+}
+
+.sanctuary-badge {
+    font-size: 0.75rem;
+    font-weight: 600;
+    background: rgba(102, 126, 234, 0.08);
+    color: var(--primary);
+    padding: 4px 10px;
+    border-radius: 12px;
+}
+
+.sanctuary-card h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 8px;
+}
+
+.sanctuary-card p {
+    font-size: 0.92rem;
+    color: var(--muted);
+    line-height: 1.55;
+    margin-bottom: 20px;
+    flex-grow: 1;
+}
+
+.sanctuary-link-text {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--primary);
+    display: inline-flex;
+    align-items: center;
+    transition: transform 0.2s ease;
+}
+
+.sanctuary-card:hover .sanctuary-link-text {
+    transform: translateX(4px);
+}
+
 .section-wrapper {
     max-width: 1200px;
     margin: 0 auto;
@@ -436,10 +583,82 @@ let chantCount = 0;
 const chantButton = document.getElementById('chantButton');
 const chantCountLabel = document.getElementById('chantCount');
 const mantraText = document.querySelector('.mantra-main');
+
+// Counting chant with tranquil sacred japa bell
 chantButton.addEventListener('click', () => {
     chantCount = chantCount >= 108 ? 0 : chantCount + 1;
     chantCountLabel.textContent = `${chantCount} / 108`;
     chantButton.textContent = chantCount >= 108 ? 'Start again' : 'Count one chant';
+    window.calmAudio?.ringChantBead(chantCount);
+});
+
+// Helper to reset all play buttons on page
+function resetAllMantraSoundButtons() {
+    document.querySelectorAll('.card-sound-btn, .featured-sound-btn, #tanpuraAmbianceBtn').forEach(btn => {
+        btn.classList.remove('is-playing');
+        const icon = btn.querySelector('.sound-icon');
+        const label = btn.querySelector('.sound-label, .sound-text');
+        if (icon) icon.textContent = '▶';
+        if (label) {
+            if (btn.id === 'tanpuraAmbianceBtn') label.textContent = 'Play Sacred Drone';
+            else if (btn.id === 'featuredMantraSoundBtn') label.textContent = 'Listen & Meditate';
+            else label.textContent = 'Listen';
+        }
+    });
+    document.querySelectorAll('.mantra-card').forEach(card => card.classList.remove('is-sound-playing'));
+}
+
+// Tanpura Ambiance Bar toggle
+const tanpuraBtn = document.getElementById('tanpuraAmbianceBtn');
+if (tanpuraBtn) {
+    tanpuraBtn.addEventListener('click', () => {
+        const isPlaying = window.calmAudio?.playMantra('tanpura');
+        if (isPlaying) {
+            resetAllMantraSoundButtons();
+            tanpuraBtn.classList.add('is-playing');
+            tanpuraBtn.querySelector('.sound-icon').textContent = '⏸';
+            tanpuraBtn.querySelector('.sound-label').textContent = 'Pause Drone';
+        } else {
+            resetAllMantraSoundButtons();
+        }
+    });
+}
+
+// Featured Mantra Sound Button toggle
+const featuredSoundBtn = document.getElementById('featuredMantraSoundBtn');
+if (featuredSoundBtn) {
+    featuredSoundBtn.addEventListener('click', () => {
+        const mantra = featuredSoundBtn.dataset.mantra || 'om';
+        const isPlaying = window.calmAudio?.playMantra(mantra);
+        if (isPlaying) {
+            resetAllMantraSoundButtons();
+            featuredSoundBtn.classList.add('is-playing');
+            featuredSoundBtn.querySelector('.sound-icon').textContent = '⏸';
+            featuredSoundBtn.querySelector('.sound-label').textContent = 'Pause Sound';
+        } else {
+            resetAllMantraSoundButtons();
+        }
+    });
+}
+
+// Grid Mantra Cards Sound Buttons
+document.querySelectorAll('.card-sound-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const mantra = btn.dataset.mantra || 'om';
+        const card = btn.closest('.mantra-card');
+        const isPlaying = window.calmAudio?.playMantra(mantra);
+
+        if (isPlaying) {
+            resetAllMantraSoundButtons();
+            btn.classList.add('is-playing');
+            if (card) card.classList.add('is-sound-playing');
+            btn.querySelector('.sound-icon').textContent = '⏸';
+            btn.querySelector('.sound-text').textContent = 'Pause';
+        } else {
+            resetAllMantraSoundButtons();
+        }
+    });
 });
 document.getElementById('copyMantra').addEventListener('click', async () => {
     try {
@@ -450,6 +669,85 @@ document.getElementById('copyMantra').addEventListener('click', async () => {
     }
 });
 </script>
+<!-- HOLISTIC SANCTUARY HUB - CONNECTING ALL TEMPLATES -->
+<section class="sanctuary-hub-section" aria-labelledby="sanctuary-hub-title">
+    <div class="section-wrapper">
+        <div class="hub-header text-center">
+            <span class="hub-eyebrow">🌸 Complete Practice Path</span>
+            <h2 id="sanctuary-hub-title" class="section-title">Deepen Your Inner Sanctuary</h2>
+            <p class="hub-subtitle">Mantras are most transformative when woven into breath, daily rituals, contemplative wisdom, and community.</p>
+        </div>
+
+        <div class="sanctuary-grid">
+            <!-- Template 1: Vedic Rituals -->
+            <a href="/rituals" class="sanctuary-card">
+                <div class="sanctuary-card-top">
+                    <span class="sanctuary-icon">🕯️</span>
+                    <span class="sanctuary-badge">Daily Practice</span>
+                </div>
+                <h3>Vedic Rituals</h3>
+                <p>Complement your mantra chanting with Dinacharya rituals, Surya Namaskar, Sandhya Vandana, and Abhyanga.</p>
+                <span class="sanctuary-link-text">Explore Vedic Rituals →</span>
+            </a>
+
+            <!-- Template 2: Stress Relief & Pranayama -->
+            <a href="/stress" class="sanctuary-card">
+                <div class="sanctuary-card-top">
+                    <span class="sanctuary-icon">🧘</span>
+                    <span class="sanctuary-badge">Breath & Body</span>
+                </div>
+                <h3>Pranayama & Stress Relief</h3>
+                <p>Prepare your nervous system with Nadi Shodhana, Box Breathing, and somatic grounding before chanting.</p>
+                <span class="sanctuary-link-text">Calm Your Mind →</span>
+            </a>
+
+            <!-- Template 3: Daily Calendar -->
+            <a href="/calendar" class="sanctuary-card">
+                <div class="sanctuary-card-top">
+                    <span class="sanctuary-icon">📅</span>
+                    <span class="sanctuary-badge">Everyday Rhythm</span>
+                </div>
+                <h3>Mindful Calendar</h3>
+                <p>365 days of sacred verses, micro-actions, and reflective themes to anchor peace into your everyday schedule.</p>
+                <span class="sanctuary-link-text">Open Daily Calendar →</span>
+            </a>
+
+            <!-- Template 4: Modern Buddha -->
+            <a href="/ideas" class="sanctuary-card">
+                <div class="sanctuary-card-top">
+                    <span class="sanctuary-icon">🪢</span>
+                    <span class="sanctuary-badge">Wisdom & Clarity</span>
+                </div>
+                <h3>Modern Buddha</h3>
+                <p>Reflective prompts, mindful inquiries, and timeless philosophical insights tailored for modern balance.</p>
+                <span class="sanctuary-link-text">Receive an Insight →</span>
+            </a>
+
+            <!-- Template 5: Global Wellness Programs -->
+            <a href="/programs" class="sanctuary-card">
+                <div class="sanctuary-card-top">
+                    <span class="sanctuary-icon">🌍</span>
+                    <span class="sanctuary-badge">Community Gatherings</span>
+                </div>
+                <h3>Global Programs</h3>
+                <p>Connect with live worldwide breath circles, sound immersions, mindful movement, and restorative workshops.</p>
+                <span class="sanctuary-link-text">View Upcoming Programs →</span>
+            </a>
+
+            <!-- Template 6: Emotions Guide -->
+            <a href="/emotions" class="sanctuary-card">
+                <div class="sanctuary-card-top">
+                    <span class="sanctuary-icon">🌿</span>
+                    <span class="sanctuary-badge">Inner Harmony</span>
+                </div>
+                <h3>Emotions Navigator</h3>
+                <p>Compassionate guidance to understand, soften, and harmonize emotional currents with mindful awareness.</p>
+                <span class="sanctuary-link-text">Navigate Feelings →</span>
+            </a>
+        </div>
+    </div>
+</section>
+
 <section class="youtube-section">
   <div class="wrap">
 

@@ -1,46 +1,63 @@
 {% extends "base.html" %}
 {% block content %}
 
-<!-- HERO SECTION - DYNAMIC & INSPIRING -->
-<section class="home-hero">
+<div class="glass-home-wrapper">
+
+<!-- BACKGROUND AMBIENT GLOW ORBS FOR FROSTED GLASS REFRACTION -->
+<div class="ambient-blob blob-1" aria-hidden="true"></div>
+<div class="ambient-blob blob-2" aria-hidden="true"></div>
+<div class="ambient-blob blob-3" aria-hidden="true"></div>
+
+<!-- HERO SECTION - FROSTED GLASS -->
+<section class="home-hero glass-panel glass-hero">
     <div class="hero-content">
-        <p class="hero-kicker"><span aria-hidden="true"></span> A quieter way forward</p>
+        <div class="glass-pill-badge">
+            <span class="pulse-dot"></span>
+            <span>A Quieter, Mindful Way Forward</span>
+        </div>
         <h1 class="hero-title">Find Your Inner Peace</h1>
-        <p class="hero-subtitle">Start your journey today with daily wisdom, guided practices, and proven techniques</p>
+        <p class="hero-subtitle">Step into a tranquil sanctuary of ancient Vedic wisdom, soothing soundscapes, breathwork, and everyday mindfulness.</p>
         <div class="hero-cta">
-            <a href="/calendar" class="cta-btn primary">Daily Inspiration</a>
-            <a href="/stress" class="cta-btn secondary">Calm Your Mind</a>
+            <a href="/mantras" class="glass-btn glass-btn-primary">
+                <span>🕉️ Sacred Mantras</span>
+            </a>
+            <a href="/calendar" class="glass-btn glass-btn-secondary">
+                <span>📅 Daily Inspiration</span>
+            </a>
+            <a href="/stress" class="glass-btn glass-btn-glass">
+                <span>🧘 Calm Your Mind</span>
+            </a>
         </div>
     </div>
 </section>
 
-<!-- QUIET START DASHBOARD -->
-<section class="quiet-dashboard" aria-labelledby="quiet-dashboard-title">
+<!-- QUIET START DASHBOARD - FROSTED GLASS CARDS -->
+<section class="quiet-dashboard glass-section" aria-labelledby="quiet-dashboard-title">
     <div class="section-wrapper">
         <div class="dashboard-heading">
             <div>
-                <p class="section-eyebrow">Your daily reset</p>
+                <p class="section-eyebrow">✨ Your Daily Reset</p>
                 <h2 id="quiet-dashboard-title">A quiet start, made simple</h2>
             </div>
-            <p class="dashboard-date" id="dashboardDate" aria-live="polite"></p>
+            <p class="dashboard-date glass-date-pill" id="dashboardDate" aria-live="polite"></p>
         </div>
 
         <div class="dashboard-grid">
-            <article class="dashboard-card dashboard-focus">
+            <article class="dashboard-card glass-card glass-card-interactive dashboard-focus">
                 <span class="dashboard-label">Today's focus</span>
                 <strong>Choose one gentle thing</strong>
-                <p>Small attention creates room for a calmer mind.</p>
+                <p>Small conscious attention creates immense room for a calmer mind.</p>
                 <a href="/calendar" class="dashboard-link">Open your calendar <span aria-hidden="true">→</span></a>
             </article>
 
-            <article class="dashboard-card dashboard-gratitude">
+            <article class="dashboard-card glass-card glass-card-interactive dashboard-gratitude">
                 <span class="dashboard-label">Pause & notice</span>
                 <strong>What is already going well?</strong>
                 <p id="gratitudePrompt">Name one ordinary moment you are glad to have.</p>
-                <button type="button" class="dashboard-action" id="gratitudeBtn">New prompt</button>
+                <button type="button" class="dashboard-action glass-action-btn" id="gratitudeBtn">New prompt ✨</button>
             </article>
 
-            <article class="dashboard-card breathing-card" aria-labelledby="breathing-title">
+            <article class="dashboard-card glass-card breathing-card" aria-labelledby="breathing-title">
                 <div class="breathing-card-copy">
                     <span class="dashboard-label">Two-minute practice</span>
                     <h3 id="breathing-title">Breathe with the light</h3>
@@ -48,940 +65,933 @@
                 </div>
                 <div class="breathing-orb" id="breathingOrb" aria-hidden="true"><span></span></div>
                 <div class="breathing-controls">
-                    <button type="button" class="dashboard-action" id="breathingStart">Start</button>
-                    <button type="button" class="dashboard-action dashboard-action-muted" id="breathingReset">Reset</button>
+                    <button type="button" class="dashboard-action glass-action-btn" id="breathingStart">Start</button>
+                    <button type="button" class="dashboard-action glass-action-btn glass-action-muted" id="breathingReset">Reset</button>
                 </div>
             </article>
         </div>
     </div>
 </section>
 
-
-<!-- FEATURED DAILY WISDOM -->
-<section class="featured-section">
+<!-- FEATURED DAILY WISDOM - GLASS CARDS -->
+<section class="featured-section glass-section">
     <div class="section-wrapper">
         <h2 class="section-title">Today's Inspiration</h2>
+        <p class="section-subtitle">Fresh contemplation and mindful practices to nourish your day</p>
         
-        <!-- Daily Quote -->
         <div class="featured-cards">
-            <div class="featured-card quote-card">
-                <div class="card-icon">Quote</div>
+            <!-- Daily Quote -->
+            <div class="featured-card glass-card quote-card">
+                <div class="card-icon">🪷</div>
                 <h3>Daily Wisdom</h3>
-                <p class="featured-text">{{ daily_content.quote if daily_content else "The only true wisdom is in knowing you know nothing. - Socrates" }}</p>
-                <button class="refresh-btn">Refresh Quote</button>
+                <p class="featured-text">{{ daily_content.quote|default:"The only true wisdom is in knowing you know nothing. — Socrates" }}</p>
+                <button class="refresh-btn glass-refresh-btn">Refresh Quote</button>
             </div>
 
             <!-- Daily Action -->
-            <div class="featured-card action-card">
-                <div class="card-icon">Practice</div>
+            <div class="featured-card glass-card action-card">
+                <div class="card-icon">🌱</div>
                 <h3>Today's Practice</h3>
-                <p class="featured-text">{{ daily_content.action if daily_content else "Drink water and stay hydrated" }}</p>
-                <button class="refresh-btn">Refresh Practice</button>
+                <p class="featured-text">{{ daily_content.action|default:"Drink water mindfully and stay grounded" }}</p>
+                <button class="refresh-btn glass-refresh-btn">Refresh Practice</button>
             </div>
 
             <!-- Daily Tip -->
-            <div class="featured-card tip-card">
-                <div class="card-icon">Tip</div>
+            <div class="featured-card glass-card tip-card">
+                <div class="card-icon">💡</div>
                 <h3>Wellness Tip</h3>
-                <p class="featured-text">{{ daily_content.tip if daily_content else "Start your day with gratitude. It shifts your vibration instantly." }}</p>
-                <button class="refresh-btn">Refresh Tip</button>
+                <p class="featured-text">{{ daily_content.tip|default:"Start your day with gratitude. It shifts your vibration instantly." }}</p>
+                <button class="refresh-btn glass-refresh-btn">Refresh Tip</button>
             </div>
         </div>
     </div>
 </section>
 
-<!-- FEATURES OVERVIEW -->
-<section class="features-section">
+<!-- SANCTUARY SUITE - GLASS GRID -->
+<section class="features-section glass-section">
     <div class="section-wrapper">
-        <h2 class="section-title">What We Offer</h2>
+        <h2 class="section-title">The Sanctuary Suite</h2>
+        <p class="section-subtitle">A harmonious ecosystem of wisdom, breath, sound, and contemplation</p>
+        
         <div class="features-grid">
-            <!-- Calendar Feature -->
-            <div class="feature-item">
-                <div class="feature-icon">Calendar</div>
-                <h3>Daily Calendar</h3>
-                <p>Every day brings a new quote, action, and wellness tip designed to elevate your spirit and guide you toward peace.</p>
-                <a href="/calendar" class="feature-link">Explore Calendar -></a>
+            <!-- Mantras -->
+            <div class="feature-item glass-card glass-card-interactive">
+                <div class="feature-icon">🕉️</div>
+                <h3>Sanskrit Mantras</h3>
+                <p>Sacred vibrations with procedural soundscapes (Om, Gayatri, Mahamantra, Tanpura drone) and bead counter.</p>
+                <a href="/mantras" class="feature-link">Chant & Meditate →</a>
             </div>
 
-            <!-- Stress Relief Feature -->
-            <div class="feature-item">
-                <div class="feature-icon">Breath</div>
-                <h3>Stress Relief</h3>
-                <p>Master breathing techniques (Pranayama), meditation practices, and affirmations rooted in ancient Indian wisdom.</p>
-                <a href="/stress" class="feature-link">Find Calm -></a>
+            <!-- Rituals -->
+            <div class="feature-item glass-card glass-card-interactive">
+                <div class="feature-icon">🕯️</div>
+                <h3>Vedic Rituals</h3>
+                <p>Gentle Dinacharya routines: Surya Namaskar, twilight Sandhya Vandana, Abhyanga oil massage, and Sattvic living.</p>
+                <a href="/rituals" class="feature-link">Explore Rituals →</a>
             </div>
 
-            <!-- Emotions Feature -->
-            <div class="feature-item">
-                <div class="feature-icon">Emotions</div>
-                <h3>Emotions Guide</h3>
-                <p>Understand and transform your emotions with compassionate guidance and practical tools for emotional wellness.</p>
-                <a href="/emotions" class="feature-link">Explore Emotions -></a>
+            <!-- Stress Relief -->
+            <div class="feature-item glass-card glass-card-interactive">
+                <div class="feature-icon">🧘</div>
+                <h3>Pranayama & Stress Relief</h3>
+                <p>Nervous system resets: Nadi Shodhana alternate nostril breathing, Box Breathing, and grounding visualizations.</p>
+                <a href="/stress" class="feature-link">Find Deep Calm →</a>
             </div>
 
-            <div class="feature-item">
-                <div class="feature-icon">World</div>
+            <!-- Calendar -->
+            <div class="feature-item glass-card glass-card-interactive">
+                <div class="feature-icon">📅</div>
+                <h3>Mindful Calendar</h3>
+                <p>365 days of sacred verses, micro-actions, and reflective themes to anchor peace into your everyday life.</p>
+                <a href="/calendar" class="feature-link">Explore Calendar →</a>
+            </div>
+
+            <!-- Modern Buddha -->
+            <div class="feature-item glass-card glass-card-interactive">
+                <div class="feature-icon">🪢</div>
+                <h3>Modern Buddha</h3>
+                <p>Simple reflections and mindful inquiries inspired by the Buddha, adapted for modern clarity and ease.</p>
+                <a href="/ideas" class="feature-link">Discover Insights →</a>
+            </div>
+
+            <!-- Global Programs -->
+            <div class="feature-item glass-card glass-card-interactive">
+                <div class="feature-icon">🌍</div>
                 <h3>Global Programs</h3>
-                <p>Discover wellness gatherings from around the world, with local times, formats, languages, and registration details.</p>
-                <a href="/programs" class="feature-link">Explore Programs -></a>
+                <p>Worldwide gatherings for breath, movement, meditation, and workplace wellness with one-click calendar sync.</p>
+                <a href="/programs" class="feature-link">View Programs →</a>
             </div>
         </div>
     </div>
 </section>
 
-<!-- BHAGAVAD GITA WISDOM SECTION -->
-<section class="gita-section">
+<!-- BHAGAVAD GITA WISDOM SECTION - GLASS PANEL -->
+<section class="gita-section glass-section">
     <div class="section-wrapper">
         <h2 class="section-title">Bhagavad Gita Wisdom</h2>
-        <p class="section-subtitle">Timeless teachings for equanimity and inner strength</p>
+        <p class="section-subtitle">Timeless teachings for equanimity, fearless action, and inner strength</p>
         
-        <div class="gita-card">
-            <div class="gita-icon">Verse</div>
-            <p class="gita-text">{{ daily_content.bhagavad_gita if daily_content else "You have the right to work, but never to the fruit of work. - Bhagavad Gita 2.47" }}</p>
-            <button type="button" class="gita-link">Explore More Verses -></button>
+        <div class="gita-card glass-panel glass-gita-card">
+            <div class="gita-icon">📜</div>
+            <p class="gita-text">{{ daily_content.bhagavad_gita|default:"You have the right to work, but never to the fruit of work. — Bhagavad Gita 2.47" }}</p>
+            <button type="button" class="gita-link glass-action-btn">Explore More Verses →</button>
         </div>
     </div>
 </section>
 
-<!-- WHY CHOOSE US -->
-<section class="why-section">
+<!-- WHY THIS MATTERS - GLASS TILES -->
+<section class="why-section glass-section">
     <div class="section-wrapper max-width-md">
         <h2 class="section-title">Why This Matters</h2>
         <div class="reasons-list">
-            <div class="reason-item">
+            <div class="reason-item glass-card">
                 <span class="reason-number">1</span>
                 <h3>Ancient Wisdom Meets Modern Science</h3>
-                <p>Proven techniques from Vedas, Upanishads, and Bhagavad Gita combined with evidence-based wellness practices.</p>
+                <p>Proven techniques from Vedas, Upanishads, and the Gita woven with contemporary evidence-based wellness practices.</p>
             </div>
 
-            <div class="reason-item">
+            <div class="reason-item glass-card">
                 <span class="reason-number">2</span>
-                <h3>Daily Guidance & Support</h3>
-                <p>Receive personalized inspiration every single day to keep you grounded, motivated, and connected to your purpose.</p>
+                <h3>Daily Guidance & Centering</h3>
+                <p>Receive thoughtful, unhurried inspiration every single day to keep you grounded, motivated, and aligned with purpose.</p>
             </div>
 
-            <div class="reason-item">
+            <div class="reason-item glass-card">
                 <span class="reason-number">3</span>
                 <h3>Practical & Accessible</h3>
-                <p>Simple techniques you can practice anywhere, anytime—no special equipment needed, just commitment to yourself.</p>
+                <p>Zero barrier to entry. No complex setup or downloads needed—everything plays smoothly in your browser with zero latency.</p>
             </div>
 
-            <div class="reason-item">
+            <div class="reason-item glass-card">
                 <span class="reason-number">4</span>
-                <h3>Holistic Approach</h3>
-                <p>We address mind, body, and spirit. From breathing to emotions to kindness, we help you thrive completely.</p>
+                <h3>Holistic Equilibrium</h3>
+                <p>We nurture mind, breath, body, and spirit equally—cultivating an unbroken continuum of calm throughout your day.</p>
             </div>
         </div>
     </div>
 </section>
 
-<!-- QUICK START SECTION -->
-<section class="quickstart-section">
+<!-- AFFIRMATION HIGHLIGHT - FROSTED SHIMMER -->
+<section class="affirmation-highlight glass-panel glass-affirmation">
     <div class="section-wrapper max-width-md">
-        <h2 class="section-title">Start Your Journey</h2>
-        <div class="steps">
-            <div class="step">
-                <div class="step-number">1</div>
-                <h3>Pick a Practice</h3>
-                <p>Choose from our calendar, stress relief, emotions, or kindness sections based on what you need today.</p>
-            </div>
-
-            <div class="step-arrow">→</div>
-
-            <div class="step">
-                <div class="step-number">2</div>
-                <h3>Follow the Guide</h3>
-                <p>Read the daily wisdom, breathing techniques, or affirmations. Take your time. There's no rush.</p>
-            </div>
-
-            <div class="step-arrow">→</div>
-
-            <div class="step">
-                <div class="step-number">3</div>
-                <h3>Feel the Change</h3>
-                <p>As you practice daily, you'll notice more calm, clarity, and peace in your life. Small steps, big transformation.</p>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- AFFIRMATION HIGHLIGHT -->
-<section class="affirmation-highlight">
-    <div class="section-wrapper max-width-md">
+        <span class="glass-pill-badge" style="margin-bottom: 16px;">Peace Affirmation</span>
         <h2 class="highlight-text">Remember: You Are Enough</h2>
-        <p class="highlight-subtitle">{{ daily_content.affirmation if daily_content else "I am peaceful and calm. My mind is clear and centered." }}</p>
-        <button class="highlight-btn">Refresh Affirmation</button>
+        <p class="highlight-subtitle">{{ daily_content.affirmation|default:"I am peaceful and calm. My mind is clear and centered." }}</p>
+        <button class="highlight-btn glass-btn glass-btn-primary">New Affirmation ✨</button>
     </div>
 </section>
 
-<!-- FINAL CTA SECTION -->
-<section class="final-cta">
+<!-- FINAL CTA SECTION - GLASS BANNER -->
+<section class="final-cta glass-panel glass-cta-banner">
     <div class="section-wrapper max-width-md">
-        <h2>Ready to Begin?</h2>
-        <p>Your journey to inner peace, clarity, and authentic happiness starts with a single breath, a single moment of awareness.</p>
+        <h2>Ready to Begin Your Peaceful Rhythm?</h2>
+        <p>Your journey to inner clarity, calm purpose, and authentic happiness begins with a single mindful breath.</p>
         <div class="final-buttons">
-            <a href="/calendar" class="btn primary">📅 Explore Daily Calendar</a>
-            <a href="/about" class="btn secondary">Learn About Us</a>
+            <a href="/mantras" class="glass-btn glass-btn-primary">🕉️ Explore Mantras</a>
+            <a href="/calendar" class="glass-btn glass-btn-glass">📅 Open Calendar</a>
+            <a href="/about" class="glass-btn glass-btn-secondary">Learn About Us</a>
         </div>
     </div>
 </section>
 
-<!-- STYLES -->
+</div>
+
+<!-- GLASSMORPHISM STYLING -->
 <style>
-/* Home Page Specific Styles */
-.home-hero {
-    background: linear-gradient(
-        180deg,
-        rgba(255, 255, 255, 0.65) 0%,
-        rgba(245, 245, 247, 0.55) 100%
-    );
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-
-    color: #1d1d1f;
-    padding: 120px 40px;
-    text-align: center;
-    margin-bottom: 80px;
-
-    border-radius: 28px;
-    border: 1px solid rgba(255, 255, 255, 0.6);
-
-    box-shadow:
-        0 10px 30px rgba(0, 0, 0, 0.08),
-        inset 0 1px 0 rgba(255, 255, 255, 0.4);
+/* Ambient Background Orbs */
+.glass-home-wrapper {
+    position: relative;
+    overflow: hidden;
+    padding-bottom: 40px;
 }
 
-.hero-content {
-    max-width: 800px;
-    margin: 0 auto;
+.ambient-blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.55;
+    animation: blobFloat 18s infinite alternate ease-in-out;
+}
+
+.blob-1 {
+    width: 600px;
+    height: 600px;
+    top: -120px;
+    left: -150px;
+    background: radial-gradient(circle, rgba(214, 226, 220, 0.55) 0%, rgba(232, 240, 236, 0.3) 55%, transparent 75%);
+}
+
+.blob-2 {
+    width: 650px;
+    height: 650px;
+    top: 400px;
+    right: -180px;
+    background: radial-gradient(circle, rgba(247, 241, 227, 0.7) 0%, rgba(238, 232, 220, 0.35) 60%, transparent 80%);
+    animation-duration: 24s;
+    animation-delay: -6s;
+}
+
+.blob-3 {
+    width: 580px;
+    height: 580px;
+    top: 1250px;
+    left: 5%;
+    background: radial-gradient(circle, rgba(228, 237, 232, 0.5) 0%, rgba(243, 238, 230, 0.3) 60%, transparent 80%);
+    animation-duration: 26s;
+}
+
+@keyframes blobFloat {
+    0% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(30px, 40px) scale(1.08); }
+    100% { transform: translate(-25px, -30px) scale(0.95); }
+}
+
+/* Glass Panels & Surfaces */
+.glass-panel {
+    background: rgba(255, 255, 255, 0.65);
+    backdrop-filter: blur(24px) saturate(190%);
+    -webkit-backdrop-filter: blur(24px) saturate(190%);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 
+        0 20px 45px rgba(20, 20, 60, 0.08),
+        inset 0 1px 1px rgba(255, 255, 255, 0.9);
+    position: relative;
+    z-index: 1;
+}
+
+.glass-card {
+    background: rgba(255, 255, 255, 0.72);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.85);
+    border-radius: 20px;
+    box-shadow: 
+        0 10px 30px rgba(20, 20, 60, 0.05),
+        inset 0 1px 0 rgba(255, 255, 255, 0.95);
+    position: relative;
+    z-index: 1;
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-card-interactive:hover {
+    transform: translateY(-6px);
+    background: rgba(255, 255, 255, 0.88);
+    border-color: rgba(102, 126, 234, 0.35);
+    box-shadow: 
+        0 20px 45px rgba(102, 126, 234, 0.16),
+        inset 0 1px 0 rgba(255, 255, 255, 1);
+}
+
+/* Hero Section */
+.home-hero.glass-hero {
+    background: rgba(255, 255, 255, 0.72) !important;
+    border-radius: 32px !important;
+    padding: 90px 40px !important;
+    text-align: center !important;
+    margin: 20px auto 60px !important;
+    max-width: 1200px !important;
+    position: relative !important;
+    overflow: hidden !important;
+}
+
+.home-hero.glass-hero::before {
+    display: none !important;
+    content: none !important;
+}
+
+.glass-pill-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(102, 126, 234, 0.1);
+    border: 1px solid rgba(102, 126, 234, 0.2);
+    color: #3d5647;
+    font-size: 0.85rem;
+    font-weight: 700;
+    padding: 6px 18px;
+    border-radius: 50px;
+    margin-bottom: 24px;
+    letter-spacing: 0.02em;
+    background: rgba(61, 86, 71, 0.08);
+    border: 1px solid rgba(61, 86, 71, 0.16);
+}
+
+.pulse-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #4f6e5c;
+    box-shadow: 0 0 0 0 rgba(74, 95, 193, 0.4);
+    animation: dotPulse 2s infinite;
+}
+
+@keyframes dotPulse {
+    0% { box-shadow: 0 0 0 0 rgba(74, 95, 193, 0.6); }
+    70% { box-shadow: 0 0 0 8px rgba(74, 95, 193, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(74, 95, 193, 0); }
 }
 
 .hero-title {
     font-size: 3.5rem;
     font-weight: 800;
+    color: #1e2229;
+    letter-spacing: -0.03em;
     margin-bottom: 20px;
-    line-height: 1.2;
+    line-height: 1.15;
 }
 
 .hero-subtitle {
-    font-size: 1.3rem;
-    line-height: 1.8;
-    opacity: 0.95;
-    margin-bottom: 40px;
+    font-size: 1.25rem;
+    color: #555b66;
+    max-width: 720px;
+    margin: 0 auto 36px;
+    line-height: 1.7;
 }
 
 .hero-cta {
     display: flex;
-    gap: 20px;
+    gap: 16px;
     justify-content: center;
     flex-wrap: wrap;
 }
 
-.cta-btn {
-    min-width: 190px;
-    padding: 14px 24px;
-    border-radius: 12px;
-    text-decoration: none;
-    font-family: 'Trebuchet MS', 'Poppins', sans-serif;
-    font-weight: 800;
-    font-size: 13px;
-    letter-spacing: 0.01em;
-    transition: all 0.3s ease;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid transparent;
-    cursor: pointer;
-}
-
-.cta-btn.primary {
-    background: #e5483f;
-    color: #fffefa;
-    box-shadow: 0 10px 24px rgba(32, 35, 34, 0.12);
-}
-
-.cta-btn.primary:hover {
-    transform: translateY(-3px);
-    background: #b92f32;
-    box-shadow: 0 16px 32px rgba(32, 35, 34, 0.18);
-}
-
-.cta-btn.secondary {
-    background: rgba(255, 254, 250, 0.7);
-    color: #202322;
-    border: 1px solid rgba(32, 35, 34, 0.2);
-    box-shadow: 0 10px 24px rgba(32, 35, 34, 0.12);
-}
-
-.cta-btn.secondary:hover {
-    transform: translateY(-3px);
-    background: #fffefa;
-    border-color: #e5483f;
-    color: #b92f32;
-    box-shadow: 0 16px 32px rgba(32, 35, 34, 0.18);
-}
-
-/* Featured Section */
-.featured-section {
-    padding: 60px 40px;
-    margin-bottom: 40px;
-}
-
-.featured-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 25px;
-    margin-top: 40px;
-}
-
-.featured-card {
-    background: white;
-    padding: 35px;
-    border-radius: 12px;
-    box-shadow: 0 8px 20px rgba(20, 20, 60, 0.08);
-    text-align: center;
-    transition: all 0.3s ease;
-    border-top: 4px solid #e5483f;
-}
-
-.featured-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 15px 40px rgba(102, 126, 234, 0.15);
-}
-
-.card-icon {
-    font-size: 2.5rem;
-    margin-bottom: 15px;
-}
-
-.featured-card h3 {
-    color: var(--text);
-    font-size: 1.3rem;
-    margin-bottom: 15px;
-}
-
-.featured-text {
-    font-size: 1rem;
-    line-height: 1.7;
-    color: var(--muted);
-    margin-bottom: 20px;
-    min-height: 80px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-style: italic;
-    transition: opacity 0.3s ease;
-}
-
-.refresh-btn {
-    padding: 10px 20px;
-    background: #e5483f;
-    color: white;
-    border: none;
-    border-radius: 25px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.refresh-btn:hover {
-    transform: scale(1.05);
-    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
-}
-
-/* Features Section */
-.features-section {
-    padding: 60px 40px;
-    margin-bottom: 40px;
-    background: linear-gradient(135deg, #fffefa 0%, #e8e6df 100%);
-    border-radius: 12px;
-}
-
-.features-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
-    gap: 30px;
-    margin-top: 40px;
-}
-
-.feature-item {
-    background: white;
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(20, 20, 60, 0.05);
-    transition: all 0.3s ease;
-}
-
-.feature-item:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 30px rgba(102, 126, 234, 0.1);
-}
-
-.feature-icon {
-    font-size: 2.5rem;
-    margin-bottom: 15px;
-}
-
-.feature-item h3 {
-    color: var(--text);
-    margin-bottom: 12px;
-}
-
-.feature-item p {
-    color: var(--muted);
-    line-height: 1.6;
-    margin-bottom: 15px;
+/* Glass Buttons */
+.glass-btn {
+    padding: 14px 28px;
+    border-radius: 14px;
+    font-weight: 700;
     font-size: 0.95rem;
-}
-
-.feature-link {
-    color: var(--primary);
     text-decoration: none;
-    font-weight: 600;
     display: inline-flex;
     align-items: center;
-    gap: 5px;
-    transition: all 0.3s ease;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    cursor: pointer;
+    border: none;
 }
 
-.feature-link:hover {
-    color: var(--secondary);
+.glass-btn-primary {
+    background: linear-gradient(135deg, #3d5647 0%, #2c3f34 100%);
+    color: #ffffff;
+    box-shadow: 0 8px 20px rgba(44, 63, 52, 0.22);
+}
+
+.glass-btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 26px rgba(44, 63, 52, 0.32);
+    color: #ffffff;
+}
+
+.glass-btn-secondary {
+    background: rgba(255, 255, 255, 0.85);
+    color: #2d3748;
+    border: 1px solid rgba(255, 255, 255, 0.9);
+    box-shadow: 0 8px 20px rgba(20, 20, 60, 0.06);
+    backdrop-filter: blur(10px);
+}
+
+.glass-btn-secondary:hover {
+    transform: translateY(-3px);
+    background: white;
+    color: #1a202c;
+    box-shadow: 0 14px 28px rgba(20, 20, 60, 0.12);
+}
+
+.glass-btn-glass {
+    background: rgba(255, 255, 255, 0.45);
+    color: #2d3748;
+    border: 1px solid rgba(61, 86, 71, 0.18);
+    backdrop-filter: blur(12px);
+}
+
+.glass-btn-glass:hover {
+    transform: translateY(-3px);
+    background: rgba(255, 255, 255, 0.75);
+    border-color: #3d5647;
+    color: #3d5647;
+}
+
+/* Sections */
+.glass-section {
+    position: relative;
+    z-index: 1;
+    margin-bottom: 50px;
+}
+
+.section-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.section-title {
+    font-size: 2.4rem;
+    font-weight: 800;
+    text-align: center;
+    color: #1e2229;
+    letter-spacing: -0.02em;
+    margin-bottom: 10px;
+}
+
+.section-subtitle {
+    text-align: center;
+    color: #64748b;
+    font-size: 1.05rem;
+    max-width: 650px;
+    margin: 0 auto 36px;
+    line-height: 1.6;
+}
+
+/* Dashboard */
+.dashboard-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.section-eyebrow {
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #3d5647;
+    margin-bottom: 4px;
+}
+
+.glass-date-pill {
+    background: rgba(255, 255, 255, 0.65);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    padding: 8px 18px;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #475569;
+    box-shadow: 0 4px 12px rgba(20, 20, 60, 0.04);
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 24px;
+}
+
+.dashboard-card {
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+}
+
+.dashboard-label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: #3d5647;
+    margin-bottom: 8px;
+}
+
+.dashboard-card strong {
+    font-size: 1.35rem;
+    color: #1e2229;
+    margin-bottom: 10px;
+}
+
+.dashboard-card p {
+    color: #64748b;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 24px;
+    flex-grow: 1;
+}
+
+.dashboard-link {
+    color: #3d5647;
+    font-weight: 700;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: gap 0.2s ease;
+}
+
+.dashboard-link:hover {
     gap: 10px;
 }
 
-/* Gita Section */
-.gita-section {
-    padding: 60px 40px;
-    margin-bottom: 40px;
-    background: linear-gradient(135deg, rgba(229, 72, 63, 0.08) 0%, rgba(228, 185, 106, 0.12) 100%);
+.glass-action-btn {
+    align-self: flex-start;
+    padding: 10px 20px;
+    background: rgba(61, 86, 71, 0.08);
+    border: 1px solid rgba(61, 86, 71, 0.18);
+    color: #3d5647;
     border-radius: 12px;
+    font-weight: 700;
+    font-size: 0.88rem;
+    cursor: pointer;
+    transition: all 0.25s ease;
 }
 
-.gita-card {
-    background: white;
-    padding: 50px 40px;
-    border-radius: 12px;
+.glass-action-btn:hover {
+    background: #3d5647;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(61, 86, 71, 0.18);
+}
+
+.glass-action-muted {
+    background: rgba(0, 0, 0, 0.04);
+    border-color: rgba(0, 0, 0, 0.08);
+    color: #64748b;
+    margin-left: 8px;
+}
+
+.glass-action-muted:hover {
+    background: rgba(0, 0, 0, 0.08);
+    color: #1e2229;
+    box-shadow: none;
+}
+
+/* Breathing Orb Card */
+.breathing-orb {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin: 10px auto 20px;
+    background: radial-gradient(circle, rgba(102, 126, 234, 0.4) 0%, rgba(118, 75, 162, 0.15) 70%, transparent 100%);
+    border: 2px solid rgba(102, 126, 234, 0.3);
+    transition: transform 4s ease-in-out, box-shadow 4s ease-in-out;
+}
+
+.breathing-orb.is-breathing {
+    transform: scale(1.35);
+    box-shadow: 0 0 35px rgba(102, 126, 234, 0.5);
+    border-color: #3d5647;
+}
+
+/* Featured Daily Cards */
+.featured-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+    gap: 24px;
+}
+
+.featured-card {
+    padding: 34px;
     text-align: center;
-    box-shadow: 0 8px 20px rgba(20, 20, 60, 0.08);
-    border-left: 6px solid var(--primary);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.card-icon {
+    font-size: 2.4rem;
+    margin-bottom: 12px;
+}
+
+.featured-card h3 {
+    font-size: 1.25rem;
+    color: #1e2229;
+    margin-bottom: 12px;
+}
+
+.featured-text {
+    color: #475569;
+    font-size: 1rem;
+    line-height: 1.65;
+    font-style: italic;
+    margin-bottom: 24px;
+    flex-grow: 1;
+    min-height: 75px;
+    display: flex;
+    align-items: center;
+}
+
+.glass-refresh-btn {
+    padding: 8px 22px;
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(61, 86, 71, 0.18);
+    color: #3d5647;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    backdrop-filter: blur(8px);
+}
+
+.glass-refresh-btn:hover {
+    background: #3d5647;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(61, 86, 71, 0.18);
+}
+
+/* Features Overview Grid */
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 24px;
+}
+
+.feature-item {
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+}
+
+.feature-icon {
+    font-size: 2.2rem;
+    margin-bottom: 14px;
+}
+
+.feature-item h3 {
+    font-size: 1.3rem;
+    color: #1e2229;
+    margin-bottom: 10px;
+}
+
+.feature-item p {
+    color: #64748b;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 22px;
+    flex-grow: 1;
+}
+
+.feature-link {
+    color: #3d5647;
+    font-weight: 700;
+    font-size: 0.95rem;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: gap 0.2s ease;
+}
+
+.feature-link:hover {
+    gap: 10px;
+}
+
+/* Gita Card */
+.glass-gita-card {
+    padding: 50px 40px;
+    border-radius: 24px;
+    text-align: center;
+    max-width: 880px;
+    margin: 0 auto;
 }
 
 .gita-icon {
-    font-size: 3rem;
-    margin-bottom: 20px;
+    font-size: 2.8rem;
+    margin-bottom: 16px;
 }
 
 .gita-text {
-    font-size: 1.2rem;
-    line-height: 1.8;
-    color: var(--text);
+    font-size: 1.35rem;
     font-style: italic;
-    margin: 20px 0;
-    min-height: 80px;
-    transition: opacity 0.3s ease;
-}
-
-.gita-link {
-    color: var(--primary);
-    text-decoration: none;
-    font-weight: 600;
-    display: inline-block;
-    margin-top: 20px;
-    transition: all 0.3s ease;
-}
-
-.gita-link:hover {
-    color: var(--secondary);
-    transform: translateX(5px);
+    color: #1e2229;
+    line-height: 1.8;
+    max-width: 740px;
+    margin: 0 auto 28px;
 }
 
 /* Why Section */
-.why-section {
-    padding: 60px 40px;
-    margin-bottom: 40px;
-    background: white;
-    border-radius: 12px;
-}
-
 .reasons-list {
     display: grid;
-    gap: 25px;
-    margin-top: 40px;
+    gap: 20px;
 }
 
 .reason-item {
-    padding: 25px;
-    background: linear-gradient(135deg, #fffefa 0%, #e8e6df 100%);
-    border-radius: 12px;
-    border-left: 4px solid var(--primary);
-    transition: all 0.3s ease;
-}
-
-.reason-item:hover {
-    transform: translateX(5px);
-    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.1);
+    padding: 26px 30px;
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
 }
 
 .reason-number {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 40px;
-    height: 40px;
-    background: var(--primary);
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
-    border-radius: 50%;
-    font-weight: 700;
-    font-size: 1.2rem;
-    margin-bottom: 12px;
+    font-weight: 800;
+    font-size: 1.15rem;
+    flex-shrink: 0;
+    box-shadow: 0 6px 16px rgba(102, 126, 234, 0.3);
 }
 
 .reason-item h3 {
-    color: var(--text);
-    margin-bottom: 10px;
+    font-size: 1.18rem;
+    color: #1e2229;
+    margin-bottom: 6px;
 }
 
 .reason-item p {
-    color: var(--muted);
+    color: #64748b;
+    font-size: 0.94rem;
     line-height: 1.6;
     margin: 0;
 }
 
-/* Quick Start Section */
-.quickstart-section {
-    padding: 60px 40px;
-    margin-bottom: 40px;
-    background: #202322;
-    border-radius: 12px;
-    color: white;
-}
-
-.steps {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 20px;
-    margin-top: 40px;
-    flex-wrap: wrap;
-}
-
-.step {
-    flex: 1;
-    min-width: 200px;
+/* Affirmation Card */
+.glass-affirmation {
+    border-radius: 28px;
+    padding: 60px 30px;
     text-align: center;
-}
-
-.step-number {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 50px;
-    height: 50px;
-    background: rgba(255, 255, 255, 0.2);
-    border: 2px solid white;
-    border-radius: 50%;
-    font-weight: 700;
-    font-size: 1.5rem;
-    margin-bottom: 15px;
-}
-
-.step h3 {
-    margin-bottom: 10px;
-    font-size: 1.2rem;
-}
-
-.step p {
-    font-size: 0.95rem;
-    opacity: 0.9;
-    line-height: 1.6;
-}
-
-.step-arrow {
-    display: none;
-    font-size: 2rem;
-    opacity: 0.5;
-}
-
-@media (min-width: 768px) {
-    .step-arrow {
-        display: block;
-    }
-}
-
-/* Affirmation Highlight */
-.affirmation-highlight {
-    padding: 60px 40px;
-    margin-bottom: 40px;
-    background: linear-gradient(135deg, #F3E5F5 0%, #E8F5E9 100%);
-    border-radius: 12px;
-    text-align: center;
+    max-width: 860px;
+    margin: 0 auto 50px;
 }
 
 .highlight-text {
-    font-size: 2.5rem;
-    color: var(--text);
-    margin-bottom: 20px;
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: #1e2229;
+    margin-bottom: 14px;
 }
 
 .highlight-subtitle {
-    font-size: 1.2rem;
-    color: var(--muted);
+    font-size: 1.25rem;
     font-style: italic;
-    line-height: 1.8;
+    color: #475569;
     margin-bottom: 30px;
-    max-width: 700px;
-    margin-left: auto;
-    margin-right: auto;
-    transition: opacity 0.3s ease;
-}
-
-.highlight-btn {
-    padding: 12px 30px;
-    background: var(--primary);
-    color: white;
-    border: none;
-    border-radius: 25px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.highlight-btn:hover {
-    background: var(--secondary);
-    transform: translateY(-2px);
+    line-height: 1.7;
 }
 
 /* Final CTA */
-.final-cta {
-    padding: 60px 40px;
-    background: #202322;
-    border-radius: 12px;
-    color: white;
+.glass-cta-banner {
+    border-radius: 30px;
+    padding: 70px 40px;
     text-align: center;
+    max-width: 1000px;
+    margin: 0 auto 30px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.8) 0%, rgba(240, 244, 255, 0.7) 100%);
 }
 
-.final-cta h2 {
-    font-size: 2.5rem;
-    margin-bottom: 20px;
+.glass-cta-banner h2 {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: #1e2229;
+    margin-bottom: 14px;
 }
 
-.final-cta p {
+.glass-cta-banner p {
     font-size: 1.1rem;
-    line-height: 1.8;
-    opacity: 0.95;
-    margin-bottom: 30px;
+    color: #64748b;
+    max-width: 650px;
+    margin: 0 auto 32px;
+    line-height: 1.7;
 }
 
 .final-buttons {
     display: flex;
-    gap: 20px;
+    gap: 16px;
     justify-content: center;
     flex-wrap: wrap;
 }
 
-.btn {
-    padding: 14px 32px;
-    border-radius: 50px;
-    text-decoration: none;
-    font-weight: 700;
-    transition: all 0.3s ease;
-    display: inline-block;
-}
-
-.btn.primary {
-    background: white;
-    color: var(--primary);
-}
-
-.btn.primary:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-}
-
-.btn.secondary {
-    background: rgba(255, 255, 255, 0.9);
-    color: #2f5141;
-    border: 2px solid #c8a66a;
-}
-
-.btn.secondary:hover {
-    background: #fff8eb;
-    transform: translateY(-3px);
-}
-
-/* Section Utilities */
-.section-wrapper {
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.section-title {
-    font-size: 2.5rem;
-    text-align: center;
-    color: var(--text);
-    margin-bottom: 10px;
-}
-
-.section-subtitle {
-    font-size: 1rem;
-    text-align: center;
-    color: var(--muted);
-    margin-bottom: 20px;
-}
-
 .max-width-md {
-    max-width: 700px;
+    max-width: 780px;
     margin: 0 auto;
 }
 
-/* Responsive Design */
+/* Responsive adjustments */
 @media (max-width: 768px) {
-    .home-hero {
+    .home-hero.glass-hero {
         padding: 60px 20px;
+        border-radius: 24px;
     }
 
     .hero-title {
-        font-size: 2.5rem;
+        font-size: 2.4rem;
     }
 
     .hero-subtitle {
-        font-size: 1.1rem;
-    }
-
-    .featured-cards,
-    .features-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .steps {
-        flex-direction: column;
-        gap: 30px;
+        font-size: 1.05rem;
     }
 
     .section-title {
-        font-size: 2rem;
+        font-size: 1.9rem;
     }
 
-    .final-buttons {
+    .gita-text {
+        font-size: 1.15rem;
+    }
+
+    .reason-item {
         flex-direction: column;
-    }
-
-    .btn {
-        width: 100%;
-    }
-}
-
-@media (max-width: 480px) {
-    .home-hero {
-        padding: 40px 15px;
-    }
-
-    .hero-title {
-        font-size: 1.8rem;
-    }
-
-    .hero-subtitle {
-        font-size: 0.95rem;
-    }
-
-    .hero-cta {
-        gap: 10px;
-    }
-
-    .cta-btn {
-        padding: 12px 25px;
-        font-size: 0.9rem;
-    }
-
-    .section-title {
-        font-size: 1.5rem;
-    }
-
-    .featured-cards {
-        gap: 15px;
-    }
-
-    .featured-card {
-        padding: 20px;
+        gap: 12px;
     }
 }
 </style>
 
-<!-- JAVASCRIPT FOR DYNAMIC CONTENT -->
+<!-- JAVASCRIPT FOR DYNAMIC CONTENT & REFRESH -->
 <script>
-// Daily Wisdom Quotes
 const quotes = [
-    "The only true wisdom is in knowing you know nothing. - Socrates",
+    "The only true wisdom is in knowing you know nothing. — Socrates",
     "The mind is everything. What you think you become. — Buddha",
     "In the midst of chaos, there is also opportunity. — Sun Tzu",
     "The journey of a thousand miles begins with one step. — Lao Tzu",
     "Peace comes from within. Do not seek it without. — Buddha",
     "You have power over your mind, not outside events. — Marcus Aurelius",
-    "The best time to plant a tree was 20 years ago. The second best time is now. — Chinese Proverb",
     "When you let go of what you are, you become what you might be. — Lao Tzu",
-    "Your task is not to seek love, but to find all barriers you have built against it. — Rumi",
-    "The wise man in the storm prays to God, not for safety, but for deliverance. — Ralph Waldo Emerson",
-    "Knowing yourself is the beginning of all wisdom. — Aristotle",
-    "The soul becomes dyed with the color of its thoughts. — Marcus Aurelius",
-    "Be like water making its way through cracks. — Bruce Lee",
-    "Silence is the language of God, all else is poor translation. — Rumi",
-    "Yesterday I was clever, so I wanted to change the world. Today I am wise, so I am changing myself. — Rumi"
+    "Silence is the language of peace; stillness is its sanctuary. — Rumi"
 ];
 
-// Daily Actions
 const actions = [
-    "Drink water and stay hydrated",
-    "Take 5 deep breaths right now",
-    "Write down 3 things you're grateful for",
-    "Stretch your body for 2 minutes",
-    "Compliment someone genuinely today",
-    "Spend 10 minutes in nature",
-    "Practice mindful eating during one meal",
-    "Call or message a loved one",
-    "Do a random act of kindness",
-    "Meditate for 5 minutes",
-    "Journal your thoughts for 10 minutes",
-    "Take a walk without your phone",
-    "Practice smiling at strangers",
-    "Listen to calming music",
-    "Read something inspirational"
+    "Drink a glass of warm water with full, quiet attention",
+    "Take 5 deep breaths, lengthening each exhale",
+    "Write down 3 simple things you are grateful for right now",
+    "Stretch your spine and shoulders gently for 2 minutes",
+    "Spend 10 minutes in natural sunlight or near greenery",
+    "Pause for one conscious breath before opening your next screen"
 ];
 
-// Wellness Tips
 const tips = [
-    "Start your day with gratitude. It shifts your vibration instantly.",
-    "Your breath is your anchor. Return to it whenever you feel overwhelmed.",
-    "Sleep is not a luxury—it's essential for mental clarity and peace.",
-    "Movement is medicine. Even a 5-minute walk can transform your mood.",
-    "Let go of perfectionism. Progress over perfection, always.",
-    "Boundaries are healthy. Saying 'no' protects your energy.",
-    "Your thoughts create your reality. Choose them wisely.",
-    "Hydration affects everything: energy, mood, focus. Drink more water.",
-    "Connection heals. Reach out, be vulnerable, share your truth.",
-    "Nature restores. Step outside and breathe fresh air daily.",
-    "Laughter is powerful medicine. Find joy in small moments.",
-    "Your body holds tension. Stretch, breathe, release.",
-    "Digital detox regularly. Your mind needs rest from screens.",
-    "Self-compassion is not selfish. Treat yourself with kindness.",
-    "Slow down. Rushing creates stress. Presence creates peace."
+    "Start your day with gratitude. It shifts your mental state instantly.",
+    "Your breath is your anchor. Return to it whenever the mind feels scattered.",
+    "Gentle movement is medicine. Even a 5-minute stretch resets the nervous system.",
+    "Boundaries are acts of kindness. Protecting your quiet hour restores energy.",
+    "Slow down. Rushing creates internal friction; presence reveals clarity."
 ];
 
-// Bhagavad Gita Verses
 const gitaVerses = [
-    "You have the right to work, but never to the fruit of work. - Bhagavad Gita 2.47",
+    "You have the right to work, but never to the fruit of work. — Bhagavad Gita 2.47",
     "The mind is restless and difficult to restrain, but it is subdued by practice. — Bhagavad Gita 6.35",
-    "One who sees inaction in action, and action in inaction, is intelligent among men. — Bhagavad Gita 4.18",
-    "The soul is neither born, and nor does it die. — Bhagavad Gita 2.20",
-    "Set thy heart upon thy work, but never on its reward. — Bhagavad Gita 2.47",
-    "When meditation is mastered, the mind is unwavering like the flame of a lamp in a windless place. — Bhagavad Gita 6.19",
-    "A person can rise through the efforts of his own mind; or draw himself down. — Bhagavad Gita 6.5",
-    "Reshape yourself through the power of your will. — Bhagavad Gita 6.5",
-    "Whatever happened, happened for the good. Whatever is happening, is happening for the good. — Bhagavad Gita"
+    "One who sees stillness in action and action in stillness is truly wise. — Bhagavad Gita 4.18",
+    "Yoga is the journey of the self, through the self, to the self. — Bhagavad Gita 6.20",
+    "When meditation is mastered, the mind is unwavering like a flame in a windless place. — Bhagavad Gita 6.19"
 ];
 
-// Affirmations
 const affirmations = [
-    "I am peaceful and calm. My mind is clear and centered.",
-    "I am worthy of love, success, and happiness.",
-    "I trust the journey of my life. Everything unfolds perfectly.",
-    "I release all fear and embrace faith.",
-    "I am strong, capable, and resilient.",
-    "I choose peace over worry, love over fear.",
-    "I am grateful for this moment and all its blessings.",
-    "I deserve rest, relaxation, and self-care.",
-    "I am enough, exactly as I am right now.",
-    "I attract positive energy and loving relationships.",
-    "My mind is quiet. My heart is open.",
-    "I forgive myself and others. I choose freedom.",
-    "I am the creator of my reality. I choose joy.",
-    "I breathe in peace, I breathe out tension.",
-    "I am connected to the infinite wisdom within me."
+    "I am peaceful, centered, and fully present in this moment.",
+    "My mind is calm, my body is relaxed, and my heart is open.",
+    "I release what I cannot control and welcome tranquility.",
+    "I breathe in quiet strength, I breathe out unnecessary worry.",
+    "I am grounded in peace. Everything unfolds in divine timing."
 ];
 
-// Helper function to get random item from array
 function getRandomItem(array) {
     return array[Math.floor(Math.random() * array.length)];
 }
 
-// Initialize on page load
 document.addEventListener('DOMContentLoaded', function() {
-    
-    // Quote refresh button
+    // Quote refresh
     const quoteRefreshBtn = document.querySelectorAll('.refresh-btn')[0];
     const quoteText = document.querySelectorAll('.featured-text')[0];
-    
-    if (quoteRefreshBtn) {
+    if (quoteRefreshBtn && quoteText) {
         quoteRefreshBtn.addEventListener('click', function() {
-            const newQuote = getRandomItem(quotes);
             quoteText.style.opacity = '0';
             setTimeout(() => {
-                quoteText.textContent = newQuote;
+                quoteText.textContent = getRandomItem(quotes);
                 quoteText.style.opacity = '1';
-            }, 200);
-        });
-    }
-    
-    // Action refresh button
-    const actionRefreshBtn = document.querySelectorAll('.refresh-btn')[1];
-    const actionText = document.querySelectorAll('.featured-text')[1];
-    
-    if (actionRefreshBtn) {
-        actionRefreshBtn.addEventListener('click', function() {
-            const newAction = getRandomItem(actions);
-            actionText.style.opacity = '0';
-            setTimeout(() => {
-                actionText.textContent = newAction;
-                actionText.style.opacity = '1';
-            }, 200);
-        });
-    }
-    
-    // Tip refresh button
-    const tipRefreshBtn = document.querySelectorAll('.refresh-btn')[2];
-    const tipText = document.querySelectorAll('.featured-text')[2];
-    
-    if (tipRefreshBtn) {
-        tipRefreshBtn.addEventListener('click', function() {
-            const newTip = getRandomItem(tips);
-            tipText.style.opacity = '0';
-            setTimeout(() => {
-                tipText.textContent = newTip;
-                tipText.style.opacity = '1';
-            }, 200);
-        });
-    }
-    
-    // Gita verse refresh (if link is clicked)
-    const gitaLink = document.querySelector('.gita-link');
-    const gitaText = document.querySelector('.gita-text');
-    
-    if (gitaLink) {
-        gitaLink.addEventListener('click', function(e) {
-            e.preventDefault();
-            const newVerse = getRandomItem(gitaVerses);
-            gitaText.style.opacity = '0';
-            setTimeout(() => {
-                gitaText.textContent = newVerse;
-                gitaText.style.opacity = '1';
-            }, 200);
-        });
-    }
-    
-    // Affirmation highlight button
-    const affirmationBtn = document.querySelector('.highlight-btn');
-    const affirmationText = document.querySelector('.highlight-subtitle');
-    
-    if (affirmationBtn) {
-        affirmationBtn.addEventListener('click', function() {
-            const newAffirmation = getRandomItem(affirmations);
-            affirmationText.style.opacity = '0';
-            setTimeout(() => {
-                affirmationText.textContent = newAffirmation;
-                affirmationText.style.opacity = '1';
-            }, 200);
+            }, 180);
         });
     }
 
+    // Action refresh
+    const actionRefreshBtn = document.querySelectorAll('.refresh-btn')[1];
+    const actionText = document.querySelectorAll('.featured-text')[1];
+    if (actionRefreshBtn && actionText) {
+        actionRefreshBtn.addEventListener('click', function() {
+            actionText.style.opacity = '0';
+            setTimeout(() => {
+                actionText.textContent = getRandomItem(actions);
+                actionText.style.opacity = '1';
+            }, 180);
+        });
+    }
+
+    // Tip refresh
+    const tipRefreshBtn = document.querySelectorAll('.refresh-btn')[2];
+    const tipText = document.querySelectorAll('.featured-text')[2];
+    if (tipRefreshBtn && tipText) {
+        tipRefreshBtn.addEventListener('click', function() {
+            tipText.style.opacity = '0';
+            setTimeout(() => {
+                tipText.textContent = getRandomItem(tips);
+                tipText.style.opacity = '1';
+            }, 180);
+        });
+    }
+
+    // Gita verse refresh
+    const gitaBtn = document.querySelector('.gita-link');
+    const gitaText = document.querySelector('.gita-text');
+    if (gitaBtn && gitaText) {
+        gitaBtn.addEventListener('click', function() {
+            gitaText.style.opacity = '0';
+            setTimeout(() => {
+                gitaText.textContent = getRandomItem(gitaVerses);
+                gitaText.style.opacity = '1';
+            }, 180);
+        });
+    }
+
+    // Affirmation refresh
+    const affirmationBtn = document.querySelector('.highlight-btn');
+    const affirmationText = document.querySelector('.highlight-subtitle');
+    if (affirmationBtn && affirmationText) {
+        affirmationBtn.addEventListener('click', function() {
+            affirmationText.style.opacity = '0';
+            setTimeout(() => {
+                affirmationText.textContent = getRandomItem(affirmations);
+                affirmationText.style.opacity = '1';
+            }, 180);
+        });
+    }
+
+    // Formatted Date
     const dashboardDate = document.getElementById('dashboardDate');
     if (dashboardDate) {
         dashboardDate.textContent = new Intl.DateTimeFormat(undefined, {
@@ -989,6 +999,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }).format(new Date());
     }
 
+    // Gratitude prompt
     const gratitudePrompts = [
         'Name one ordinary moment you are glad to have.',
         'Who made today feel a little lighter?',
@@ -998,7 +1009,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const gratitudeBtn = document.getElementById('gratitudeBtn');
     const gratitudePrompt = document.getElementById('gratitudePrompt');
     if (gratitudeBtn && gratitudePrompt) {
-        gratitudeBtn.addEventListener('click', function () {
+        gratitudeBtn.addEventListener('click', function() {
             const current = gratitudePrompt.textContent;
             let next = getRandomItem(gratitudePrompts);
             while (next === current) next = getRandomItem(gratitudePrompts);
@@ -1006,6 +1017,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // Breathing practice
     const breathingOrb = document.getElementById('breathingOrb');
     const breathingStart = document.getElementById('breathingStart');
     const breathingReset = document.getElementById('breathingReset');
@@ -1021,15 +1033,18 @@ document.addEventListener('DOMContentLoaded', function() {
     function resetBreathing() {
         clearTimeout(breathingTimer);
         breathingStep = 0;
-        breathingOrb.classList.remove('is-breathing');
-        breathingStart.textContent = 'Start';
-        breathingInstruction.textContent = 'Press start when you are ready.';
+        if (breathingOrb) breathingOrb.classList.remove('is-breathing');
+        if (breathingStart) breathingStart.textContent = 'Start';
+        if (breathingInstruction) breathingInstruction.textContent = 'Press start when you are ready.';
     }
 
     function runBreathingStep() {
         const [label, seconds] = breathingCycle[breathingStep];
-        breathingOrb.classList.toggle('is-breathing', label === 'Inhale');
-        breathingInstruction.textContent = `${label} gently · ${seconds}s`;
+        if (breathingOrb) breathingOrb.classList.toggle('is-breathing', label === 'Inhale');
+        if (breathingInstruction) breathingInstruction.textContent = `${label} gently · ${seconds}s`;
+        if (window.calmAudio && label === 'Inhale') {
+            window.calmAudio.ringChime(528);
+        }
         breathingTimer = setTimeout(() => {
             breathingStep = (breathingStep + 1) % breathingCycle.length;
             runBreathingStep();
@@ -1037,7 +1052,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     if (breathingStart && breathingReset) {
-        breathingStart.addEventListener('click', function () {
+        breathingStart.addEventListener('click', function() {
             if (breathingStart.textContent === 'Stop') {
                 resetBreathing();
                 return;

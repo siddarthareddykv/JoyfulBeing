@@ -1,19 +1,22 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Your sanctuary for emotional wellness, daily happiness, and inner peace">
     <meta name="theme-color" content="#b08b5b">
-    <title>{{ title if title else "Live with Purpose & Peace" }}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>{{ title|default:"Live with Purpose & Peace" }}</title>
+    <link rel="stylesheet" href="/static/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Poppins:wght@300;400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='images/joyful-being-logo.svg') }}">
-    <link rel="apple-touch-icon" href="{{ url_for('static', filename='images/joyful-being-logo.svg') }}">
-    <link rel="manifest" href="{{ url_for('static', filename='site.webmanifest') }}">
+    <link rel="icon" type="image/svg+xml" href="/static/images/joyful-being-logo.svg">
+    <link rel="apple-touch-icon" href="/static/images/joyful-being-logo.svg">
+    <link rel="manifest" href="/static/site.webmanifest">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/calm-themes.css">
+    <script src="/static/calm-audio.js" defer></script>
+    <script src="/static/calm-app.js" defer></script>
 </head>
 <body>
 
@@ -22,7 +25,7 @@
 <nav class="navbar">
     <div class="nav-left">
         <a href="/" class="logo">
-            <img src="{{ url_for('static', filename='images/joyful-being-logo.svg') }}" alt="JoyfulBeing" class="logo-img">
+            <img src="/static/images/joyful-being-logo.svg" alt="JoyfulBeing" class="logo-img">
         </a>
     </div>
 
@@ -30,10 +33,21 @@
         <p class="nav-tagline">Where Peace Begins</p>
     </div>
 
-    <button class="menu-toggle" type="button" aria-label="Open navigation" aria-controls="navMenu" aria-expanded="false" onclick="toggleMenu()">☰</button>
+    <div class="calm-nav-actions">
+        <button class="calm-pill-btn" id="calmSoundToggle" type="button" aria-label="Ambient soundscapes">
+            <span>🎵</span> <span class="calm-pill-label">Soundscapes</span>
+        </button>
+        <button class="calm-pill-btn" id="mindfulMinuteBtn" type="button" aria-label="Take a mindful minute">
+            <span>✨</span> <span class="calm-pill-label">Mindful Minute</span>
+        </button>
+    </div>
+
+    <button class="menu-toggle" type="button" aria-label="Open navigation" aria-controls="navMenu" aria-expanded="false" onclick="toggleMenu()">?</button>
 
     <div class="nav-right" id="navMenu">
         <ul class="nav-list">
+            <li><a href="/mantras" class="{% if request.path == '/mantras' %}is-current{% endif %}" {% if request.path == '/mantras' %}aria-current="page"{% endif %}>Mantras</a></li>
+            <li><a href="/rituals" class="{% if request.path == '/rituals' %}is-current{% endif %}" {% if request.path == '/rituals' %}aria-current="page"{% endif %}>Rituals</a></li>
             <li><a href="/stress" class="{% if request.path == '/stress' %}is-current{% endif %}" {% if request.path == '/stress' %}aria-current="page"{% endif %}>Wellness</a></li>
             <li><a href="/calendar" class="{% if request.path == '/calendar' %}is-current{% endif %}" {% if request.path == '/calendar' %}aria-current="page"{% endif %}>Calendar</a></li>
             <li><a href="/programs" class="{% if request.path == '/programs' %}is-current{% endif %}" {% if request.path == '/programs' %}aria-current="page"{% endif %}>Global Programs</a></li>
@@ -49,7 +63,7 @@
 <footer class="footer">
     <div class="footer-content">
     <div class="footer-brand">
-      <img src="{{ url_for('static', filename='images/joyful-being-logo.svg') }}" alt="JoyfulBeing" class="footer-logo">
+      <img src="/static/images/joyful-being-logo.svg" alt="JoyfulBeing" class="footer-logo">
       <p>A calmer rhythm for everyday life.</p>
       <div class="footer-socials" aria-label="Social links">
         <a href="https://www.linkedin.com" aria-label="LinkedIn">in</a>
@@ -132,17 +146,17 @@ document.addEventListener("DOMContentLoaded", function () {
 </script>
 
 <div id="namaskaram-bot">
-  <button id="namaskaram-button" type="button" aria-expanded="false">🌿 Chat</button>
+  <button id="namaskaram-button" type="button" aria-expanded="false">?? Chat</button>
 
   <div id="namaskaram-window">
     <div class="nb-header">
-      <span>Namaskaram 🌿</span>
-      <button id="nb-close">✕</button>
+      <span>Namaskaram ??</span>
+      <button id="nb-close">?</button>
     </div>
 
     <div id="nb-messages" aria-live="polite">
       <div class="nb-bot">
-        Namaskaram 🌿
+        Namaskaram ??
         How is your heart feeling right now?
       </div>
     </div>
@@ -184,7 +198,7 @@ resetButton.setAttribute("aria-label", "Reset chat");
 document.querySelector(".nb-header")?.appendChild(resetButton);
 
 resetButton.onclick = () => {
-  messages.innerHTML = '<div class="nb-bot">Namaskaram 🌿<br>How is your heart feeling right now?</div>';
+  messages.innerHTML = '<div class="nb-bot">Namaskaram ??<br>How is your heart feeling right now?</div>';
 };
 
 btn.onclick = () => {
@@ -207,12 +221,12 @@ async function updateLlmStatus() {
       llmStatus.classList.add('nb-status-online');
       llmStatus.classList.remove('nb-status-offline');
     } else {
-      llmStatus.textContent = "Calm fallback ready — local Ollama is optional.";
+      llmStatus.textContent = "Calm fallback ready â€” local Ollama is optional.";
       llmStatus.classList.add('nb-status-offline');
       llmStatus.classList.remove('nb-status-online');
     }
   } catch (err) {
-    llmStatus.textContent = "Calm fallback ready — local Ollama is optional.";
+    llmStatus.textContent = "Calm fallback ready â€” local Ollama is optional.";
     llmStatus.classList.add('nb-status-offline');
     llmStatus.classList.remove('nb-status-online');
   }
@@ -258,5 +272,47 @@ chatForm.addEventListener("submit", async (e) => {
   messages.scrollTop = messages.scrollHeight;
 });
 </script>
+
+<!-- CALM AMBIENT SOUNDSCAPE DOCK -->
+<div class="calm-sound-dock" id="calmSoundDock" role="dialog" aria-label="Ambient soundscapes">
+  <div class="dock-header">
+    <div class="dock-title"><span>🎵</span> Ambient Soundscapes</div>
+    <button class="dock-close" id="calmSoundClose" type="button" aria-label="Close sound dock">✕</button>
+  </div>
+  <div class="dock-tracks">
+    <button type="button" class="calm-track-btn" data-track="rain">🌧️ Gentle Rain</button>
+    <button type="button" class="calm-track-btn" data-track="ocean">🌊 Ocean Waves</button>
+    <button type="button" class="calm-track-btn" data-track="bowl">🔔 Singing Bowl</button>
+    <button type="button" class="calm-track-btn" data-track="breeze">🌲 Forest Breeze</button>
+    <button type="button" class="calm-track-btn" data-track="om">🧘 Earth Om</button>
+  </div>
+  <div class="dock-volume-wrap">
+    <span>🔈</span>
+    <input type="range" id="calmVolumeSlider" min="0" max="1" step="0.05" value="0.5" aria-label="Volume">
+    <span>🔊</span>
+  </div>
+  <div class="dock-status" id="calmNowPlaying">Select a soundscape to focus & relax</div>
+</div>
+
+<!-- MINDFUL MINUTE MODAL (60s CALM RESET) -->
+<div class="mindful-modal-overlay" id="mindfulModal" role="dialog" aria-modal="true" aria-labelledby="mindfulTitle">
+  <div class="mindful-container">
+    <button class="mindful-close-btn" id="mindfulClose" type="button" aria-label="Close session">✕</button>
+    <div class="mindful-header">
+      <h3 id="mindfulTitle">A Mindful Minute</h3>
+      <p>Follow the light. Inhale tranquility, exhale tension.</p>
+    </div>
+    <div class="mindful-orb-wrapper">
+      <div class="mindful-orb" id="mindfulOrb"></div>
+    </div>
+    <div class="mindful-instruction" id="mindfulInstruction" aria-live="polite">Prepare gently. Inhale deeply...</div>
+    <div class="mindful-timer" id="mindfulTimer">1:00</div>
+    <div class="mindful-footer-controls">
+      <label style="cursor: pointer; display: flex; align-items: center; gap: 6px;">
+        <input type="checkbox" id="mindfulChimeToggle" checked> Gentle chimes
+      </label>
+    </div>
+  </div>
+</div>
 </body>
 </html>

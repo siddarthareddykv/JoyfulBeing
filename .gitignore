@@ -1,5 +1,9 @@
-﻿.env
+.env
 API key.txt
 __pycache__/
 *.py[cod]
 *.db
+*.db-shm
+*.db-wal
+*.exe
+.vscode/

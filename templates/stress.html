@@ -192,6 +192,9 @@
                     Repeat a sacred mantra like 'Om', 'So-Hum', or 'Aham Brahmasmi' silently. 
                     Let it anchor your awareness and guide you to stillness.
                 </p>
+                <button type="button" class="mantra-sound-btn stress-mantra-sound-btn" data-mantra="om" style="margin-top:14px; width: 100%; justify-content: center;">
+                    <span class="sound-icon">▶</span> <span class="sound-label">Listen to Om Vibration</span>
+                </button>
             </div>
 
             <!-- Chakra Meditation -->
@@ -455,5 +458,24 @@
         breathText.textContent = 'Ready when you are';
         breathStart.textContent = 'Start';
     });
+
+    // Stress page Mantra sound player
+    const stressMantraBtn = document.querySelector('.stress-mantra-sound-btn');
+    if (stressMantraBtn) {
+        stressMantraBtn.addEventListener('click', () => {
+            const isPlaying = window.calmAudio?.playMantra('om');
+            const icon = stressMantraBtn.querySelector('.sound-icon');
+            const label = stressMantraBtn.querySelector('.sound-label');
+            if (isPlaying) {
+                stressMantraBtn.classList.add('is-playing');
+                if (icon) icon.textContent = '⏸';
+                if (label) label.textContent = 'Pause Om Vibration';
+            } else {
+                stressMantraBtn.classList.remove('is-playing');
+                if (icon) icon.textContent = '▶';
+                if (label) label.textContent = 'Listen to Om Vibration';
+            }
+        });
+    }
 </script>
 {% endblock %}

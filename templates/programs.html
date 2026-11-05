@@ -64,7 +64,7 @@
                  data-price="{{ program.price }}"
                  data-program-title="{{ program.title }}"
                  data-duration="{{ program.duration }}"
-                 data-search="{{ (program.title ~ ' ' ~ program.organizer ~ ' ' ~ program.city ~ ' ' ~ program.country)|lower }}"
+                 data-search="{{ program.search_text }}"
                  data-start="{{ program.start_utc }}">
             <div class="program-card-topline">
                 <span class="program-category">{{ program.category }}</span>
@@ -127,13 +127,15 @@ document.addEventListener('DOMContentLoaded', () => {
     function updatePrograms() {
         const query = search.value.trim().toLowerCase();
         const now = new Date();
-        const endOfWeek = new Date(now);
+        const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        const endOfWeek = new Date(startOfToday);
         endOfWeek.setDate(now.getDate() + (7 - now.getDay() || 7));
+        endOfWeek.setHours(23, 59, 59, 999);
         let visible = 0;
         cards.forEach((card) => {
             const start = new Date(card.dataset.start);
             const sameDay = start.toDateString() === now.toDateString();
-            const thisWeek = start >= now && start <= endOfWeek;
+            const thisWeek = start >= startOfToday && start <= endOfWeek;
             const matches = (!query || card.dataset.search.includes(query)) &&
                 (!category.value || card.dataset.category === category.value) &&
                 (!format.value || card.dataset.format === format.value) &&
