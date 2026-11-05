@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: joyfulbeing
+    runtime: go
+    plan: free
+    buildCommand: go build -o bin/joyfulbeing .
+    startCommand: ./bin/joyfulbeing
+    envVars:
+      - key: PORT
+        value: 10000
