@@ -1,0 +1,1 @@
+# Python compatibility placeholder for Render services configured as Python runtime
