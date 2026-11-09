@@ -84,7 +84,7 @@
             <div class="featured-card glass-card quote-card">
                 <div class="card-icon">🪷</div>
                 <h3>Daily Wisdom</h3>
-                <p class="featured-text">{{ daily_content.quote|default:"The only true wisdom is in knowing you know nothing. — Socrates" }}</p>
+                <p class="featured-text">{{ daily_content.quote|default("The only true wisdom is in knowing you know nothing. — Socrates") }}</p>
                 <button class="refresh-btn glass-refresh-btn">Refresh Quote</button>
             </div>
 
@@ -92,7 +92,7 @@
             <div class="featured-card glass-card action-card">
                 <div class="card-icon">🌱</div>
                 <h3>Today's Practice</h3>
-                <p class="featured-text">{{ daily_content.action|default:"Drink water mindfully and stay grounded" }}</p>
+                <p class="featured-text">{{ daily_content.action|default("Drink water mindfully and stay grounded") }}</p>
                 <button class="refresh-btn glass-refresh-btn">Refresh Practice</button>
             </div>
 
@@ -100,7 +100,7 @@
             <div class="featured-card glass-card tip-card">
                 <div class="card-icon">💡</div>
                 <h3>Wellness Tip</h3>
-                <p class="featured-text">{{ daily_content.tip|default:"Start your day with gratitude. It shifts your vibration instantly." }}</p>
+                <p class="featured-text">{{ daily_content.tip|default("Start your day with gratitude. It shifts your vibration instantly.") }}</p>
                 <button class="refresh-btn glass-refresh-btn">Refresh Tip</button>
             </div>
         </div>
@@ -173,7 +173,7 @@
         
         <div class="gita-card glass-panel glass-gita-card">
             <div class="gita-icon">📜</div>
-            <p class="gita-text">{{ daily_content.bhagavad_gita|default:"You have the right to work, but never to the fruit of work. — Bhagavad Gita 2.47" }}</p>
+            <p class="gita-text">{{ daily_content.bhagavad_gita|default("You have the right to work, but never to the fruit of work. — Bhagavad Gita 2.47") }}</p>
             <button type="button" class="gita-link glass-action-btn">Explore More Verses →</button>
         </div>
     </div>
@@ -216,7 +216,7 @@
     <div class="section-wrapper max-width-md">
         <span class="glass-pill-badge" style="margin-bottom: 16px;">Peace Affirmation</span>
         <h2 class="highlight-text">Remember: You Are Enough</h2>
-        <p class="highlight-subtitle">{{ daily_content.affirmation|default:"I am peaceful and calm. My mind is clear and centered." }}</p>
+        <p class="highlight-subtitle">{{ daily_content.affirmation|default("I am peaceful and calm. My mind is clear and centered.") }}</p>
         <button class="highlight-btn glass-btn glass-btn-primary">New Affirmation ✨</button>
     </div>
 </section>

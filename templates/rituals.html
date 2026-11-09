@@ -72,7 +72,7 @@
                         <span class="badge">{{ ritual.duration }}</span>
                     </div>
                     <p class="ritual-benefit">{{ ritual.benefits }}</p>
-                    <p class="ritual-tip"><strong>Tip:</strong> {{ ritual.practice_tip|truncatechars:80 }}</p>
+                    <p class="ritual-tip"><strong>Tip:</strong> {{ ritual.practice_tip|truncate(80) }}</p>
                 </div>
             {% endfor %}
         </div>
